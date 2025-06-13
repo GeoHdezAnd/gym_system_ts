@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@layer components, utilities, base;
+
+@theme {
+    --color-primary-100: #081028;
+    --color-primary-200: #001233;
+    --color-secondary-100: #4c1036;
+    --color-secondary-200: #72195a;
+}
+
+@layer base {
+    input {
+        color-scheme: dark;
+    }
+}
+
+@layer utilities {
+    .bg-auth {
+        background: linear-gradient(
+            135deg,
+            #0a0a0a 0%,
+            #1a1a2e 50%,
+            #16213e 100%
+        );
+    }
+
+    .container-dash {
+        @apply p-6 text-white ;
+    }
+}

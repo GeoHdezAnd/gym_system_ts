@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        // Directory
+        "outDir": "./dist",
+        "rootDir": "./src",
+        // Enable latest features
+        "lib": ["ESnext", "DOM"],
+        "module": "NodeNext",
+        "target": "ESNext",
+
+        //BundlerMode
+        "moduleResolution": "NodeNext",
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
+
+        //Best Practices
+        "strict": true,
+        "skipLibCheck": true,
+        "noFallthroughCasesInSwitch": true,
+
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "declaration": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    },
+    "include": ["src/**/*.ts", "src/utils/handleAPIError.tsx"]
+}

@@ -1,0 +1,79 @@
+import {
+    CreationOptional,
+    DataTypes,
+    InferAttributes,
+    InferCreationAttributes,
+    Model,
+    NonAttribute,
+} from "@sequelize/core";
+import {
+    Attribute,
+    ColumnName,
+    Default,
+    HasMany,
+    HasOne,
+    NotNull,
+    PrimaryKey,
+    Table,
+    Unique,
+} from "@sequelize/core/decorators-legacy";
+import { SubscriptionModel } from "./subscription.model";
+
+@Table({
+    tableName: "plans",
+    timestamps: true,
+})
+export class PlansModel extends Model<
+    InferAttributes<PlansModel>,
+    InferCreationAttributes<PlansModel>
+> {
+    @Attribute(DataTypes.UUID)
+    @Default(DataTypes.UUIDV4)
+    @PrimaryKey
+    declare id: CreationOptional<string>;
+
+    @NotNull
+    @Unique
+    @Attribute(DataTypes.STRING(60))
+    declare name: string;
+
+    @NotNull
+    @Attribute(DataTypes.STRING(70))
+    declare description: string;
+
+    @NotNull
+    @ColumnName("benefits")
+    @Attribute(DataTypes.ARRAY(DataTypes.STRING(30)))
+    declare benefits: string[];
+
+    @NotNull
+    @Attribute(DataTypes.DOUBLE)
+    declare price: number;
+
+    @NotNull
+    @ColumnName("duration_days")
+    @Attribute(DataTypes.INTEGER)
+    declare durationDays: number;
+
+    @ColumnName("is_active")
+    @Attribute(DataTypes.BOOLEAN)
+    @Default(true)
+    declare isActive: CreationOptional<boolean>;
+
+    @Attribute(DataTypes.BOOLEAN)
+    @Default(false)
+    declare deleted: CreationOptional<boolean>;
+
+    @Attribute(DataTypes.DATE)
+    declare createdAt: CreationOptional<Date>;
+
+    @Attribute(DataTypes.DATE)
+    declare updatedAt: CreationOptional<Date>;
+
+    // Foreign Key Suscriptions
+    @HasMany(() => SubscriptionModel, {
+        foreignKey: "planId",
+        sourceKey: "id",
+    })
+    declare suscriptions?: NonAttribute<SubscriptionModel[]>;
+}

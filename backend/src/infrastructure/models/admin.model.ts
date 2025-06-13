@@ -1,0 +1,44 @@
+import {
+    CreationOptional,
+    DataTypes,
+    InferAttributes,
+    InferCreationAttributes,
+    Model,
+    NonAttribute,
+} from "@sequelize/core";
+import {
+    Attribute,
+    BelongsTo,
+    ColumnName,
+    Default,
+    HasMany,
+    NotNull,
+    PrimaryKey,
+    Table,
+    Unique,
+} from "@sequelize/core/decorators-legacy";
+
+@Table({
+    tableName: "admins",
+    timestamps: false
+})
+export class AdminModel extends Model<
+    InferAttributes<AdminModel>,
+    InferCreationAttributes<AdminModel>
+> {
+    @Attribute(DataTypes.UUID)
+    @Default(DataTypes.UUIDV4)
+    @PrimaryKey
+    declare id: CreationOptional<string>;
+
+    @ColumnName("access_level")
+    @Attribute(DataTypes.ENUM("full", "limited"))
+    declare accessLevel: string;
+
+    @ColumnName("user_id")
+    @Attribute(DataTypes.UUID)
+    @NotNull
+    @Unique
+    declare userId: string;
+
+}
