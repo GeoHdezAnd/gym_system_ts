@@ -27,7 +27,7 @@ export class CreateSuscriptionUseCase {
 
         const suscripcionActive =
             await this.subscriptionRepository.findActiveSubscription(
-                (memberId = member.user.profile.id!),
+                (memberId = member.profile.id!),
                 planId
             );
 
@@ -38,7 +38,7 @@ export class CreateSuscriptionUseCase {
         }
 
         const suscription = new Subscription({
-            memberId: member.user.profile.id!, // en el perfil está el id de la tabla de su perfil miembro, es donde tendra todas sus suscripciones el usuario ya que solo los miembtos pueden tener suscripcion
+            memberId: member.profile.id!, // en el perfil está el id de la tabla de su perfil miembro, es donde tendra todas sus suscripciones el usuario ya que solo los miembtos pueden tener suscripcion
             planId,
             startDate: new Date(),
             endDate: this.calculateEndSuscription(plan.durationDays),

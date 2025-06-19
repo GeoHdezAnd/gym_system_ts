@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 const AuthLayout = () => {
     return (
         <>
-            <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-950 flex flex-col items-center justify-center p-4 sm:p-6">
+            <div className="min-h-screen bg-gradient-to-br from-primary-100 to-primary-200 flex flex-col items-center justify-center p-4 sm:p-6">
                 {/* Contenedor principal responsivo */}
                 <div className="w-full max-w-md mx-auto">
                     {/* Contenedor de formulario con efecto vidrio */}

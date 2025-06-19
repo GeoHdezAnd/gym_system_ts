@@ -3,9 +3,9 @@ import {
     RiUserFill,
     RiSettingsFill,
     RiUserAddFill,
-    RiUserSharedFill,
     RiShieldUserLine,
 } from "react-icons/ri";
+import { TbUsers } from "react-icons/tb";
 import { NavItem } from "../attoms/NavItem";
 
 export function SideBar() {
@@ -21,7 +21,11 @@ export function SideBar() {
                     label: "Agregar usuario",
                     icon: RiUserAddFill,
                 },
-                { to: "users/all", label: "Ver todos", icon: RiUserSharedFill },
+                {
+                    to: "users/customer",
+                    label: "Clientes",
+                    icon: TbUsers,
+                },
                 {
                     to: "users/roles",
                     label: "Administrar roles",

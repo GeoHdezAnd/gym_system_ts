@@ -9,15 +9,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import api from "../../../lib/config/axios";
 import { handleApiError } from "../../../lib/utils/handleAPIError";
+import { useState } from "react";
 
 const memberAddSchema = memberSchema.omit({ password: true });
 type MemberAddSchema = z.infer<typeof memberAddSchema>;
 
 export function FormMemberAdd() {
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const {
         control,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting: isFormSubmitting },
+        reset,
     } = useForm<MemberAddSchema>({
         resolver: zodResolver(memberAddSchema),
         defaultValues: {
@@ -33,15 +36,31 @@ export function FormMemberAdd() {
     const onSubmit: SubmitHandler<MemberAddSchema> = async (
         formData: MemberAddSchema
     ) => {
-        toast.promise(api.post("/member", formData), {
-            loading: "Registrando usuario...",
-            success: (response) => {
-                console.log(response);
-                return response.data.message;
-            },
-            error: (error) => handleApiError(error),
-        });
+        try {
+            setIsSubmitting(true);
+
+            toast.promise(api.post("/member", formData), {
+                loading: "Registrando usuario...",
+                success: (response) => {
+                    reset(); // Limpia el formulario después del éxito
+                    const { member, message } = response.data;
+
+                    return `${message}: ${member}`;
+                },
+                error: (error) => {
+                    throw error; // Propaga el error para manejarlo en el catch
+                },
+            });
+        } catch (error) {
+            handleApiError(error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
+
+    // Combina el estado de envío del formulario con nuestro estado personalizado
+    const isLoading = isSubmitting || isFormSubmitting;
+
     return (
         <div className="mb-8">
             <div className="mb-4 space-y-2">
@@ -111,7 +130,7 @@ export function FormMemberAdd() {
                         name="born_date"
                         icon={<MdDateRange />}
                         control={control}
-                        label="Fecha de nacimiento"
+                        label="Nacimiento"
                         type="date"
                         error={errors.born_date}
                         placeholder="MM-DD-YYYY"
@@ -119,10 +138,11 @@ export function FormMemberAdd() {
 
                     <Button
                         type="submit"
-                        variant="secondary"
+                        variant="primary"
                         size="sm"
                         fullWidth
-                        loading={false}
+                        loading={isLoading}
+                        disabled={isLoading}
                     >
                         Enviar formulario
                     </Button>

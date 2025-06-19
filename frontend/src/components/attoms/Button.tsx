@@ -31,14 +31,14 @@ export const Button = ({
         "rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer";
 
     const sizeClasses = {
-        sm: "py-1.5 px-3 text-sm",
+        sm: "py-1.5 px-3 text-sm ",
         md: "py-2 px-4 text-base",
         lg: "py-3 px-6 text-lg",
     };
 
     const variantClasses = {
         primary:
-            "bg-blue-600 hover:bg-blue-700 text-white shadow hover:shadow-md",
+            "bg-secondary-100/80 hover:bg-secondary-100 text-white shadow hover:shadow-md",
         secondary:
             "bg-gray-700 hover:bg-gray-600 text-white shadow hover:shadow-md",
         danger: "bg-red-600 hover:bg-red-700 text-white shadow hover:shadow-md",

@@ -3,9 +3,10 @@
 
 @theme {
     --color-primary-100: #081028;
-    --color-primary-200: #001233;
+    --color-primary-200: #0b1739;
     --color-secondary-100: #4c1036;
     --color-secondary-200: #72195a;
+    --color-secondary-300: #cb3cff;
 }
 
 @layer base {
@@ -25,6 +26,6 @@
     }
 
     .container-dash {
-        @apply p-6 text-white ;
+        @apply p-6 text-white;
     }
 }

@@ -64,7 +64,7 @@ export class MemberController {
                     gender,
                     bornDate: born_date,
                 },
-                req.member!.user.id
+                req.member!.id
             );
             res.json({ message: "Miembro actualizado" });
         } catch (error) {
@@ -74,7 +74,7 @@ export class MemberController {
 
     async deleteMemberById(req: Request, res: Response, next: NextFunction) {
         try {
-            const memberId = req.member?.user.id!;
+            const memberId = req.member?.id!;
             await this.deleteUserUseCase.execute(memberId);
             res.json({ message: "Usuario eliminado con soft deleted" });
         } catch (error) {

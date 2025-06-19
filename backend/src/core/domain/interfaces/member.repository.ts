@@ -1,16 +1,14 @@
 import { Member, MemberProps } from "../entities";
 
 export interface MemberWithUser {
-    user: {
-        id: string;
-        name: string;
-        lastName: string;
-        email: string;
-        phone: string;
-        confirmed: boolean;
+    id: string;
+    name: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    confirmed: boolean;
 
-        profile: Omit<MemberProps, "userId">;
-    };
+    profile: Omit<MemberProps, "userId">;
 }
 
 export interface MemberRepository {

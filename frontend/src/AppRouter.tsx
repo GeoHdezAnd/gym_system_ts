@@ -9,7 +9,7 @@ import ForgotPassword from "./pages/public/ForgotPassword";
 import ResetPassword from "./pages/public/ResetPassword";
 import ConfirmAccount from "./pages/public/ConfirmAccount";
 import UsersAdd from "./pages/private/admin/users/UsersAdd";
-import AllUsers from "./pages/private/admin/users/AllUsers";
+import AllCustomers from "./pages/private/admin/users/AllCustomers";
 
 export const AppRouter = () => {
     return (
@@ -35,7 +35,10 @@ export const AppRouter = () => {
                     <Route path="/dashboard" element={<DashboardLayout />}>
                         <Route index element={<Dashboard />} />
                         <Route path="users/add" element={<UsersAdd />} />
-                        <Route path="users/all" element={<AllUsers />} />
+                        <Route
+                            path="users/customer"
+                            element={<AllCustomers />}
+                        />
                     </Route>
                 </Routes>
             </AuthProvider>

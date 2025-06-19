@@ -40,23 +40,20 @@ export class SequelizeMemberRepository implements MemberRepository {
         }
 
         return members.map((member) => ({
-            user: {
-                id: member.userAccount!.id,
-                name: member.userAccount!.name,
-                lastName: member.userAccount!.lastName,
-                email: member.userAccount!.email,
-                phone: member.userAccount!.phone,
-                confirmed: member.userAccount!.confirmed,
-                profile: {
-                    gender: member.gender,
-                    bornDate: member.bornDate,
-                    matricula: member.matricula,
-                },
+            id: member.userAccount!.id,
+            name: member.userAccount!.name,
+            lastName: member.userAccount!.lastName,
+            email: member.userAccount!.email,
+            phone: member.userAccount!.phone,
+            confirmed: member.userAccount!.confirmed,
+            profile: {
+                gender: member.gender,
+                bornDate: member.bornDate,
+                matricula: member.matricula,
             },
         }));
     }
 
-   
     async create(member: Member): Promise<Member> {
         const memberModel = await MemberModel.create({
             userId: member.userId,
@@ -104,19 +101,17 @@ export class SequelizeMemberRepository implements MemberRepository {
             return false;
         }
         return {
-            user: {
-                id: memberModel.userAccount.id,
-                name: memberModel.userAccount.name,
-                lastName: memberModel.userAccount.lastName,
-                email: memberModel.userAccount.email,
-                phone: memberModel.userAccount.phone,
-                confirmed: memberModel.userAccount.confirmed,
-                profile: {
-                    id: memberModel.id,
-                    gender: memberModel.gender,
-                    bornDate: memberModel.bornDate,
-                    matricula: memberModel.matricula,
-                },
+            id: memberModel.userAccount.id,
+            name: memberModel.userAccount.name,
+            lastName: memberModel.userAccount.lastName,
+            email: memberModel.userAccount.email,
+            phone: memberModel.userAccount.phone,
+            confirmed: memberModel.userAccount.confirmed,
+            profile: {
+                id: memberModel.id,
+                gender: memberModel.gender,
+                bornDate: memberModel.bornDate,
+                matricula: memberModel.matricula,
             },
         };
     }
