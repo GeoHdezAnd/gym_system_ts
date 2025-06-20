@@ -1,6 +1,10 @@
 import { UserRepository } from "../../domain/interfaces";
-import { NotFoundError, ForbiddenError, UnauthorizedError } from "../../errors";
-import { AuthService } from "../../services";
+import {
+    NotFoundError,
+    ForbiddenError,
+    UnauthorizedError,
+} from "../../domain/errors";
+import { AuthService } from "../../domain/services";
 
 export class SignInUseCase {
     constructor(

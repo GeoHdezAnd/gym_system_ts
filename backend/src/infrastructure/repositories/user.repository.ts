@@ -1,6 +1,6 @@
-import { User } from "../../core/domain/entities";
-import { UserRepository } from "../../core/domain/interfaces";
-import { NotFoundError } from "../../core/errors";
+import { User } from "../../domain/entities";
+import { UserRepository } from "../../domain/interfaces";
+import { NotFoundError } from "../../domain/errors";
 import { UserModel } from "../models";
 
 export class SequelizeUserRepository implements UserRepository {

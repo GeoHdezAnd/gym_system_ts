@@ -4,7 +4,7 @@ import {
     PlanRepository,
     SubscriptionRepository,
 } from "../../../domain/interfaces";
-import { ConflictError, NotFoundError } from "../../../errors";
+import { ConflictError, NotFoundError } from "../../../domain/errors";
 
 export class CreateSuscriptionUseCase {
     constructor(

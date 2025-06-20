@@ -1,6 +1,6 @@
 import { UserRepository } from "../../domain/interfaces";
-import { NotFoundError } from "../../errors";
-import { AuthService } from "../../services";
+import { NotFoundError } from "../../domain/errors";
+import { AuthService } from "../../domain/services";
 
 export class ResetPasswordWTokenUseCase {
     constructor(

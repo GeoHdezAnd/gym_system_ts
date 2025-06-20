@@ -1,8 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../../infrastructure/models";
-import { UnauthorizedError, ForbiddenError } from "../../core/errors";
-import { User } from "../../core/domain/entities";
+import { UnauthorizedError, ForbiddenError } from "../../domain/errors";
+import { User } from "../../domain/entities";
 
 declare global {
     namespace Express {
@@ -64,8 +64,6 @@ export const authenticate = async (
                 res.status(404).json({ error: error.message });
                 return;
             }
-
-            
 
             req.user = user;
             next();

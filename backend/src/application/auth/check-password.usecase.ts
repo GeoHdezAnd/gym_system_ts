@@ -1,7 +1,7 @@
 import { UserRepository } from "../../domain/interfaces";
-import { NotFoundError } from "../../errors";
-import { UnauthorizedError } from "../../errors/unauthorized.error";
-import { AuthService } from "../../services";
+import { NotFoundError } from "../../domain/errors";
+import { UnauthorizedError } from "../../domain/errors/unauthorized.error";
+import { AuthService } from "../../domain/services";
 
 export class CheckPasswordUseCase {
     constructor(

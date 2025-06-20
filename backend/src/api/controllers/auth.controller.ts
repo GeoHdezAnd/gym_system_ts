@@ -5,24 +5,24 @@ import {
     ForgotPasswordUseCase,
     ValidateTokenUseCase,
     ResetPasswordWTokenUseCase,
-} from "../../core/use-case/auth";
+} from "../../application/auth";
 
-import { SignInUseCase } from "../../core/use-case/auth/sign-in.usecase";
-import { UpdateCurrentPasswordUseCase } from "../../core/use-case/auth/update-current-password.usecase";
-import { CheckPasswordUseCase } from "../../core/use-case/auth/check-password.usecase";
-import { SignUpMemberUseCase } from "../../core/use-case/auth/sign-up-member.usecase";
+import { SignInUseCase } from "../../application/auth/sign-in.usecase";
+import { UpdateCurrentPasswordUseCase } from "../../application/auth/update-current-password.usecase";
+import { CheckPasswordUseCase } from "../../application/auth/check-password.usecase";
+import { SignUpMemberUseCase } from "../../application/auth/sign-up-member.usecase";
 export class AuthController {
     constructor(
-        private signUpAdminUseCase: SignUpAdminUseCase,
-        private signUpMemberUseCase: SignUpMemberUseCase,
-        private signInUseCase: SignInUseCase,
+        private readonly _signUpAdminUseCase: SignUpAdminUseCase,
+        private readonly _signUpMemberUseCase: SignUpMemberUseCase,
+        private readonly _signInUseCase: SignInUseCase,
 
-        private confirmAccountUseCase: ConfirmAccountUseCase,
-        private forgotPasswordUseCase: ForgotPasswordUseCase,
-        private validateTokenUseCase: ValidateTokenUseCase,
-        private resetPassworWTokenUseCase: ResetPasswordWTokenUseCase,
-        private updateCurrentPasswordUseCase: UpdateCurrentPasswordUseCase,
-        private checkPasswordUseCase: CheckPasswordUseCase
+        private readonly _confirmAccountUseCase: ConfirmAccountUseCase,
+        private readonly _forgotPasswordUseCase: ForgotPasswordUseCase,
+        private readonly _validateTokenUseCase: ValidateTokenUseCase,
+        private readonly _resetPassworWTokenUseCase: ResetPasswordWTokenUseCase,
+        private readonly _updateCurrentPasswordUseCase: UpdateCurrentPasswordUseCase,
+        private readonly _checkPasswordUseCase: CheckPasswordUseCase
     ) {}
 
     async signUpAdmin(req: Request, res: Response, next: NextFunction) {
@@ -30,7 +30,7 @@ export class AuthController {
             const { name, last_name, email, password, phone, access_level } =
                 req.body;
 
-            await this.signUpAdminUseCase.execute({
+            await this._signUpAdminUseCase.execute({
                 name,
                 lastName: last_name,
                 email,
@@ -56,7 +56,7 @@ export class AuthController {
                 gender,
                 born_date,
             } = req.body;
-            await this.signUpMemberUseCase.execute({
+            await this._signUpMemberUseCase.execute({
                 name,
                 lastName: last_name,
                 email,
@@ -74,7 +74,7 @@ export class AuthController {
     async signIn(req: Request, res: Response, next: NextFunction) {
         try {
             const { email, password } = req.body;
-            const response = await this.signInUseCase.execute(email, password);
+            const response = await this._signInUseCase.execute(email, password);
             res.json(response);
         } catch (error) {
             next(error);
@@ -89,7 +89,7 @@ export class AuthController {
         try {
             const { token } = req.body;
 
-            await this.confirmAccountUseCase.execute({ token });
+            await this._confirmAccountUseCase.execute({ token });
             res.json("Cuenta Confirmada correctamente :)");
         } catch (error) {
             next(error);
@@ -100,7 +100,7 @@ export class AuthController {
         try {
             const { email } = req.body;
 
-            await this.forgotPasswordUseCase.execute({ email });
+            await this._forgotPasswordUseCase.execute({ email });
             res.json("Revisa tu email para seguir las instrucciones");
         } catch (error) {
             next(error);
@@ -110,7 +110,7 @@ export class AuthController {
     async validateToken(req: Request, res: Response, next: NextFunction) {
         try {
             const { token } = req.params;
-            await this.validateTokenUseCase.execute(token);
+            await this._validateTokenUseCase.execute(token);
             res.json("Token válido, asigna un nuevo password");
         } catch (error) {
             next(error);
@@ -122,7 +122,7 @@ export class AuthController {
             const { token } = req.params;
             const { password } = req.body;
 
-            await this.resetPassworWTokenUseCase.execute({ token, password });
+            await this._resetPassworWTokenUseCase.execute({ token, password });
             res.json("Password modificado correctamente");
         } catch (error) {
             next(error);
@@ -137,7 +137,7 @@ export class AuthController {
         const { id } = req.user;
 
         try {
-            await this.updateCurrentPasswordUseCase.execute({
+            await this._updateCurrentPasswordUseCase.execute({
                 currentPassword: current_password,
                 password,
                 id,
@@ -152,7 +152,7 @@ export class AuthController {
         try {
             const { password } = req.body;
             const { id } = req.user;
-            await this.checkPasswordUseCase.execute(password, id);
+            await this._checkPasswordUseCase.execute(password, id);
             res.json("Password correcto");
         } catch (error) {
             next(error);

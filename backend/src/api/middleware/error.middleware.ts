@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { AppError } from "../../core/errors";
+import { AppError } from "../../domain/errors";
 
 interface ErrorResponse {
     success: boolean;

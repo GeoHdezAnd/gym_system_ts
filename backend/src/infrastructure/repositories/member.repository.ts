@@ -1,6 +1,6 @@
-import { Member } from "../../core/domain/entities";
-import { MemberRepository, MemberWithUser } from "../../core/domain/interfaces";
-import { NotFoundError } from "../../core/errors";
+import { Member } from "../../domain/entities";
+import { MemberRepository, MemberWithUser } from "../../domain/interfaces";
+import { NotFoundError } from "../../domain/errors";
 import { MemberModel, UserModel } from "../models";
 
 export class SequelizeMemberRepository implements MemberRepository {

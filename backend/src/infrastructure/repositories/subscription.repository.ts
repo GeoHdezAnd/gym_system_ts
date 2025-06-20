@@ -1,6 +1,6 @@
-import { Subscription, SubscriptionProps } from "../../core/domain/entities";
-import { SubscriptionRepository } from "../../core/domain/interfaces";
-import { NotFoundError } from "../../core/errors";
+import { Subscription, SubscriptionProps } from "../../domain/entities";
+import { SubscriptionRepository } from "../../domain/interfaces";
+import { NotFoundError } from "../../domain/errors";
 import { SubscriptionModel } from "../models";
 import { Op } from "@sequelize/core";
 

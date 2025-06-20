@@ -4,7 +4,7 @@ import {
     DeleteUserUseCase,
     GetAllMembersUseCase,
     UpdateMemberUseCase,
-} from "../../core/use-case/admin/members";
+} from "../../application/admin/members";
 
 export class MemberController {
     constructor(

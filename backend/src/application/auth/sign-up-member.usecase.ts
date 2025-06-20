@@ -5,10 +5,10 @@ import {
     RoleRepository,
     UserRepository,
 } from "../../domain/interfaces";
-import { ConflictError, NotFoundError } from "../../errors";
-import { AuthService, EmailService } from "../../services";
+import { ConflictError, NotFoundError } from "../../domain/errors";
+import { AuthService, EmailService } from "../../domain/services";
 import { Sequelize } from "@sequelize/core";
-import { db } from "../../../infrastructure/config/db";
+import { db } from "../../infrastructure/config/db";
 type InputMember = {
     name: string;
     lastName: string;

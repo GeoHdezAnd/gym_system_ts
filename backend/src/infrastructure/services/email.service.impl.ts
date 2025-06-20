@@ -1,4 +1,4 @@
-import { EmailService, TEmail } from "../../core/services";
+import { EmailService, TEmail } from "../../domain/services";
 import { transport } from "../config/nodemailer";
 
 export class EmailServiceImpl implements EmailService {

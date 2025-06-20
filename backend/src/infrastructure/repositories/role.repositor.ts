@@ -1,5 +1,5 @@
-import { Role } from "../../core/domain/entities";
-import { RoleRepository } from "../../core/domain/interfaces";
+import { Role } from "../../domain/entities";
+import { RoleRepository } from "../../domain/interfaces";
 import { RoleModel } from "../models";
 
 export class SequelizeRoleRepository implements RoleRepository {

@@ -1,6 +1,6 @@
 import { UserRepository } from "../../domain/interfaces";
-import { NotFoundError, UnauthorizedError } from "../../errors";
-import { AuthService } from "../../services";
+import { NotFoundError, UnauthorizedError } from "../../domain/errors";
+import { AuthService } from "../../domain/services";
 
 export class UpdateCurrentPasswordUseCase {
     constructor(

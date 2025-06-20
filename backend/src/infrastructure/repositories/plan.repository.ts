@@ -1,5 +1,5 @@
-import { Plan, PlanProps } from "../../core/domain/entities";
-import { PlanRepository } from "../../core/domain/interfaces";
+import { Plan, PlanProps } from "../../domain/entities";
+import { PlanRepository } from "../../domain/interfaces";
 import { PlansModel } from "../models";
 
 export class SequelizePlanRepository implements PlanRepository {

@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { CreateSuscriptionUseCase } from "../../core/use-case/admin/suscriptions";
+import { CreateSuscriptionUseCase } from "../../application/admin/suscriptions";
 
 export class SuscriptionController {
     constructor(private createSuscriptionUseCase: CreateSuscriptionUseCase) {}

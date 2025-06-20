@@ -1,5 +1,5 @@
 import { UserRepository } from "../../../domain/interfaces";
-import { NotFoundError } from "../../../errors";
+import { NotFoundError } from "../../../domain/errors";
 
 export class DeleteUserUseCase {
     constructor(private userRepository: UserRepository) {}

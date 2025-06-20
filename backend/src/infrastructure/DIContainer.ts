@@ -6,25 +6,25 @@ import {
     RoleRepository,
     SubscriptionRepository,
     UserRepository,
-} from "../core/domain/interfaces";
-import { AuthService, EmailService } from "../core/services";
+} from "../domain/interfaces";
+import { AuthService, EmailService } from "../domain/services";
 import {
     CreateAttendanceUseCase,
     GetAllAttendancesWithMember,
-} from "../core/use-case/admin/attendances";
+} from "../application/admin/attendances";
 import {
     DeleteUserUseCase,
     CreateMemberUseCase,
     GetAllMembersUseCase,
     UpdateMemberUseCase,
-} from "../core/use-case/admin/members";
+} from "../application/admin/members";
 import {
     CreatePlanUseCase,
     UpdatePlanUseCase,
     DeletePlanUseCase,
     GetAllPlansUseCase,
-} from "../core/use-case/admin/plans";
-import { CreateSuscriptionUseCase } from "../core/use-case/admin/suscriptions";
+} from "../application/admin/plans";
+import { CreateSuscriptionUseCase } from "../application/admin/suscriptions";
 import {
     SignInUseCase,
     SignUpMemberUseCase,
@@ -35,7 +35,7 @@ import {
     ValidateTokenUseCase,
     CheckPasswordUseCase,
     UpdateCurrentPasswordUseCase,
-} from "../core/use-case/auth";
+} from "../application/auth";
 import {
     SequelizeAdminRepository,
     SequelizePlanRepository,

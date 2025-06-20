@@ -1,5 +1,5 @@
-import { Admin } from "../../core/domain/entities";
-import { AdminRepository } from "../../core/domain/interfaces";
+import { Admin } from "../../domain/entities";
+import { AdminRepository } from "../../domain/interfaces";
 import { AdminModel } from "../models";
 
 export class SequelizeAdminRepository implements AdminRepository {

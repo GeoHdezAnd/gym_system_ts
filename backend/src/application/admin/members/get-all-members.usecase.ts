@@ -1,4 +1,7 @@
-import { MemberRepository, MemberWithUser } from "../../../domain/interfaces";
+import {
+    MemberRepository,
+    MemberWithUser,
+} from "../../../domain/interfaces";
 
 export class GetAllMembersUseCase {
     constructor(private memberRepository: MemberRepository) {}

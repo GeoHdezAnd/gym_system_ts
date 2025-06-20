@@ -1,9 +1,8 @@
-import colors from 'colors'
-import server from './server'
+import { ApiServer } from "./api/server";
 
+export async function main(): Promise<void> {
+    const port = Number(process.env.PORT) || 4000;
+    await ApiServer.run(port);
+}
 
-const port = process.env.PORT || 4000
-
-server.listen(port, () => {
-    console.log( colors.cyan.bold( `REST API en el puerto ${port} con el entorno de ${process.env.NODE_ENV}`))
-})
+main();

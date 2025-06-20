@@ -4,7 +4,7 @@ import {
     UpdatePlanUseCase,
     DeletePlanUseCase,
     GetAllPlansUseCase,
-} from "../../core/use-case/admin/plans";
+} from "../../application/admin/plans";
 
 export class PlanController {
     constructor(

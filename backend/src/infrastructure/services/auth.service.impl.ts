@@ -1,4 +1,4 @@
-import { AuthService } from "../../core/services";
+import { AuthService } from "../../domain/services";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 

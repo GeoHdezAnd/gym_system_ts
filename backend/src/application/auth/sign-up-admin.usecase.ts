@@ -1,8 +1,8 @@
 import { Admin, User } from "../../domain/entities";
 import { RoleRepository, UserRepository } from "../../domain/interfaces";
 import { AdminRepository } from "../../domain/interfaces";
-import { ConflictError } from "../../errors";
-import { AuthService, EmailService } from "../../services";
+import { ConflictError } from "../../domain/errors";
+import { AuthService, EmailService } from "../../domain/services";
 
 type InputAdmin =  {
     name: string;

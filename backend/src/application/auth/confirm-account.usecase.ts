@@ -1,5 +1,5 @@
 import { UserRepository } from "../../domain/interfaces";
-import { NotFoundError } from "../../errors";
+import { NotFoundError } from "../../domain/errors";
 
 export class ConfirmAccountUseCase {
     constructor(private userRepository: UserRepository) {}
@@ -8,7 +8,7 @@ export class ConfirmAccountUseCase {
         // 1. Verificamos que el usuario exista
         const existingUser = await this.userRepository.findByToken(input.token);
         if (!existingUser) {
-            throw new NotFoundError('Usuario no encontrado');
+            throw new NotFoundError("Usuario no encontrado");
         }
 
         existingUser.confirmAccount();

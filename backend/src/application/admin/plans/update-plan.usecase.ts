@@ -1,6 +1,6 @@
 import { PlanProps } from "../../../domain/entities";
 import { PlanRepository } from "../../../domain/interfaces";
-import { NotFoundError } from "../../../errors";
+import { NotFoundError } from "../../../domain/errors";
 
 export class UpdatePlanUseCase {
     constructor(private planRepository: PlanRepository) {}

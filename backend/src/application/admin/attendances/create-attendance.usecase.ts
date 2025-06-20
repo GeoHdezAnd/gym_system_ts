@@ -4,7 +4,7 @@ import {
     MemberRepository,
     SubscriptionRepository,
 } from "../../../domain/interfaces";
-import { ForbiddenError, NotFoundError } from "../../../errors";
+import { ForbiddenError, NotFoundError } from "../../../domain/errors";
 
 export class CreateAttendanceUseCase {
     constructor(

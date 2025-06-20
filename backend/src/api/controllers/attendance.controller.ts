@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import {
     CreateAttendanceUseCase,
     GetAllAttendancesWithMember,
-} from "../../core/use-case/admin/attendances";
+} from "../../application/admin/attendances";
 
 export class AttendanceController {
     constructor(

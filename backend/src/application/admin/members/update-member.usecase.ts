@@ -3,7 +3,7 @@ import {
     MemberWithUser,
     UserRepository,
 } from "../../../domain/interfaces";
-import { NotFoundError } from "../../../errors";
+import { NotFoundError } from "../../../domain/errors";
 import { TCreateUser } from "./create-member.usecase";
 
 export class UpdateMemberUseCase {

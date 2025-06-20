@@ -1,6 +1,6 @@
 import { Plan, PlanProps } from "../../../domain/entities";
 import { PlanRepository } from "../../../domain/interfaces";
-import { ConflictError } from "../../../errors";
+import { ConflictError } from "../../../domain/errors";
 
 export class CreatePlanUseCase {
     constructor(private planRepository: PlanRepository) {}

@@ -1,8 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
 import { SequelizeMemberRepository } from "../../infrastructure/repositories";
-import { NotFoundError } from "../../core/errors";
-import { MemberWithUser } from "../../core/domain/interfaces";
+import { NotFoundError } from "../../domain/errors";
+import { MemberWithUser } from "../../domain/interfaces";
 
 declare global {
     namespace Express {

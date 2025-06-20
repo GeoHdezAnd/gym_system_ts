@@ -1,6 +1,4 @@
-import { UnauthorizedError } from "../../errors";
-import { TCreateUser } from "../../use-case/admin/members";
-import { Member } from "./member.entity";
+import { TCreateUser } from "../../application/admin/members";
 
 export interface UserProps {
     id?: string;

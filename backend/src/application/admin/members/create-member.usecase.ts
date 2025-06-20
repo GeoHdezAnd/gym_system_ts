@@ -4,8 +4,8 @@ import {
     RoleRepository,
     UserRepository,
 } from "../../../domain/interfaces";
-import { ConflictError, NotFoundError } from "../../../errors";
-import { AuthService, EmailService } from "../../../services";
+import { ConflictError, NotFoundError } from "../../../domain/errors";
+import { AuthService, EmailService } from "../../../domain/services";
 
 export type TCreateUser = {
     name: string;

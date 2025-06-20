@@ -1,7 +1,7 @@
 import { exitCode } from "process";
 import { UserRepository } from "../../domain/interfaces";
-import { NotFoundError, UnauthorizedError } from "../../errors";
-import { AuthService, EmailService } from "../../services";
+import { NotFoundError, UnauthorizedError } from "../../domain/errors";
+import { AuthService, EmailService } from "../../domain/services";
 
 export class ForgotPasswordUseCase {
     constructor(

@@ -1,8 +1,8 @@
-import { Attendance } from "../../core/domain/entities";
+import { Attendance } from "../../domain/entities";
 import {
     AttendanceRepository,
     AttendancesWithMember,
-} from "../../core/domain/interfaces";
+} from "../../domain/interfaces";
 import { AttendanceModel, MemberModel } from "../models";
 import { Op } from "@sequelize/core";
 

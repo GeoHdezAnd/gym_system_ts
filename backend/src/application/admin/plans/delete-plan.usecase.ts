@@ -1,5 +1,5 @@
 import { PlanRepository } from "../../../domain/interfaces";
-import { NotFoundError } from "../../../errors";
+import { NotFoundError } from "../../../domain/errors";
 
 export class DeletePlanUseCase {
     constructor(private planRepository: PlanRepository) {}
