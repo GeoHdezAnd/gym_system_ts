@@ -1,4 +1,3 @@
-import { PostgresDialect } from "@sequelize/postgres";
 import { Member, User } from "../../domain/entities";
 import {
     MemberRepository,
@@ -7,16 +6,15 @@ import {
 } from "../../domain/interfaces";
 import { ConflictError, NotFoundError } from "../../domain/errors";
 import { AuthService, EmailService } from "../../domain/services";
-import { Sequelize } from "@sequelize/core";
 import { db } from "../../infrastructure/config/db";
 type InputMember = {
     name: string;
-    lastName: string;
+    last_name: string;
     email: string;
     password: string;
     phone: string;
     gender: string;
-    bornDate: Date;
+    born_date: Date;
 };
 export class SignUpMemberUseCase {
     constructor(
@@ -54,12 +52,12 @@ export class SignUpMemberUseCase {
             await db.transaction(async () => {
                 const user = new User({
                     name: input.name,
-                    lastName: input.lastName,
+                    last_name: input.last_name,
                     email: input.email,
                     phone: input.phone,
                     password: hashPassword,
                     token,
-                    roleId: memberRole.id,
+                    role_id: memberRole.id,
                 });
 
                 const createdUser = await this.userRepository.create(user);
@@ -70,16 +68,16 @@ export class SignUpMemberUseCase {
                 // Crear perfil de member
                 const member = new Member({
                     gender: input.gender,
-                    bornDate: input.bornDate,
+                    born_date: input.born_date,
                     matricula: createdUser.createMatricula(),
-                    userId: createdUser.id!, // Especificamos con "!" que la variable siempre existira
+                    user_id: createdUser.id!, // Especificamos con "!" que la variable siempre existira
                 });
 
                 await this.memberRepository.create(member);
 
                 // 5. Enviar email de confirmación
                 await this.emailService.sendConfirmationEmail({
-                    name: `${user.name} ${user.lastName}`,
+                    name: `${user.name} ${user.last_name}`,
                     email: user.email,
                     token: user.token!,
                 });

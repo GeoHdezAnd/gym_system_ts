@@ -1,9 +1,9 @@
 export interface SubscriptionProps {
     id?: string;
-    memberId: string;
-    planId: string;
-    startDate: Date;
-    endDate: Date;
+    member_id: string;
+    plan_id: string;
+    start_date: Date;
+    end_date: Date;
     status?: string;
 }
 
@@ -14,20 +14,20 @@ export class Subscription {
         return this.props.id;
     }
 
-    get memberId(): string {
-        return this.props.memberId;
+    get member_id(): string {
+        return this.props.member_id;
     }
 
-    get planId(): string {
-        return this.props.planId;
+    get plan_id(): string {
+        return this.props.plan_id;
     }
 
-    get startDate(): Date {
-        return this.props.startDate;
+    get start_date(): Date {
+        return this.props.start_date;
     }
 
-    get endDate(): Date {
-        return this.props.endDate;
+    get end_date(): Date {
+        return this.props.end_date;
     }
 
     get status(): string | undefined {
@@ -38,7 +38,7 @@ export class Subscription {
         const today = new Date();
         today.setHours(0, 0, 0, 0); // Normalizamos la fecha para comparación
 
-        const endDate = new Date(this.props.endDate);
+        const endDate = new Date(this.props.end_date);
         endDate.setHours(0, 0, 0, 0);
 
         if (today > endDate && this.props.status !== "expired") {

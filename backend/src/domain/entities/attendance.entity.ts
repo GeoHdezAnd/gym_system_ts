@@ -1,6 +1,6 @@
 export interface AttendanceProps {
     id?: string;
-    memberId: string;
+    member_id: string;
     entry?: Date;
     exit?: Date;
 }
@@ -12,8 +12,8 @@ export class Attendance {
         return this.props.id;
     }
 
-    get memberId(): string {
-        return this.props.memberId;
+    get member_id(): string {
+        return this.props.member_id;
     }
 
     get entry(): Date | undefined {

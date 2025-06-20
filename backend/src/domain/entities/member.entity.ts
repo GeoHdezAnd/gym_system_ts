@@ -1,9 +1,9 @@
 export interface MemberProps {
     id?: string;
     gender: string;
-    bornDate: Date;
+    born_date: Date;
     matricula: string;
-    userId: string;
+    user_id: string;
 }
 
 export class Member {
@@ -16,21 +16,21 @@ export class Member {
         return this.props.gender;
     }
 
-    get bornDate(): Date {
-        return this.props.bornDate;
+    get born_date(): Date {
+        return this.props.born_date;
     }
 
     get matricula(): string {
         return this.props.matricula;
     }
 
-    get userId(): string {
-        return this.props.userId;
+    get user_id(): string {
+        return this.props.user_id;
     }
 
-    updateProfile(gender: string, bornDate: Date, matricula: string): void {
+    updateProfile(gender: string, born_date: Date, matricula: string): void {
         if (gender) this.props.gender = gender;
-        if (bornDate) this.props.bornDate = bornDate;
+        if (born_date) this.props.born_date = born_date;
         if (matricula) this.props.matricula = matricula;
     }
 }

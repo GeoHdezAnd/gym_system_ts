@@ -1,6 +1,5 @@
 import {
     MemberRepository,
-    MemberWithUser,
     UserRepository,
 } from "../../../domain/interfaces";
 import { NotFoundError } from "../../../domain/errors";
@@ -25,9 +24,9 @@ export class UpdateMemberUseCase {
 
         if (
             newData.name ||
-            newData.lastName ||
+            newData.last_name ||
             newData.gender ||
-            newData.bornDate
+            newData.born_date
         ) {
             const memberProfile = await this.memberRepository.getProfile(
                 memberId
@@ -40,7 +39,7 @@ export class UpdateMemberUseCase {
 
             memberProfile.updateProfile(
                 newData.gender,
-                newData.bornDate,
+                newData.born_date,
                 newMatricula
             );
 

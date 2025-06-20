@@ -32,11 +32,11 @@ export class AuthController {
 
             await this._signUpAdminUseCase.execute({
                 name,
-                lastName: last_name,
+                last_name,
                 email,
                 phone,
                 password,
-                accessLevel: access_level || "limited",
+                access_level: access_level || "limited",
             });
 
             res.status(201).json("Cuenta creada correctamente :)");
@@ -58,12 +58,12 @@ export class AuthController {
             } = req.body;
             await this._signUpMemberUseCase.execute({
                 name,
-                lastName: last_name,
+                last_name: last_name,
                 email,
                 phone,
                 password,
                 gender,
-                bornDate: born_date,
+                born_date: born_date,
             });
             res.status(201).json("Cuenta creada correctamente :)");
         } catch (error) {

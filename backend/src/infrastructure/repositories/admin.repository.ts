@@ -5,20 +5,20 @@ import { AdminModel } from "../models";
 export class SequelizeAdminRepository implements AdminRepository {
     async create(admin: Admin): Promise<Admin> {
         const adminModel = await AdminModel.create({
-            userId: admin.userId,
-            accessLevel: admin.accessLevel
+            user_id: admin.user_id,
+            access_level: admin.access_level,
         });
 
         return new Admin({
             id: adminModel.id,
-            userId: adminModel.userId,
-            accessLevel: adminModel.accessLevel
+            user_id: adminModel.user_id,
+            access_level: adminModel.access_level,
         });
     }
 
-    async findByUserId(userId: string): Promise<Admin | null> {
+    async findByUserId(user_id: string): Promise<Admin | null> {
         const adminModel = await AdminModel.findOne({
-            where: { userId }
+            where: { user_id },
         });
 
         if (!adminModel) {
@@ -27,8 +27,8 @@ export class SequelizeAdminRepository implements AdminRepository {
 
         return new Admin({
             id: adminModel.id,
-            userId: adminModel.userId,
-            accessLevel: adminModel.accessLevel
+            user_id: adminModel.user_id,
+            access_level: adminModel.access_level,
         });
     }
 }

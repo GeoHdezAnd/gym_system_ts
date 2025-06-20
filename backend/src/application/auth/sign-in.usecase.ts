@@ -22,7 +22,7 @@ export class SignInUseCase {
             throw new ForbiddenError("El usuario no está confirmado");
         }
 
-        if (user.loginAttempts && user.loginAttempts >= 5) {
+        if (user.login_attempts && user.login_attempts >= 5) {
             throw new UnauthorizedError(
                 "Excediste los intentos de inicio de sesión, solicita cambio de contraseña"
             );

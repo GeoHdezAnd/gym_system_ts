@@ -3,15 +3,15 @@ import { TCreateUser } from "../../application/admin/members";
 export interface UserProps {
     id?: string;
     name: string;
-    lastName: string;
+    last_name: string;
     email: string;
     phone: string;
     password?: string;
     confirmed?: boolean;
     token?: string | null;
-    loginAttempts?: number;
+    login_attempts?: number;
     deleted?: boolean;
-    roleId: number;
+    role_id: number;
 }
 
 export class User {
@@ -23,8 +23,8 @@ export class User {
     get name(): string {
         return this.props.name;
     }
-    get lastName(): string {
-        return this.props.lastName;
+    get last_name(): string {
+        return this.props.last_name;
     }
     get email(): string {
         return this.props.email;
@@ -45,11 +45,11 @@ export class User {
         return this.props.deleted;
     }
 
-    get loginAttempts(): number | undefined {
-        return this.props.loginAttempts;
+    get login_attempts(): number | undefined {
+        return this.props.login_attempts;
     }
-    get roleId(): number {
-        return this.props.roleId;
+    get role_id(): number {
+        return this.props.role_id;
     }
 
     updateToken(token: string): void {
@@ -63,7 +63,7 @@ export class User {
 
     createMatricula(): string {
         const nameInitials = this.name.slice(0, 2).toUpperCase();
-        const lastNameInitials = this.lastName.slice(0, 2).toUpperCase();
+        const lastNameInitials = this.last_name.slice(0, 2).toUpperCase();
         const telInitials = this.phone.slice(-4);
 
         return `${nameInitials}${lastNameInitials}-${telInitials}`;
@@ -83,21 +83,21 @@ export class User {
     }
 
     incrementLoginAttempts(): void {
-        this.props.loginAttempts = (this.props.loginAttempts || 0) + 1;
+        this.props.login_attempts = (this.props.login_attempts || 0) + 1;
     }
 
     resetLoginAttempts(): void {
-        this.props.loginAttempts = 0;
+        this.props.login_attempts = 0;
     }
 
     updateByAdmin({
         name,
-        lastName,
+        last_name,
         email,
         phone,
     }: Partial<TCreateUser>): void {
         if (name) this.props.name = name;
-        if (lastName) this.props.lastName = lastName;
+        if (last_name) this.props.last_name = last_name;
         if (email) this.props.email = email;
         if (phone) this.props.phone = phone;
     }

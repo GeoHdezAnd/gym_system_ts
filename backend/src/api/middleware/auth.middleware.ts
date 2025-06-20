@@ -40,7 +40,7 @@ export const authenticate = async (
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         if (typeof decoded === "object" && "id" in decoded) {
             const user = await UserModel.findByPk(decoded.id, {
-                attributes: ["id", "name", "lastName", "email", "phone"],
+                attributes: ["id", "name", "last_name", "email", "phone"],
                 include: [
                     {
                         association: UserModel.associations.role,

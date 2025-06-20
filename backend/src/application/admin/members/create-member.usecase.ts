@@ -9,11 +9,11 @@ import { AuthService, EmailService } from "../../../domain/services";
 
 export type TCreateUser = {
     name: string;
-    lastName: string;
+    last_name: string;
     email: string;
     phone: string;
     gender: string;
-    bornDate: Date;
+    born_date: Date;
 };
 
 export class CreateMemberUseCase {
@@ -41,19 +41,19 @@ export class CreateMemberUseCase {
 
         // 3. Crear usuario
         const hashPassword = await this.authService.hashPassword(
-            input.lastName
+            input.last_name
         );
 
         const token = this.authService.generateToken();
 
         const user = new User({
             name: input.name,
-            lastName: input.lastName,
+            last_name: input.last_name,
             email: input.email,
             phone: input.phone,
             password: hashPassword,
             token,
-            roleId: memberRole.id,
+            role_id: memberRole.id,
         });
 
         const createdUser = await this.userRepository.create(user);
@@ -64,9 +64,9 @@ export class CreateMemberUseCase {
         // Crear perfil de member
         const member = new Member({
             gender: input.gender,
-            bornDate: input.bornDate,
+            born_date: input.born_date,
             matricula: createdUser.createMatricula(),
-            userId: createdUser.id!, // Especificamos con "!" que la variable siempre existira
+            user_id: createdUser.id!, // Especificamos con "!" que la variable siempre existira
         });
 
         // Cambiamos password a la matricula del usuario para que sea seguro su primer ingreso
@@ -79,7 +79,7 @@ export class CreateMemberUseCase {
 
         // 5. Envio de email de confirmación
         await this.emailService.sendCreatedUserGym({
-            name: `${user.name} ${user.lastName}`,
+            name: `${user.name} ${user.last_name}`,
             email: user.email,
             token: user.token!,
         });

@@ -13,22 +13,22 @@ export class CreateSuscriptionUseCase {
         private subscriptionRepository: SubscriptionRepository
     ) {}
 
-    async execute(memberId: string, planId: string): Promise<void> {
+    async execute(member_id: string, plan_id: string): Promise<void> {
         // 1. Buscamos el miembro en la base de datos
-        const member = await this.memberRepository.findByUserId(memberId);
+        const member = await this.memberRepository.findByUserId(member_id);
         if (!member) {
             throw new NotFoundError("No existe el miembro");
         }
 
-        const plan = await this.planRepository.findById(planId);
+        const plan = await this.planRepository.findById(plan_id);
         if (!plan) {
             throw new NotFoundError("No existe el plan");
         }
 
         const suscripcionActive =
             await this.subscriptionRepository.findActiveSubscription(
-                (memberId = member.profile.id!),
-                planId
+                (member_id = member.profile.id!),
+                plan_id
             );
 
         if (suscripcionActive) {
@@ -38,10 +38,10 @@ export class CreateSuscriptionUseCase {
         }
 
         const suscription = new Subscription({
-            memberId: member.profile.id!, // en el perfil está el id de la tabla de su perfil miembro, es donde tendra todas sus suscripciones el usuario ya que solo los miembtos pueden tener suscripcion
-            planId,
-            startDate: new Date(),
-            endDate: this.calculateEndSuscription(plan.durationDays),
+            member_id: member.profile.id!, // en el perfil está el id de la tabla de su perfil miembro, es donde tendra todas sus suscripciones el usuario ya que solo los miembtos pueden tener suscripcion
+            plan_id,
+            start_date: new Date(),
+            end_date: this.calculateEndSuscription(plan.duration_days),
         });
 
         await this.subscriptionRepository.create(suscription);

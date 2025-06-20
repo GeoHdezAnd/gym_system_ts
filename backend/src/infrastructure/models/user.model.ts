@@ -15,7 +15,6 @@ import {
     NotNull,
     PrimaryKey,
     BelongsTo,
-    ColumnName,
 } from "@sequelize/core/decorators-legacy";
 import { RoleModel } from "./role.model";
 import { AdminModel } from "./admin.model";
@@ -40,9 +39,8 @@ export class UserModel extends Model<
     declare name: string;
 
     @NotNull
-    @ColumnName("last_name")
     @Attribute(DataTypes.STRING(60))
-    declare lastName: string;
+    declare last_name: string;
 
     @Unique
     @NotNull
@@ -70,17 +68,15 @@ export class UserModel extends Model<
     declare token: string | null;
 
     @Attribute(DataTypes.INTEGER)
-    @ColumnName("login_attempts")
     @Default(0)
-    declare loginAttempts: CreationOptional<number>;
+    declare login_attempts: CreationOptional<number>;
 
     @Attribute(DataTypes.BOOLEAN)
     @Default(false)
     declare deleted: CreationOptional<boolean>;
 
-    @ColumnName("role_id")
     @Attribute(DataTypes.INTEGER)
-    declare roleId: number; // Foreign key column
+    declare role_id: number; // Foreign key column
 
     // Relationships
     @BelongsTo(() => RoleModel, "role_id")
@@ -88,10 +84,10 @@ export class UserModel extends Model<
 
     // 1 ... 1 Foreign key
     @HasOne(() => MemberModel, {
-        foreignKey: "userId",
-        inverse: { as: "memberProfile" }, // nombre explícito de la asociación
+        foreignKey: "user_id",
+        inverse: { as: "member_profile" }, // nombre explícito de la asociación
     })
-    declare memberProfile?: NonAttribute<MemberModel>;
+    declare member_profile?: NonAttribute<MemberModel>;
 
     // 1 ... 1 Foreign key
     @HasOne(() => AdminModel, "user_id")

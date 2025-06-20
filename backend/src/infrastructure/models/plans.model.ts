@@ -11,7 +11,6 @@ import {
     ColumnName,
     Default,
     HasMany,
-    HasOne,
     NotNull,
     PrimaryKey,
     Table,
@@ -42,7 +41,6 @@ export class PlansModel extends Model<
     declare description: string;
 
     @NotNull
-    @ColumnName("benefits")
     @Attribute(DataTypes.ARRAY(DataTypes.STRING(30)))
     declare benefits: string[];
 
@@ -51,14 +49,12 @@ export class PlansModel extends Model<
     declare price: number;
 
     @NotNull
-    @ColumnName("duration_days")
     @Attribute(DataTypes.INTEGER)
-    declare durationDays: number;
+    declare duration_days: number;
 
-    @ColumnName("is_active")
     @Attribute(DataTypes.BOOLEAN)
     @Default(true)
-    declare isActive: CreationOptional<boolean>;
+    declare is_active: CreationOptional<boolean>;
 
     @Attribute(DataTypes.BOOLEAN)
     @Default(false)
@@ -72,7 +68,7 @@ export class PlansModel extends Model<
 
     // Foreign Key Suscriptions
     @HasMany(() => SubscriptionModel, {
-        foreignKey: "planId",
+        foreignKey: "plan_id",
         sourceKey: "id",
     })
     declare suscriptions?: NonAttribute<SubscriptionModel[]>;

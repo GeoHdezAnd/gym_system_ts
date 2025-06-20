@@ -11,7 +11,7 @@ export class SequelizeAttendanceRepository implements AttendanceRepository {
         const members = await MemberModel.findAll({
             include: [
                 {
-                    association: "userAccount",
+                    association: "user_account",
                     required: true,
                     where: {
                         deleted: false,
@@ -23,7 +23,7 @@ export class SequelizeAttendanceRepository implements AttendanceRepository {
                             attributes: [],
                         },
                     ],
-                    attributes: ["name", "lastName"],
+                    attributes: ["name", "last_name"],
                 },
                 {
                     association: "attendances",
@@ -40,7 +40,7 @@ export class SequelizeAttendanceRepository implements AttendanceRepository {
 
             // Mapeamos cada asistencia a un objeto de resultado
             return member.attendances.map((attendance) => ({
-                name: `${member.userAccount?.name} ${member.userAccount?.lastName}`,
+                name: `${member.user_account?.name} ${member.user_account?.last_name}`,
                 matricula: member.matricula,
                 entry: attendance.entry,
                 exit: attendance.exit,
@@ -49,15 +49,15 @@ export class SequelizeAttendanceRepository implements AttendanceRepository {
     }
     async create(attendance: Attendance): Promise<Attendance> {
         const attendanceCreated = await AttendanceModel.create({
-            memberId: attendance.memberId,
+            member_id: attendance.member_id,
         });
 
         return new Attendance(attendanceCreated);
     }
 
-    async findWithMemberId(memberId: string): Promise<Attendance | null> {
+    async findWithMemberId(member_id: string): Promise<Attendance | null> {
         const attendance = await AttendanceModel.findOne({
-            where: { memberId },
+            where: { member_id },
         });
         if (!attendance) {
             return null;
@@ -75,7 +75,7 @@ export class SequelizeAttendanceRepository implements AttendanceRepository {
         return new Attendance(attendanceExists!);
     }
     async findTodayAttendance(
-        memberId: string,
+        member_id: string,
         date: Date
     ): Promise<Attendance | null> {
         const startOfDay = new Date(date);
@@ -85,7 +85,7 @@ export class SequelizeAttendanceRepository implements AttendanceRepository {
         endOfDay.setHours(23, 59, 59, 999);
         const attendance = await AttendanceModel.findOne({
             where: {
-                memberId,
+                member_id,
                 entry: {
                     [Op.between]: [startOfDay, endOfDay],
                 },

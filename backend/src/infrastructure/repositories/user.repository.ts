@@ -7,27 +7,27 @@ export class SequelizeUserRepository implements UserRepository {
     async create(user: User): Promise<User> {
         const userModel = await UserModel.create({
             name: user.name,
-            lastName: user.lastName,
+            last_name: user.last_name,
             email: user.email,
             phone: user.phone,
             password: user.password,
             token: user.token,
             confirmed: user.confirmed,
-            roleId: user.roleId,
+            role_id: user.role_id,
         });
 
         const userData = userModel.get();
         return new User({
             id: userData.id,
             name: userData.name,
-            lastName: userData.lastName,
+            last_name: userData.last_name,
             email: userData.email,
             phone: userData.phone,
             password: userData.password,
             confirmed: userData.confirmed,
             token: userData.token,
-            loginAttempts: userData.loginAttempts,
-            roleId: userData.roleId,
+            login_attempts: userData.login_attempts,
+            role_id: userData.role_id,
         });
     }
 
@@ -73,13 +73,13 @@ export class SequelizeUserRepository implements UserRepository {
         // Actualizar solo los campos necesarios
         await userModel.update({
             name: user.name,
-            lastName: user.lastName,
+            last_name: user.last_name,
             phone: user.phone,
             password: user.password,
             confirmed: user.confirmed,
             deleted: user.deleted,
             token: user.token,
-            loginAttempts: user.loginAttempts,
+            login_attempts: user.login_attempts,
         });
     }
 }

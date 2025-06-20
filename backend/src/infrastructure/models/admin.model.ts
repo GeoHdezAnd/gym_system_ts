@@ -4,14 +4,10 @@ import {
     InferAttributes,
     InferCreationAttributes,
     Model,
-    NonAttribute,
 } from "@sequelize/core";
 import {
     Attribute,
-    BelongsTo,
-    ColumnName,
     Default,
-    HasMany,
     NotNull,
     PrimaryKey,
     Table,
@@ -31,14 +27,12 @@ export class AdminModel extends Model<
     @PrimaryKey
     declare id: CreationOptional<string>;
 
-    @ColumnName("access_level")
     @Attribute(DataTypes.ENUM("full", "limited"))
-    declare accessLevel: string;
+    declare access_level: string;
 
-    @ColumnName("user_id")
     @Attribute(DataTypes.UUID)
     @NotNull
     @Unique
-    declare userId: string;
+    declare user_id: string;
 
 }

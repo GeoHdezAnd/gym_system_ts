@@ -9,7 +9,6 @@ import {
 import {
     Attribute,
     BelongsTo,
-    ColumnName,
     Default,
     HasMany,
     NotNull,
@@ -36,24 +35,22 @@ export class MemberModel extends Model<
 
     // Foreign Key users_model
     @BelongsTo(() => UserModel, {
-        foreignKey: "userId",
+        foreignKey: "user_id",
     })
-    declare userAccount?: NonAttribute<UserModel>;
+    declare user_account?: NonAttribute<UserModel>;
 
-    @ColumnName("user_id")
     @Attribute(DataTypes.STRING)
     @NotNull
     @Unique
-    declare userId: string;
+    declare user_id: string;
 
     @Attribute(DataTypes.ENUM("M", "F"))
     @NotNull
     declare gender: string;
 
-    @ColumnName("born_date")
     @Attribute(DataTypes.DATEONLY)
     @NotNull
-    declare bornDate: Date;
+    declare born_date: Date;
 
     @Attribute(DataTypes.STRING)
     @NotNull
@@ -61,9 +58,9 @@ export class MemberModel extends Model<
     declare matricula: string;
 
     // Relations
-    @HasMany(() => SubscriptionModel, /* Foreign Key*/ "memberId")
+    @HasMany(() => SubscriptionModel, /* Foreign Key*/ "member_id")
     declare suscriptions?: NonAttribute<SubscriptionModel[]>;
 
-    @HasMany(() => AttendanceModel, "memberId")
+    @HasMany(() => AttendanceModel, "member_id")
     declare attendances?: NonAttribute<AttendanceModel[]>;
 }

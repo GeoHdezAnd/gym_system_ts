@@ -36,11 +36,11 @@ export class MemberController {
                 req.body;
             const member = await this.createMemberUseCase.execute({
                 name,
-                lastName: last_name,
+                last_name,
                 email,
                 phone,
                 gender,
-                bornDate: born_date,
+                born_date,
             });
             res.status(201).json({
                 message: "Miembro creado correctamente",
@@ -58,11 +58,11 @@ export class MemberController {
             await this.updateMemberUseCase.execute(
                 {
                     name,
-                    lastName: last_name,
+                    last_name,
                     email,
                     phone,
                     gender,
-                    bornDate: born_date,
+                    born_date,
                 },
                 req.member!.id
             );

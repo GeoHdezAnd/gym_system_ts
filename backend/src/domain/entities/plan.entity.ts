@@ -4,8 +4,8 @@ export interface PlanProps {
     description: string;
     benefits: string[];
     price: number;
-    durationDays: number;
-    isActive?: boolean;
+    duration_days: number;
+    is_active?: boolean;
     deleted?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
@@ -33,11 +33,11 @@ export class Plan {
         return this.props.price;
     }
 
-    get durationDays(): number {
-        return this.props.durationDays;
+    get duration_days(): number {
+        return this.props.duration_days;
     }
-    get isActive(): boolean | undefined {
-        return this.props.isActive;
+    get is_active(): boolean | undefined {
+        return this.props.is_active;
     }
 
     get deleted(): boolean | undefined {
@@ -56,22 +56,22 @@ export class Plan {
         description,
         benefits,
         price,
-        durationDays,
+        duration_days,
     }: Partial<PlanProps>): void {
         if (name) this.props.name = name;
         if (description) this.props.description = description;
         if (benefits) this.props.benefits = benefits;
         if (price) this.props.price = price;
-        if (durationDays) this.props.durationDays = durationDays;
+        if (duration_days) this.props.duration_days = duration_days;
     }
 
     softDelete(): void {
-        this.props.isActive = false;
+        this.props.is_active = false;
         this.props.deleted = true;
     }
 
     restore(): void {
-        this.props.isActive = true;
+        this.props.is_active = true;
         this.props.deleted = false;
     }
 }

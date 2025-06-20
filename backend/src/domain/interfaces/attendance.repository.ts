@@ -10,10 +10,10 @@ export type AttendancesWithMember = {
 export interface AttendanceRepository {
     getAllAttendancesWithMember(): Promise<AttendancesWithMember[]>
     create(attendance: Attendance): Promise<Attendance | null>;
-    findWithMemberId(memberId: string): Promise<Attendance | null>;
+    findWithMemberId(member_id: string): Promise<Attendance | null>;
     updateAttendance(attendance: Attendance): Promise<Attendance>;
     findTodayAttendance(
-        memberId: string,
+        member_id: string,
         date: Date
     ): Promise<Attendance | null>;
 }

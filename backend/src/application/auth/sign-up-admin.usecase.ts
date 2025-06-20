@@ -4,14 +4,14 @@ import { AdminRepository } from "../../domain/interfaces";
 import { ConflictError } from "../../domain/errors";
 import { AuthService, EmailService } from "../../domain/services";
 
-type InputAdmin =  {
+type InputAdmin = {
     name: string;
-    lastName: string;
+    last_name: string;
     email: string;
     password: string;
     phone: string;
-    accessLevel: string;
-}
+    access_level: string;
+};
 
 export class SignUpAdminUseCase {
     constructor(
@@ -26,7 +26,7 @@ export class SignUpAdminUseCase {
         // 1. Verfificamos si el usuario existe
         const existingUser =
             (await this.userRepository.findByEmail(input.email)) ||
-            await this.userRepository.findByPhone(input.phone);
+            (await this.userRepository.findByPhone(input.phone));
         if (existingUser) {
             throw new ConflictError("El usuario ya existe");
         }
@@ -45,12 +45,12 @@ export class SignUpAdminUseCase {
 
         const user = new User({
             name: input.name,
-            lastName: input.lastName,
+            last_name: input.last_name,
             email: input.email,
             phone: input.phone,
             password: hashPassword,
             token,
-            roleId: adminRole.id,
+            role_id: adminRole.id,
         });
 
         const createdUser = await this.userRepository.create(user);
@@ -61,17 +61,17 @@ export class SignUpAdminUseCase {
 
         // Crear perfil de admin
         const admin = new Admin({
-            userId: createdUser.id!,
-            accessLevel: input.accessLevel,
+            user_id: createdUser.id!,
+            access_level: input.access_level,
         });
 
         await this.adminRepository.create(admin);
 
         // 5. Enviar email de confirmación
         await this.emailService.sendConfirmationEmail({
-            name: `${user.name} ${user.lastName}`,
+            name: `${user.name} ${user.last_name}`,
             email: user.email,
-            token: user.token!
-        })
+            token: user.token!,
+        });
     }
 }

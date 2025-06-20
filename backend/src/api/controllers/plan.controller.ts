@@ -32,7 +32,7 @@ export class PlanController {
                 description,
                 benefits,
                 price,
-                durationDays: duration_days,
+                duration_days,
             });
             res.json({
                 success: true,
@@ -51,8 +51,8 @@ export class PlanController {
                 description: req.plan?.description,
                 benefits: req.plan?.benefits,
                 price: req.plan?.price,
-                durationDays: req.plan?.durationDays,
-                isActive: req.plan?.isActive,
+                duration_days: req.plan?.duration_days,
+                is_active: req.plan?.is_active,
             });
         } catch (error) {
             next(error);
@@ -70,7 +70,7 @@ export class PlanController {
                     description,
                     benefits,
                     price,
-                    durationDays: duration_days,
+                    duration_days: duration_days,
                 },
                 req.plan!.id!
             );

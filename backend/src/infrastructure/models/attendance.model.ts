@@ -33,14 +33,13 @@ export class AttendanceModel extends Model<
     declare id: CreationOptional<string>;
 
     @BelongsTo(() => MemberModel, {
-        foreignKey: "memberId",
+        foreignKey: "member_id",
     })
     declare member?: NonAttribute<MemberModel>;
 
-    @ColumnName("member_id")
     @Attribute(DataTypes.UUID)
     @NotNull
-    declare memberId: string;
+    declare member_id: string;
 
     @ColumnName("entry")
     @Attribute(DataTypes.DATE)

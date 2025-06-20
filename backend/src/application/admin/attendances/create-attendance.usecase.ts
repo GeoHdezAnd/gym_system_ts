@@ -43,20 +43,22 @@ export class CreateAttendanceUseCase {
         }
     }
 
-    private async handleAttendanceLogic(memberId: string): Promise<Attendance> {
+    private async handleAttendanceLogic(
+        member_id: string
+    ): Promise<Attendance> {
         const today = new Date();
         today.setHours(0, 0, 0, 0); // Normalizar fecha para comparación
 
         // Buscar asistencia del día actual
         const existingAttendance =
             await this.attendanceRepository.findTodayAttendance(
-                memberId,
+                member_id,
                 today
             );
 
         if (!existingAttendance) {
             // Crear nueva asistencia
-            const newAttendance = new Attendance({ memberId });
+            const newAttendance = new Attendance({ member_id });
             const createdAttendance = await this.attendanceRepository.create(
                 newAttendance
             );

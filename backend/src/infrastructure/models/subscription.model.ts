@@ -9,7 +9,6 @@ import {
 import {
     Attribute,
     BelongsTo,
-    ColumnName,
     Default,
     NotNull,
     PrimaryKey,
@@ -32,36 +31,30 @@ export class SubscriptionModel extends Model<
     declare id: CreationOptional<string>;
 
     // // Foreign Key member_id
-    @BelongsTo(() => MemberModel, "memberId")
+    @BelongsTo(() => MemberModel, "member_id")
     declare member?: NonAttribute<MemberModel>;
 
-    @ColumnName("member_id")
     @Attribute(DataTypes.UUID)
     @NotNull
-    declare memberId: string;
+    declare member_id: string;
 
     // Foreign Key plan_id
-    @BelongsTo(() => PlansModel, "planId") // Relación muchos a uno (suscripción → plan)
+    @BelongsTo(() => PlansModel, "plan_id") // Relación muchos a uno (suscripción → plan)
     declare plan?: NonAttribute<PlansModel>;
-    @ColumnName("plan_id")
     @Attribute(DataTypes.UUID)
     @NotNull
-    declare planId: string;
+    declare plan_id: string;
 
-    @ColumnName("start_date")
     @NotNull
     @Attribute(DataTypes.DATEONLY)
-    declare startDate: Date;
+    declare start_date: Date;
 
-    @ColumnName("end_date")
     @NotNull
     @Attribute(DataTypes.DATEONLY)
-    declare endDate: Date;
+    declare end_date: Date;
 
     @Attribute(DataTypes.ENUM("active", "expired", "renewed"))
     @Default("active")
     @NotNull
     declare status: CreationOptional<string>;
-
-    
 }

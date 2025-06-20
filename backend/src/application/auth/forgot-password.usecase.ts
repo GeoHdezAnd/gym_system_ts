@@ -28,7 +28,7 @@ export class ForgotPasswordUseCase {
         existingUser.updateToken(token);
         await this.userRepository.save(existingUser);
         await this.emailService.sendPasswordResetEmail({
-            name: `${existingUser.name} ${existingUser.lastName}`,
+            name: `${existingUser.name} ${existingUser.last_name}`,
             email: existingUser.email,
             token: existingUser.token!,
         });

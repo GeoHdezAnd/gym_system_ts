@@ -1,7 +1,7 @@
 export interface AdminProps {
     id?: string;
-    userId: string;
-    accessLevel: string;
+    user_id: string;
+    access_level: string;
 }
 
 export class Admin {
@@ -10,14 +10,14 @@ export class Admin {
     get id(): string | undefined {
         return this.props.id;
     }
-    get userId(): string {
-        return this.props.userId;
+    get user_id(): string {
+        return this.props.user_id;
     }
-    get accessLevel(): string {
-        return this.props.accessLevel;
+    get access_level(): string {
+        return this.props.access_level;
     }
 
     hasFullAccess(): boolean {
-        return this.props.accessLevel === "full";
+        return this.props.access_level === "full";
     }
 }

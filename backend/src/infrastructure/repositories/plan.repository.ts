@@ -14,7 +14,7 @@ export class SequelizePlanRepository implements PlanRepository {
             description: plan.description,
             benefits: plan.benefits,
             price: plan.price,
-            durationDays: plan.durationDays,
+            duration_days: plan.duration_days,
         });
         return new Plan(planNew);
     }
@@ -42,8 +42,8 @@ export class SequelizePlanRepository implements PlanRepository {
             description: plan.description,
             benefits: plan.benefits,
             price: plan.price,
-            durationDays: plan.durationDays,
-            isActive: plan.isActive,
+            duration_days: plan.duration_days,
+            is_active: plan.is_active,
             createdAt: plan.createdAt,
             updatedAt: plan.updatedAt,
         });
@@ -56,8 +56,8 @@ export class SequelizePlanRepository implements PlanRepository {
             description: plan.description,
             benefits: plan.benefits,
             price: plan.price,
-            durationDays: plan.durationDays,
-            isActive: plan.isActive,
+            duration_days: plan.duration_days,
+            is_active: plan.is_active,
             deleted: plan.deleted,
         });
     }
