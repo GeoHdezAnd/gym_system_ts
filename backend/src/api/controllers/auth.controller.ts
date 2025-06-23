@@ -11,6 +11,12 @@ import { SignInUseCase } from "../../application/auth/sign-in.usecase";
 import { UpdateCurrentPasswordUseCase } from "../../application/auth/update-current-password.usecase";
 import { CheckPasswordUseCase } from "../../application/auth/check-password.usecase";
 import { SignUpMemberUseCase } from "../../application/auth/sign-up-member.usecase";
+import { SignUpAdminDto } from "../../application/auth/dtos/request/sing-up-admin.dto";
+
+/**
+ * Controlador para operaciones de autenticación y gestión de usuarios.
+ * Incluye registro, login, confirmación de cuenta, recuperación y cambio de contraseña.
+ */
 export class AuthController {
     constructor(
         private readonly _signUpAdminUseCase: SignUpAdminUseCase,
@@ -25,12 +31,13 @@ export class AuthController {
         private readonly _checkPasswordUseCase: CheckPasswordUseCase
     ) {}
 
+    /** Registro de administradores / solo es posible con un administrador autenticado */
     async signUpAdmin(req: Request, res: Response, next: NextFunction) {
         try {
             const { name, last_name, email, password, phone, access_level } =
                 req.body;
 
-            await this._signUpAdminUseCase.execute({
+            const result = await this._signUpAdminUseCase.execute({
                 name,
                 last_name,
                 email,
@@ -39,7 +46,12 @@ export class AuthController {
                 access_level: access_level || "limited",
             });
 
-            res.status(201).json("Cuenta creada correctamente :)");
+            const response: SignUpAdminDto = new SignUpAdminDto(result);
+
+            res.status(201).json({
+                message: "Admin creado correctamente",
+                response,
+            });
         } catch (error) {
             next(error);
         }

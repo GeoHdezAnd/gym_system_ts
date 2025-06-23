@@ -1,11 +1,11 @@
 import { UserRepository } from "../../domain/interfaces";
 import { NotFoundError } from "../../domain/errors";
-import { AuthService } from "../../domain/services";
+import { IAuthService } from "../../domain/services";
 
 export class ResetPasswordWTokenUseCase {
     constructor(
         private userRepository: UserRepository,
-        private authService: AuthService
+        private authService: IAuthService
     ) {}
 
     async execute(input: { token: string; password: string }): Promise<void> {

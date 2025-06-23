@@ -2,46 +2,42 @@ import { Admin, User } from "../../domain/entities";
 import { RoleRepository, UserRepository } from "../../domain/interfaces";
 import { AdminRepository } from "../../domain/interfaces";
 import { ConflictError } from "../../domain/errors";
-import { AuthService, EmailService } from "../../domain/services";
+import { IAuthService, EmailService } from "../../domain/services";
+import { IUseCase } from "../../shared/IUseCase";
+import { ISignUpDto, ISignUpResultDto } from "./dtos/request/sing-up-admin.dto";
+import { createToken } from "../../utils";
 
-type InputAdmin = {
-    name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone: string;
-    access_level: string;
-};
-
-export class SignUpAdminUseCase {
+export class SignUpAdminUseCase
+    implements IUseCase<ISignUpDto, ISignUpResultDto>
+{
     constructor(
-        private userRepository: UserRepository,
-        private adminRepository: AdminRepository,
-        private roleRepository: RoleRepository,
-        private authService: AuthService,
-        private emailService: EmailService
+        private _userRepository: UserRepository,
+        private _adminRepository: AdminRepository,
+        private _roleRepository: RoleRepository,
+        private _authService: IAuthService,
+        private _emailService: EmailService
     ) {}
 
-    async execute(input: InputAdmin): Promise<void> {
+    public async execute(input: ISignUpDto): Promise<ISignUpResultDto> {
         // 1. Verfificamos si el usuario existe
         const existingUser =
-            (await this.userRepository.findByEmail(input.email)) ||
-            (await this.userRepository.findByPhone(input.phone));
+            (await this._userRepository.findByEmail(input.email)) ||
+            (await this._userRepository.findByPhone(input.phone));
         if (existingUser) {
             throw new ConflictError("El usuario ya existe");
         }
 
         // 2. Obtener el rol del admin
-        const adminRole = await this.roleRepository.findByName("admin");
+        const adminRole = await this._roleRepository.findByName("admin");
         if (!adminRole) {
             throw new ConflictError("Rol de administrador no configurado");
         }
 
         // 3. Crear usuario
-        const hashPassword = await this.authService.hashPassword(
+        const hashPassword = await this._authService.hashPassword(
             input.password
         );
-        const token = this.authService.generateToken();
+        const token = createToken();
 
         const user = new User({
             name: input.name,
@@ -53,10 +49,10 @@ export class SignUpAdminUseCase {
             role_id: adminRole.id,
         });
 
-        const createdUser = await this.userRepository.create(user);
+        const createdUser = await this._userRepository.create(user);
 
         if (!createdUser) {
-            throw new Error();
+            throw new Error("No se puede crear el usuario");
         }
 
         // Crear perfil de admin
@@ -65,13 +61,19 @@ export class SignUpAdminUseCase {
             access_level: input.access_level,
         });
 
-        await this.adminRepository.create(admin);
+        await this._adminRepository.create(admin);
 
         // 5. Enviar email de confirmación
-        await this.emailService.sendConfirmationEmail({
+        await this._emailService.sendConfirmationEmail({
             name: `${user.name} ${user.last_name}`,
             email: user.email,
             token: user.token!,
         });
+
+        return {
+            id: createdUser.id!,
+            name: createdUser.name,
+            last_name: createdUser.last_name,
+        };
     }
 }

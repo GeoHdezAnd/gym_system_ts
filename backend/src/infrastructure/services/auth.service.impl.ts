@@ -1,8 +1,8 @@
-import { AuthService } from "../../domain/services";
+import { IAuthService } from "../../domain/services";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export class AuthServiceImpl implements AuthService {
+export class AuthServiceImpl implements IAuthService {
     constructor() {}
     async hashPassword(password: string): Promise<string> {
         const salt = await bcrypt.genSalt(10);
@@ -16,9 +16,6 @@ export class AuthServiceImpl implements AuthService {
         return await bcrypt.compare(password, hashedPassword);
     }
 
-    generateToken(): string {
-        return Math.floor(100000 + Math.random() * 900000).toString();
-    }
 
     generateJWT(id: string): string {
         if (!process.env.JWT_SECRET) {

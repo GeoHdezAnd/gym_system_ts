@@ -1,12 +1,12 @@
 import { UserRepository } from "../../domain/interfaces";
 import { NotFoundError } from "../../domain/errors";
 import { UnauthorizedError } from "../../domain/errors/unauthorized.error";
-import { AuthService } from "../../domain/services";
+import { IAuthService } from "../../domain/services";
 
 export class CheckPasswordUseCase {
     constructor(
         private userRepository: UserRepository,
-        private authService: AuthService
+        private authService: IAuthService
     ) {}
 
     async execute(password: string, id: string): Promise<void> {

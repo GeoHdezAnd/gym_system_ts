@@ -4,12 +4,12 @@ import {
     ForbiddenError,
     UnauthorizedError,
 } from "../../domain/errors";
-import { AuthService } from "../../domain/services";
+import { IAuthService } from "../../domain/services";
 
 export class SignInUseCase {
     constructor(
         private userRepository: UserRepository,
-        private authService: AuthService
+        private authService: IAuthService
     ) {}
 
     async execute(email: string, password: string): Promise<string> {

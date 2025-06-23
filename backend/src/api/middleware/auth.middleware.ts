@@ -2,7 +2,6 @@ import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../../infrastructure/models";
 import { UnauthorizedError, ForbiddenError } from "../../domain/errors";
-import { User } from "../../domain/entities";
 
 declare global {
     namespace Express {
@@ -47,7 +46,7 @@ export const authenticate = async (
                         attributes: ["name"],
                     },
                     {
-                        association: UserModel.associations.memberProfile,
+                        association: UserModel.associations.member_profile,
                         attributes: ["matricula", "gender"],
                         required: false,
                     },

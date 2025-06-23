@@ -74,11 +74,11 @@ export const CustomerTable = () => {
                         </tr>
                     </thead>
 
-                    <tbody className="divide-y divide-gray-700 text-xs">
+                    <tbody className="divide-y divide-gray-700 text-xs items-center">
                         {members.map((member) => (
                             <tr
                                 key={member.id}
-                                className="hover:bg-gray-800/50 transition-colors"
+                                className="hover:bg-gray-800/50 transition-colors "
                             >
                                 <td className="px-4 py-4 whitespace-nowrap">
                                     <div className="font-medium">

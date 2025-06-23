@@ -5,8 +5,9 @@ import {
     UserRepository,
 } from "../../domain/interfaces";
 import { ConflictError, NotFoundError } from "../../domain/errors";
-import { AuthService, EmailService } from "../../domain/services";
+import { IAuthService, EmailService } from "../../domain/services";
 import { db } from "../../infrastructure/config/db";
+import { createToken } from "../../utils";
 type InputMember = {
     name: string;
     last_name: string;
@@ -21,13 +22,11 @@ export class SignUpMemberUseCase {
         private userRepository: UserRepository,
         private memberRepository: MemberRepository,
         private roleRepository: RoleRepository,
-        private authService: AuthService,
+        private authService: IAuthService,
         private emailService: EmailService
     ) {}
 
     async execute(input: InputMember): Promise<void> {
-        // Iniciamos transacción manejable por si existen errores en datos revertir la operación en la base de datos
-
         // 1. Verfificamos si el usuario existe
         const existingUser =
             (await this.userRepository.findByEmail(input.email)) ||
@@ -46,7 +45,7 @@ export class SignUpMemberUseCase {
             input.password
         );
 
-        const token = this.authService.generateToken();
+        const token = createToken();
 
         try {
             await db.transaction(async () => {
@@ -61,8 +60,9 @@ export class SignUpMemberUseCase {
                 });
 
                 const createdUser = await this.userRepository.create(user);
+
                 if (!createdUser) {
-                    throw new Error();
+                    throw new Error("No fue posible crear el usuario");
                 }
 
                 // Crear perfil de member
@@ -72,6 +72,11 @@ export class SignUpMemberUseCase {
                     matricula: createdUser.createMatricula(),
                     user_id: createdUser.id!, // Especificamos con "!" que la variable siempre existira
                 });
+                if (!member) {
+                    throw new Error(
+                        "No fue posible crear el perfil de miembro"
+                    );
+                }
 
                 await this.memberRepository.create(member);
 

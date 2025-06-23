@@ -1,12 +1,13 @@
 import { exitCode } from "process";
 import { UserRepository } from "../../domain/interfaces";
 import { NotFoundError, UnauthorizedError } from "../../domain/errors";
-import { AuthService, EmailService } from "../../domain/services";
+import { IAuthService, EmailService } from "../../domain/services";
+import { createToken } from "../../utils";
 
 export class ForgotPasswordUseCase {
     constructor(
         private userRepository: UserRepository,
-        private authService: AuthService,
+        private authService: IAuthService,
         private emailService: EmailService
     ) {}
 
@@ -23,7 +24,7 @@ export class ForgotPasswordUseCase {
             );
         }
 
-        const token = this.authService.generateToken();
+        const token = createToken();
 
         existingUser.updateToken(token);
         await this.userRepository.save(existingUser);

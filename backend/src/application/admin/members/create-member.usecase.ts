@@ -5,7 +5,8 @@ import {
     UserRepository,
 } from "../../../domain/interfaces";
 import { ConflictError, NotFoundError } from "../../../domain/errors";
-import { AuthService, EmailService } from "../../../domain/services";
+import { IAuthService, EmailService } from "../../../domain/services";
+import { createToken } from "../../../utils";
 
 export type TCreateUser = {
     name: string;
@@ -21,7 +22,7 @@ export class CreateMemberUseCase {
         private userRepository: UserRepository,
         private memberRepository: MemberRepository,
         private roleRepository: RoleRepository,
-        private authService: AuthService,
+        private authService: IAuthService,
         private emailService: EmailService
     ) {}
 
@@ -44,7 +45,7 @@ export class CreateMemberUseCase {
             input.last_name
         );
 
-        const token = this.authService.generateToken();
+        const token = createToken();
 
         const user = new User({
             name: input.name,

@@ -7,7 +7,7 @@ import {
     SubscriptionRepository,
     UserRepository,
 } from "../domain/interfaces";
-import { AuthService, EmailService } from "../domain/services";
+import { IAuthService, EmailService } from "../domain/services";
 import {
     CreateAttendanceUseCase,
     GetAllAttendancesWithMember,
@@ -65,7 +65,7 @@ export class DIContainer {
         new SequelizeAttendanceRepository();
 
     // Servicios
-    private static _authService: AuthService = new AuthServiceImpl();
+    private static _authService: IAuthService = new AuthServiceImpl();
     private static _emailService: EmailService = new EmailServiceImpl();
 
     // Casos de uso AUTH

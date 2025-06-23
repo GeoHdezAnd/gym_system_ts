@@ -1,11 +1,11 @@
 import { UserRepository } from "../../domain/interfaces";
 import { NotFoundError, UnauthorizedError } from "../../domain/errors";
-import { AuthService } from "../../domain/services";
+import { IAuthService } from "../../domain/services";
 
 export class UpdateCurrentPasswordUseCase {
     constructor(
         private userRepository: UserRepository,
-        private authService: AuthService
+        private authService: IAuthService
     ) {}
     async execute(input: {
         currentPassword: string;
