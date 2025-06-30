@@ -2,12 +2,12 @@ import type { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
 import { SequelizeMemberRepository } from "../../infrastructure/repositories";
 import { NotFoundError } from "../../domain/errors";
-import { MemberWithUser } from "../../domain/interfaces";
+import { IMemberWithUserDto } from "../../application/auth/dtos/response";
 
 declare global {
     namespace Express {
         interface Request {
-            member?: MemberWithUser;
+            member?: IMemberWithUserDto;
         }
     }
 }

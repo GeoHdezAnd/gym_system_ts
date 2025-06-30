@@ -15,4 +15,10 @@ export class DeleteUserUseCase {
 
         await this.userRepository.save(user);
     }
+
+    async executeBath(userIds: string[]): Promise<void> {
+        for (const id of userIds) {
+            await this.execute(id);
+        }
+    }
 }

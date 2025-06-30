@@ -11,7 +11,6 @@ import { SignInUseCase } from "../../application/auth/sign-in.usecase";
 import { UpdateCurrentPasswordUseCase } from "../../application/auth/update-current-password.usecase";
 import { CheckPasswordUseCase } from "../../application/auth/check-password.usecase";
 import { SignUpMemberUseCase } from "../../application/auth/sign-up-member.usecase";
-import { SignUpAdminDto } from "../../application/auth/dtos/request/sing-up-admin.dto";
 
 /**
  * Controlador para operaciones de autenticación y gestión de usuarios.
@@ -46,17 +45,16 @@ export class AuthController {
                 access_level: access_level || "limited",
             });
 
-            const response: SignUpAdminDto = new SignUpAdminDto(result);
-
             res.status(201).json({
                 message: "Admin creado correctamente",
-                response,
+                result,
             });
         } catch (error) {
             next(error);
         }
     }
 
+    /** Registro de miembros */
     async signUpMember(req: Request, res: Response, next: NextFunction) {
         try {
             const {
@@ -68,7 +66,7 @@ export class AuthController {
                 gender,
                 born_date,
             } = req.body;
-            await this._signUpMemberUseCase.execute({
+            const result = await this._signUpMemberUseCase.execute({
                 name,
                 last_name: last_name,
                 email,
@@ -77,12 +75,16 @@ export class AuthController {
                 gender,
                 born_date: born_date,
             });
-            res.status(201).json("Cuenta creada correctamente :)");
+            res.status(201).json({
+                message: "Cuenta creada correctamente, revisa tu email",
+                result,
+            });
         } catch (error) {
             next(error);
         }
     }
 
+    /** Login al sistema */
     async signIn(req: Request, res: Response, next: NextFunction) {
         try {
             const { email, password } = req.body;
@@ -112,7 +114,7 @@ export class AuthController {
         try {
             const { email } = req.body;
 
-            await this._forgotPasswordUseCase.execute({ email });
+            await this._forgotPasswordUseCase.execute(email);
             res.json("Revisa tu email para seguir las instrucciones");
         } catch (error) {
             next(error);

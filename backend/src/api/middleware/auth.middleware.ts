@@ -11,6 +11,13 @@ declare global {
     }
 }
 
+/**
+ * Middleware para autenticar usuarios mediante JWT.
+ *
+ * - Verifica el token en la cabecera Authorization.
+ * - Busca el usuario en la base de datos y lo adjunta a req.user.
+ * - Responde con error 401/404/500 según el caso.
+ */
 export const authenticate = async (
     req: Request,
     res: Response,
@@ -73,6 +80,13 @@ export const authenticate = async (
     }
 };
 
+/**
+ * Middleware para autorizar usuarios por roles.
+ *
+ * @param allowedRoles Lista de roles permitidos.
+ * - Verifica que el usuario esté autenticado y tenga un rol permitido.
+ * - Llama a next() si tiene permiso, lanza error si no.
+ */
 // Autorización por roles
 type Role = "admin" | "member";
 

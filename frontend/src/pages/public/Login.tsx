@@ -7,6 +7,7 @@ import api from "../../lib/config/axios";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../../lib/hooks/useAuth";
 import { loginSchema, type LoginFormData } from "../../lib/types";
+import { Button } from "../../components/attoms";
 
 export default function Login() {
     const { signIn } = useAuth();
@@ -66,12 +67,10 @@ export default function Login() {
                     placeholder="******"
                 />
 
-                <button
-                    type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-700 cursor-pointer hover:bg-blue-800 transition transform duration-100 ease-in"
-                >
+                <Button type="submit" className="m-auto">
+                    {" "}
                     Iniciar sesión
-                </button>
+                </Button>
             </form>
 
             <div className="text-center text-sm text-gray-600 flex justify-between">
@@ -79,7 +78,7 @@ export default function Login() {
                     <p>¿No Tienes cuenta?</p>
                     <Link
                         to="/sign-up"
-                        className="font-medium text-blue-600 hover:text-blue-500"
+                        className="font-medium text-gray-400 hover:text-white"
                     >
                         Registrate
                     </Link>
@@ -87,7 +86,7 @@ export default function Login() {
 
                 <Link
                     to="/forgot-password"
-                    className="font-medium text-blue-600 hover:text-blue-500"
+                    className="font-medium text-gray-400 hover:text-white"
                 >
                     Olvide contraseña
                 </Link>

@@ -69,7 +69,6 @@ authRouter.get("/profile", authenticate, authorize(["member"]));
 authRouter.post(
     "/confirm-account",
     body("token").isLength({ min: 6, max: 6 }).withMessage("Token no valido"),
-
     handleInputErrors,
     authController.confirmAccount.bind(authController)
 );

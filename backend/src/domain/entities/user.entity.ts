@@ -1,4 +1,5 @@
 import { TCreateUser } from "../../application/admin/members";
+import { ForbiddenError } from "../errors";
 
 export interface UserProps {
     id?: string;
@@ -82,10 +83,26 @@ export class User {
         this.props.token = null;
     }
 
+    /**
+     * Funcion que incrementa y revisa la cantidad de login attempts cada que falla
+     * - Si falla se incrementa 1
+     * - Si tiene 5 se envia error y bloquea cuenta
+     */
     incrementLoginAttempts(): void {
+        const maxAttempts = 5;
+
+        if (this.props.login_attempts! >= maxAttempts) {
+            throw new ForbiddenError(
+                "Cuenta bloqueada por demasiados intentos fallidos, solicita cambio de contraseña"
+            );
+        }
+
         this.props.login_attempts = (this.props.login_attempts || 0) + 1;
     }
 
+    /**
+     * Reincia los logins attempts a 0
+     */
     resetLoginAttempts(): void {
         this.props.login_attempts = 0;
     }

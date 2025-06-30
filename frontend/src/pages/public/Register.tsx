@@ -6,6 +6,7 @@ import { CustomInput } from "../../components";
 import { memberSchema, type MemberFormData } from "../../lib/types";
 import { Link } from "react-router";
 import { handleApiError } from "../../lib/utils/handleAPIError";
+import { Button } from "../../components/attoms";
 
 // Esta pagina solo es para registrar a los miembros, el administrador o staff se debe crear desde el dashboard privado por un administrador
 
@@ -36,7 +37,7 @@ export default function Register() {
             loading: "Registrando usuario...",
             success: (response) => {
                 reset();
-                return response.data;
+                return response.data.message;
             },
             error: (error) => handleApiError(error),
         });
@@ -117,19 +118,16 @@ export default function Register() {
                     />
                 </div>
 
-                <button
-                    type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-700 cursor-pointer hover:bg-blue-800 transition transform duration-100 ease-in"
-                >
-                    Crear cuenta
-                </button>
+                <Button type="submit" className="m-auto">
+                    Registrar cuenta
+                </Button>
             </form>
             <div className="text-center text-sm text-gray-600">
                 <p>
                     ¿Ya tienes cuenta?{" "}
                     <Link
                         to="/"
-                        className="font-medium text-blue-600 hover:text-blue-500"
+                        className="font-medium text-gray-300 hover:text-white"
                     >
                         Inicia sesión
                     </Link>

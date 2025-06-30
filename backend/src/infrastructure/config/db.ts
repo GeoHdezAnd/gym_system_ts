@@ -8,9 +8,14 @@ import {
     MemberModel,
     PlansModel,
     SubscriptionModel,
-    AttendanceModel
+    AttendanceModel,
 } from "../models";
 dotenv.config();
+
+/**
+ * Configuración de base de datos
+ * Aqui se encuentra la información que necesita sequelize para conectar con la base de datos, en este momento es local
+ */
 
 export const db = new Sequelize({
     database: process.env.DATABASE_NAME,
@@ -27,6 +32,6 @@ export const db = new Sequelize({
         MemberModel,
         PlansModel,
         SubscriptionModel,
-        AttendanceModel
+        AttendanceModel,
     ],
 });

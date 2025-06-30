@@ -16,7 +16,7 @@ import {
 
 @Table({
     tableName: "admins",
-    timestamps: false
+    timestamps: false,
 })
 export class AdminModel extends Model<
     InferAttributes<AdminModel>,
@@ -34,5 +34,4 @@ export class AdminModel extends Model<
     @NotNull
     @Unique
     declare user_id: string;
-
 }

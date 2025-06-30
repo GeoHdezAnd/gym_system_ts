@@ -5,6 +5,7 @@ import { CustomInput } from "../../components";
 import { toast } from "sonner";
 import api from "../../lib/config/axios";
 import { handleApiError } from "../../lib/utils/handleAPIError";
+import { Button } from "../../components/attoms";
 
 export default function ForgotPassword() {
     const {
@@ -20,7 +21,7 @@ export default function ForgotPassword() {
     });
 
     const onSubmit: SubmitHandler<ForgotPasswordForm> = async (formData) => {
-        console.log(formData)
+        console.log(formData);
         toast.promise(api.post("/auth/forgot-password", formData), {
             loading: "Enviando petición...",
             success: (response) => {
@@ -51,12 +52,9 @@ export default function ForgotPassword() {
                     error={errors.email}
                     placeholder="correo@correo.com"
                 />
-                <button
-                    type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-700 cursor-pointer hover:bg-blue-800 transition transform duration-100 ease-in"
-                >
-                    Enviar
-                </button>
+                <Button type="submit" className="m-auto">
+                    Solicitar reestablecer
+                </Button>
             </form>
         </div>
     );

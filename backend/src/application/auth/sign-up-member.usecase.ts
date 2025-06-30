@@ -1,65 +1,64 @@
-import { Member, User } from "../../domain/entities";
-import {
-    MemberRepository,
-    RoleRepository,
-    UserRepository,
-} from "../../domain/interfaces";
-import { ConflictError, NotFoundError } from "../../domain/errors";
-import { IAuthService, EmailService } from "../../domain/services";
+import { Member } from "../../domain/entities";
+import { MemberRepository, UserRepository } from "../../domain/interfaces";
+import { EmailService, UserDomainService } from "../../domain/services";
 import { db } from "../../infrastructure/config/db";
-import { createToken } from "../../utils";
-type InputMember = {
-    name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone: string;
-    gender: string;
-    born_date: Date;
-};
-export class SignUpMemberUseCase {
+import { IUseCase } from "../../shared/IUseCase";
+import {
+    ISignUpMemberDto,
+    ISignUpResultDto,
+    SignUpDto,
+} from "./dtos/request/sign-up.dto";
+
+/**
+ * Caso de uso para registrar un nuevo miembro.
+ *
+ * - Verifica que el usuario no exista previamente.
+ * - Obtiene el rol de miembro.
+ * - Crea el usuario y su perfil de miembro en una transacción.
+ * - Envía un email de confirmación.
+ *
+ * @param input Datos del nuevo miembro.
+ * @returns Datos básicos del miembro creado.
+ * @throws Error si ocurre algún problema durante el registro.
+ */
+export class SignUpMemberUseCase
+    implements IUseCase<ISignUpMemberDto, ISignUpResultDto | undefined>
+{
     constructor(
-        private userRepository: UserRepository,
-        private memberRepository: MemberRepository,
-        private roleRepository: RoleRepository,
-        private authService: IAuthService,
-        private emailService: EmailService
+        private readonly _userDomainService: UserDomainService,
+        private readonly _userRepository: UserRepository,
+        private readonly _memberRepository: MemberRepository,
+        private readonly _emailService: EmailService
     ) {}
 
-    async execute(input: InputMember): Promise<void> {
+    /**
+     * Ejecuta el registro de miembro.
+     */
+    async execute(
+        input: ISignUpMemberDto
+    ): Promise<ISignUpResultDto | undefined> {
         // 1. Verfificamos si el usuario existe
-        const existingUser =
-            (await this.userRepository.findByEmail(input.email)) ||
-            (await this.userRepository.findByPhone(input.phone));
-        if (existingUser) {
-            throw new ConflictError("El usuario ya existe");
-        }
-        // 2. Obtener el rol del member
-        const memberRole = await this.roleRepository.findByName("member");
-        if (!memberRole) {
-            throw new NotFoundError("Rol de member no configurado");
-        }
-
-        // 3. Crear usuario
-        const hashPassword = await this.authService.hashPassword(
-            input.password
+        await this._userDomainService.ensureUserDoesNotExist(
+            input.email,
+            input.phone
         );
 
-        const token = createToken();
+        // 2. Obtener el rol del miembro
+        const memberRole = await this._userDomainService.getRoleorFail(
+            "member"
+        );
+
+        // 3. Crear usuario
+        const user = await this._userDomainService.buildUser(
+            input,
+            memberRole.id
+        );
+
+        let result: ISignUpResultDto | undefined;
 
         try {
             await db.transaction(async () => {
-                const user = new User({
-                    name: input.name,
-                    last_name: input.last_name,
-                    email: input.email,
-                    phone: input.phone,
-                    password: hashPassword,
-                    token,
-                    role_id: memberRole.id,
-                });
-
-                const createdUser = await this.userRepository.create(user);
+                const createdUser = await this._userRepository.create(user);
 
                 if (!createdUser) {
                     throw new Error("No fue posible crear el usuario");
@@ -78,17 +77,25 @@ export class SignUpMemberUseCase {
                     );
                 }
 
-                await this.memberRepository.create(member);
+                await this._memberRepository.create(member);
 
-                // 5. Enviar email de confirmación
-                await this.emailService.sendConfirmationEmail({
+                // 5. Enviar email de confirmación, es escencial para garantizar seguridad
+                await this._emailService.sendConfirmationEmail({
                     name: `${user.name} ${user.last_name}`,
                     email: user.email,
                     token: user.token!,
                 });
+
+                result = new SignUpDto({
+                    id: createdUser.id!,
+                    name: createdUser.name,
+                    last_name: createdUser.last_name,
+                });
             });
+
+            return result;
         } catch (error) {
-            throw new Error();
+            throw new Error("Error al registrar el miembro, intente de nuevo");
         }
     }
 }

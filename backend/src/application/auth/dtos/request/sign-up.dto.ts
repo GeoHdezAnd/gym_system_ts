@@ -1,10 +1,18 @@
-export interface ISignUpDto {
+export interface IBaseSignUpDto {
     name: string;
     last_name: string;
     email: string;
     password: string;
     phone: string;
+}
+
+export interface ISignUpDto extends IBaseSignUpDto {
     access_level: string;
+}
+
+export interface ISignUpMemberDto extends IBaseSignUpDto {
+    gender: string;
+    born_date: Date;
 }
 
 export interface ISignUpResultDto {
@@ -13,7 +21,7 @@ export interface ISignUpResultDto {
     last_name: string;
 }
 
-export class SignUpAdminDto implements ISignUpResultDto {
+export class SignUpDto implements ISignUpResultDto {
     public readonly name: string;
     public readonly last_name: string;
     public readonly id: string;
@@ -24,5 +32,3 @@ export class SignUpAdminDto implements ISignUpResultDto {
         this.last_name = params.last_name;
     }
 }
-
-

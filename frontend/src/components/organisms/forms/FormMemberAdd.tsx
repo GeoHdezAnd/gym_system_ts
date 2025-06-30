@@ -72,7 +72,7 @@ export function FormMemberAdd() {
             </div>
 
             <div className="space-y-6 bg-primary-200 rounded-md p-4 shadow-lg shadow-gray-950 border-1 border-gray-800">
-                <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+                <form className="space-y-4 " onSubmit={handleSubmit(onSubmit)}>
                     <CustomInput
                         name="name"
                         control={control}

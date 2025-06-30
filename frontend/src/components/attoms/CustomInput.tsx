@@ -102,7 +102,7 @@ export const CustomInput = <T extends FieldValues>({
     minLength,
     options,
     rows = 3,
-    icon, 
+    icon,
 }: Props<T>) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -115,10 +115,10 @@ export const CustomInput = <T extends FieldValues>({
     };
 
     return (
-        <div className="form-group space-y-2">
+        <div className="form-group space-y-2 ">
             {icon ? (
-                <div className="flex items-center justify-between gap-4 px-4 py-1">
-                    <div className="flex gap-4 items-center">
+                <div className="  lg:flex  space-y-2 items-center justify-between gap-2 px-4 py-1">
+                    <div className="flex gap-2 items-center ">
                         {icon}
                         <label
                             htmlFor={name}
@@ -136,7 +136,7 @@ export const CustomInput = <T extends FieldValues>({
                                 return (
                                     <select
                                         id={name}
-                                        className={`flex-1 border text-sm bg-primary-200  ${
+                                        className={`flex w-full border text-sm   ${
                                             error
                                                 ? "border-red-500"
                                                 : "border-gray-600"
@@ -320,9 +320,7 @@ export const CustomInput = <T extends FieldValues>({
                 </>
             )}
 
-            {error && (
-                <p className=" text-xs text-red-500">{error.message}</p>
-            )}
+            {error && <p className=" text-xs text-red-500">{error.message}</p>}
         </div>
     );
 };

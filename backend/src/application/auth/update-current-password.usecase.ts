@@ -4,8 +4,8 @@ import { IAuthService } from "../../domain/services";
 
 export class UpdateCurrentPasswordUseCase {
     constructor(
-        private userRepository: UserRepository,
-        private authService: IAuthService
+        private readonly _userRepository: UserRepository,
+        private readonly _authService: IAuthService
     ) {}
     async execute(input: {
         currentPassword: string;
@@ -13,12 +13,12 @@ export class UpdateCurrentPasswordUseCase {
         id: string;
     }): Promise<void> {
         // Verificamos si el usuario existe
-        const user = await this.userRepository.findById(input.id);
+        const user = await this._userRepository.findById(input.id);
         if (!user) {
             throw new NotFoundError("Usuario no encontrado");
         }
 
-        const isPasswordCorrect = await this.authService.comparePassword(
+        const isPasswordCorrect = await this._authService.comparePassword(
             input.currentPassword,
             user.password
         );
@@ -27,8 +27,8 @@ export class UpdateCurrentPasswordUseCase {
             throw new UnauthorizedError("El password no es correcto");
         }
 
-        const password = await this.authService.hashPassword(input.password);
+        const password = await this._authService.hashPassword(input.password);
         user.changePassword(password);
-        await this.userRepository.save(user);
+        await this._userRepository.save(user);
     }
 }

@@ -22,18 +22,18 @@ export function NavItem({
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col cursor-pointer">
             <NavLink
                 to={to}
                 end={end}
                 className={({ isActive }) =>
                     clsx(
-                        "flex items-center pl-10 p-3 gap-6 transform duration-200 ",
+                        "flex text-sm rounded-md items-center pl-8 py-2 mx-4 gap-6 transform duration-200 ",
                         isActive && !subItems
-                            ? "text-white font-bold border-l-4  bg-secondary-100/50 border-l-secondary-100"
-                            : "text-gray-400 font-semibold hover:bg-secondary-100/40",
+                            ? "text-white border-l-4  bg-gray-100/5 border-l-secondary-100"
+                            : "text-gray-400  hover:bg-gray-100/5",
                         subItems && "justify-between pr-4",
-                        isActive && "text-white"
+                        isActive && "text-white bg-gray-100/5"
                     )
                 }
                 onClick={(e) => {
@@ -49,7 +49,7 @@ export function NavItem({
                             <Icon
                                 className={clsx(
                                     "text-lg",
-                                    isActive ? "text-secondary-200" : ""
+                                    isActive && "text-secondary-200"
                                 )}
                             />
                             <span>{label}</span>
@@ -57,9 +57,17 @@ export function NavItem({
                         {subItems && (
                             <span className="text-sm">
                                 {isExpanded ? (
-                                    <FiChevronDown />
+                                    <FiChevronDown
+                                        className={`font-bold ${
+                                            isActive && "text-secondary-200"
+                                        }`}
+                                    />
                                 ) : (
-                                    <FiChevronRight />
+                                    <FiChevronRight
+                                        className={` font-bold ${
+                                            isActive && "text-secondary-200"
+                                        }`}
+                                    />
                                 )}
                             </span>
                         )}
@@ -68,17 +76,17 @@ export function NavItem({
             </NavLink>
 
             {subItems && isExpanded && (
-                <div className="ml-8 flex flex-col">
+                <div className="ml-8 mx-4 space-y-1 mt-1 flex flex-col">
                     {subItems.map((subItem) => (
                         <NavLink
                             key={subItem.to}
                             to={subItem.to}
                             className={({ isActive }) =>
                                 clsx(
-                                    "flex items-center pl-6 p-3 gap-4 text-sm transform duration-150 ease-in",
+                                    "flex items-center pl-6 p-2 rounded-md gap-4 text-sm transform duration-150 ease-in",
                                     isActive
-                                        ? "text-white font-bold  bg-secondary-100/50 border-l-4 border-secondary-100"
-                                        : "text-gray-400 font-medium hover:bg-secondary-100/20"
+                                        ? "text-white   bg-gray-100/5 border-l-4 border-secondary-100"
+                                        : "text-gray-400  hover:bg-gray-100/5"
                                 )
                             }
                         >

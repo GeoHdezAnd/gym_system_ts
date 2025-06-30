@@ -9,6 +9,8 @@ export const handleApiError = (error: unknown): string => {
         }
     }
 
+    
+
     // Error con mensaje directo
     if (isAxiosError(error) && error.response?.data?.error.message) {
         return error.response.data.error.message;

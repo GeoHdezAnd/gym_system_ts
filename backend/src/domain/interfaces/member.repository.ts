@@ -1,20 +1,23 @@
-import { Member, MemberProps } from "../entities";
+import { IMemberWithUserDto } from "../../application/auth/dtos/response";
+import { Member } from "../entities";
 
-export interface MemberWithUser {
-    id: string;
-    name: string;
-    last_name: string;
-    email: string;
-    phone: string;
-    confirmed: boolean;
+export interface PaginationOptions {
+    page: number;
+    limit: number;
+}
 
-    profile: Omit<MemberProps, "user_id">;
+export interface FilterOptions {
+    search?: string;
+    // Aqui se pueden agregar filtros como status, fecha, etc
 }
 
 export interface MemberRepository {
-    getAll(): Promise<MemberWithUser[]>;
+    getAll(
+        pagination?: PaginationOptions,
+        filters?: FilterOptions
+    ): Promise<{ members: IMemberWithUserDto[]; total: number }>;
     create(member: Member): Promise<Member>;
-    findByUserId(user_id: string): Promise<MemberWithUser | false>;
+    findByUserId(user_id: string): Promise<IMemberWithUserDto | false>;
     findByMatricula(matricula: string): Promise<Member | false>;
     getProfile(user_id: string): Promise<Member | false>;
     save(member: Member): Promise<void>;

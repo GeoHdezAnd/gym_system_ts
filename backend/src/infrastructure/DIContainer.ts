@@ -7,7 +7,11 @@ import {
     SubscriptionRepository,
     UserRepository,
 } from "../domain/interfaces";
-import { IAuthService, EmailService } from "../domain/services";
+import {
+    IAuthService,
+    EmailService,
+    UserDomainService,
+} from "../domain/services";
 import {
     CreateAttendanceUseCase,
     GetAllAttendancesWithMember,
@@ -45,7 +49,11 @@ import {
     SequelizeSubscriptionRepository,
     SequelizeAttendanceRepository,
 } from "./repositories";
-import { AuthServiceImpl, EmailServiceImpl } from "./services";
+import {
+    AuthServiceImpl,
+    EmailServiceImpl,
+    UserDomainServiceImpl,
+} from "./services";
 
 export class DIContainer {
     // Repositorios
@@ -67,24 +75,28 @@ export class DIContainer {
     // Servicios
     private static _authService: IAuthService = new AuthServiceImpl();
     private static _emailService: EmailService = new EmailServiceImpl();
+    private static _userDomainService: UserDomainService =
+        new UserDomainServiceImpl(
+            this._userRepository,
+            this._roleRepository,
+            this._authService
+        );
 
     // Casos de uso AUTH
     static getSignUpAdminUseCase(): SignUpAdminUseCase {
         return new SignUpAdminUseCase(
+            this._userDomainService,
             this._userRepository,
             this._adminRepository,
-            this._roleRepository,
-            this._authService,
             this._emailService
         );
     }
 
     static getSignUpMemberUseCase(): SignUpMemberUseCase {
         return new SignUpMemberUseCase(
+            this._userDomainService,
             this._userRepository,
             this._memberRepository,
-            this._roleRepository,
-            this._authService,
             this._emailService
         );
     }
@@ -99,7 +111,6 @@ export class DIContainer {
     static getForgotPasswordUseCase(): ForgotPasswordUseCase {
         return new ForgotPasswordUseCase(
             this._userRepository,
-            this._authService,
             this._emailService
         );
     }

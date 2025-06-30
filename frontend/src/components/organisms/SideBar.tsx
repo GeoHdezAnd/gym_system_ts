@@ -37,10 +37,10 @@ export function SideBar() {
     ];
 
     return (
-        <aside className="flex fixed flex-col h-screen bg-primary-100 text-white transition-all duration-300 w-64 shadow-2xl shadow-black rounded-r-md border-r-[1px] border-gray-900 cursor-pointer select-none">
-            <div className="flex py-2  items-center justify-center">
+        <aside className="flex flex-col  h-full bg-primary-100 text-white transition-all duration-300  shadow-2xl shadow-black rounded-r-md border-r-[1px] border-gray-900  select-none">
+            <div className="flex py-4  items-center justify-center">
                 <img src="/logo.png" alt="logo" width={70} />
-                <p className="font-bold text-2xl">Kings Layer</p>
+                <p className="font-medium text-xl ">Kings Layer</p>
             </div>
 
             <nav className="flex-1 flex flex-col gap-1 mt-4 overflow-y-auto">

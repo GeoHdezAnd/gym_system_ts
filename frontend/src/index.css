@@ -4,7 +4,7 @@
 @theme {
     --color-primary-100: #081028;
     --color-primary-200: #0b1739;
-    --color-secondary-100: #4c1036;
+    --color-secondary-100: #94246f;
     --color-secondary-200: #72195a;
     --color-secondary-300: #cb3cff;
 }
@@ -12,6 +12,11 @@
 @layer base {
     input {
         color-scheme: dark;
+        
+    }
+
+    select {
+        background-color: #16213e;
     }
 }
 
@@ -27,5 +32,15 @@
 
     .container-dash {
         @apply p-6 text-white;
+    }
+}
+
+@layer components {
+    .head-table {
+        @apply py-3 px-4 text-left text-xs font-medium text-gray-300 uppercase tracking-wider;
+    }
+
+    .table-item-base {
+        @apply px-4 py-4 whitespace-nowrap;
     }
 }

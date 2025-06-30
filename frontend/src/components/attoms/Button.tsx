@@ -28,7 +28,7 @@ export const Button = ({
     loading = false,
 }: ButtonProps) => {
     const baseClasses =
-        "rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer";
+        "rounded-lg font-normal transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer";
 
     const sizeClasses = {
         sm: "py-1.5 px-3 text-sm ",

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { handleApiError } from "../../lib/utils/handleAPIError";
 
 interface ErrorMessageProps {
     message: string;
@@ -11,8 +12,7 @@ export const ErrorMessage = ({
     error,
     className,
 }: ErrorMessageProps) => {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-
+    const errorMessage = handleApiError(error);
     return (
         <div className={clsx("rounded-md bg-red-50 p-4", className)}>
             <div className="flex">

@@ -75,7 +75,7 @@ export class ApiServer {
     private static async connectDB(): Promise<void> {
         try {
             await db.authenticate();
-            db.sync(); // ACTIVAR SI SE CREARAN NUEVAS TABLAS PERO CUIDADO PORQUE CREARA LA TABLA DE LA VISTA DE VENTAS, ESA TABLA NO DEBE EXISTIR COMO TABLA, ES UNA VISTA
+            db.sync(); // Esto permite que si creamos modelos nuevos se creeen en la base de datos si los tenemos especificados en la configuración de la DB
             console.log(colors.blue.bold("Conexión exitosa a la BD"));
         } catch (error) {
             console.log(colors.red.bold("Falló la conexión a la BD"));

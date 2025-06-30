@@ -5,6 +5,7 @@ import {
     InferCreationAttributes,
     Model,
     NonAttribute,
+    sql,
 } from "@sequelize/core";
 import {
     Attribute,
@@ -28,8 +29,8 @@ export class MemberModel extends Model<
     InferAttributes<MemberModel>,
     InferCreationAttributes<MemberModel>
 > {
-    @Attribute(DataTypes.UUID)
-    @Default(DataTypes.UUIDV4)
+    @Attribute(DataTypes.UUIDV4)
+    @Default(sql.uuidV4)
     @PrimaryKey
     declare id: CreationOptional<string>;
 
