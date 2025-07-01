@@ -14,6 +14,7 @@ import { deleteBatchMembers, deleteMember } from "../../../api/MemberApi";
 import { useState } from "react";
 import { PiEraserFill } from "react-icons/pi";
 import { Button } from "../../attoms";
+import { Link } from "react-router";
 
 type Props = {
     data?: MemberProps[];
@@ -288,9 +289,12 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
                                 </td>
                                 <td className="table-item-base">
                                     <div className="flex items-center gap-4 text-lg text-bold ">
-                                        <button className="p-1 cursor-pointer text-yellow-400 border border-yellow-400 rounded-md">
+                                        <Link
+                                            to={`/dashboard/users/customer/${user.id}/edit`}
+                                            className="p-1 cursor-pointer text-yellow-400 border border-yellow-400 rounded-md"
+                                        >
                                             <RiEdit2Fill />
-                                        </button>
+                                        </Link>
                                         <DeleteConfirmationDialog
                                             fild={`Usuario: ${user.name} ${user.last_name}`}
                                             onConfirm={() =>

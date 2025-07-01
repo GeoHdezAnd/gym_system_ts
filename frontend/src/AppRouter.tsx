@@ -10,6 +10,7 @@ import ResetPassword from "./pages/public/ResetPassword";
 import ConfirmAccount from "./pages/public/ConfirmAccount";
 import UsersAdd from "./pages/private/admin/users/UsersAdd";
 import AllCustomers from "./pages/private/admin/users/AllCustomers";
+import CustomerEdit from "./pages/private/admin/users/CustomerEdit";
 
 export const AppRouter = () => {
     return (
@@ -38,6 +39,10 @@ export const AppRouter = () => {
                         <Route
                             path="users/customer"
                             element={<AllCustomers />}
+                        />
+                        <Route
+                            path="users/customer/:userId/edit"
+                            element={<CustomerEdit />}
                         />
                     </Route>
                 </Routes>
