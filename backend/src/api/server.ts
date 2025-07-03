@@ -20,6 +20,7 @@ import memberRouter from "./routes/member.router";
 import planRouter from "./routes/plan.routes";
 import suscriptionRouter from "./routes/suscription.router";
 import attendecandeRouter from "./routes/attendance.router";
+import { runLoaders } from "../infrastructure/loaders";
 /**
  * Clase principal para levantar y configurar el servidor de la API.
  *
@@ -76,6 +77,7 @@ export class ApiServer {
         try {
             await db.authenticate();
             db.sync(); // Esto permite que si creamos modelos nuevos se creeen en la base de datos si los tenemos especificados en la configuración de la DB
+            await runLoaders()
             console.log(colors.blue.bold("Conexión exitosa a la BD"));
         } catch (error) {
             console.log(colors.red.bold("Falló la conexión a la BD"));

@@ -29,8 +29,8 @@ export class MemberModel extends Model<
     InferAttributes<MemberModel>,
     InferCreationAttributes<MemberModel>
 > {
-    @Attribute(DataTypes.UUIDV4)
-    @Default(sql.uuidV4)
+    @Attribute(DataTypes.UUID)
+    @Default(DataTypes.UUIDV4)
     @PrimaryKey
     declare id: CreationOptional<string>;
 
@@ -40,7 +40,7 @@ export class MemberModel extends Model<
     })
     declare user_account?: NonAttribute<UserModel>;
 
-    @Attribute(DataTypes.STRING)
+    @Attribute(DataTypes.UUID)
     @NotNull
     @Unique
     declare user_id: string;

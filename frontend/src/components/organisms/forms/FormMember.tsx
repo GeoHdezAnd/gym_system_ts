@@ -6,15 +6,27 @@ import { Button, CustomInput } from "../../attoms";
 import { memberSchema } from "../../../lib/types";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-import api from "../../../lib/config/axios";
-import { handleApiError } from "../../../lib/utils/handleAPIError";
+
 import { useState } from "react";
 
 const memberAddSchema = memberSchema.omit({ password: true });
-type MemberAddSchema = z.infer<typeof memberAddSchema>;
+export type MemberAddSchema = z.infer<typeof memberAddSchema>;
 
-export function FormMemberAdd() {
+type FormMemberProps = {
+    mode?: "create" | "edit";
+    description: string;
+    defaultValues?: Partial<MemberAddSchema>; // Partial crea un type del objeto que recibe
+    onSubmit?: (data: MemberAddSchema) => Promise<void> | void;
+    isLoading?: boolean;
+};
+
+export function FormMember({
+    mode = "create",
+    description,
+    defaultValues,
+    onSubmit,
+    isLoading: externalLoading,
+}: FormMemberProps) {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const {
         control,
@@ -30,49 +42,44 @@ export function FormMemberAdd() {
             phone: "",
             gender: "O",
             born_date: "",
+            ...defaultValues,
         },
     });
 
-    const onSubmit: SubmitHandler<MemberAddSchema> = async (
+    const handleFormSubmit: SubmitHandler<MemberAddSchema> = async (
         formData: MemberAddSchema
     ) => {
         try {
             setIsSubmitting(true);
 
-            toast.promise(api.post("/member", formData), {
-                loading: "Registrando usuario...",
-                success: (response) => {
-                    reset(); // Limpia el formulario después del éxito
-                    const { member, message } = response.data;
-
-                    return `${message}: ${member}`;
-                },
-                error: (error) => {
-                    throw error; // Propaga el error para manejarlo en el catch
-                },
-            });
+            if (onSubmit) {
+                await onSubmit(formData);
+                if (mode === "create") reset();
+            }
         } catch (error) {
-            handleApiError(error);
+            console.log(error);
         } finally {
             setIsSubmitting(false);
         }
     };
 
     // Combina el estado de envío del formulario con nuestro estado personalizado
-    const isLoading = isSubmitting || isFormSubmitting;
+    const isLoading = isSubmitting || isFormSubmitting || externalLoading;
 
     return (
         <div className="mb-8">
             <div className="mb-4 space-y-2">
                 <h2 className="font-semibold text-lg ">Cliente</h2>
                 <p className="text-sm text-gray-500">
-                    Ingresa la información del cliente, indique al cliente la
-                    matricula que te da como respuesta el envio del formulario
+                    {description}
                 </p>
             </div>
 
             <div className="space-y-6 bg-primary-200 rounded-md p-4 shadow-lg shadow-gray-950 border-1 border-gray-800">
-                <form className="space-y-4 " onSubmit={handleSubmit(onSubmit)}>
+                <form
+                    className="space-y-4 "
+                    onSubmit={handleSubmit(handleFormSubmit)}
+                >
                     <CustomInput
                         name="name"
                         control={control}

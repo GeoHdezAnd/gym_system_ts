@@ -19,7 +19,7 @@ interface ButtonProps {
 export const Button = ({
     children,
     variant = "primary",
-    size = "md",
+    size = "sm",
     className = "",
     type = "button",
     disabled = false,

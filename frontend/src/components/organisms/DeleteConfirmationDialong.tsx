@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { PiEraserFill, PiX } from "react-icons/pi";
+import { PiEraserFill } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "../attoms";
 type Props = {
     fild: string;
     onConfirm: () => void;
@@ -46,7 +47,7 @@ export const DeleteConfirmationDialog = ({ fild, onConfirm }: Props) => {
                     <motion.div
                         ref={dialogRef}
                         initial={{ opacity: 0, y: 50, x: -10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 100, x: -30, scale: 1 }}
+                        animate={{ opacity: 1, y: 70, x: -30, scale: 1 }}
                         exit={{ opacity: 0, y: 50, x: -10, scale: 0.95 }}
                         transition={{
                             type: "spring",
@@ -57,50 +58,41 @@ export const DeleteConfirmationDialog = ({ fild, onConfirm }: Props) => {
                     >
                         <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden w-64">
                             {/* Encabezado */}
-                            <div className="flex justify-between items-center p-3 border-b border-gray-700 bg-gray-900/50">
+                            <div className="items-center p-3 border-b border-gray-700 bg-gray-900/50">
                                 <h3 className="text-sm text-red-400 flex items-center gap-2">
                                     <PiEraserFill />
                                     Confirmar eliminación
                                 </h3>
-                                <button
-                                    onClick={() => {
-                                        setIsOpen(false);
-                                    }}
-                                    className="text-gray-400 hover:text-white"
-                                >
-                                    <PiX />
-                                </button>
+                                
                             </div>
 
                             {/* Cuerpo */}
                             <div className="p-4 text-center">
-                                <p className="text-sm text-gray-300  ">
-                                    ¿Está seguro de eliminar el campo?
-                                </p>
-                                <span className="text-pretty text-sm leading-none">
+                               
+                                <p className="text-pretty text-gray-400 py-2 text-sm leading-none">
                                     {fild}
-                                </span>
+                                </p>
 
                                 {/* Acciones */}
                                 <div className="flex justify-end mt-2 gap-2">
-                                    <button
+                                    <Button
                                         onClick={() => {
                                             setIsOpen(false);
                                         }}
-                                        className="px-3 py-1.5 text-sm rounded-md border border-gray-600 hover:bg-gray-700 transition-colors"
+                                        variant="secondary"
                                     >
                                         Cancelar
-                                    </button>
-                                    <button
+                                    </Button>
+                                    <Button
                                         onClick={() => {
                                             setIsOpen(false);
                                             onConfirm();
                                         }}
-                                        className="px-3 py-1.5 text-sm rounded-md bg-red-600 hover:bg-red-700 text-white flex items-center gap-1 transition-colors"
+                                        variant="danger"
                                     >
                                         <PiEraserFill />
                                         Eliminar
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>

@@ -1,3 +1,4 @@
+import type { MemberAddSchema } from "../components/organisms";
 import api from "../lib/config/axios";
 
 type PropsGet = {
@@ -17,13 +18,23 @@ export async function getMembers(params: PropsGet) {
     return data || { members: [], total: 0, pages: 1, currentPage: 1 };
 }
 
+export async function getMemberByID(id: string) {
+    const { data } = await api.get(`/member/${id}`);
+    return data;
+}
+
+export async function updateMember(id: string, user: MemberAddSchema) {
+    const { data } = await api.put(`/member/${id}`, user );
+    return data;
+}
+
 export async function deleteMember(userId: string) {
     const { data } = await api.delete(`/member/${userId}`);
+
     return data;
 }
 
 export async function deleteBatchMembers(userIds: string[]) {
-    console.log(userIds);
     const { data } = await api.delete("/member/batch-delete", {
         data: { userIds },
     });

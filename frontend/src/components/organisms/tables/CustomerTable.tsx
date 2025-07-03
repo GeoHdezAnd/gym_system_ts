@@ -150,7 +150,7 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
 
             {/* Tabla de usuarios */}
             <div className="hidden md:block  w-full ">
-                <table className="w-full static ">
+                <table className="w-full relative ">
                     <thead className="border-b-1 space-x-2 border-gray-800">
                         <tr>
                             <th className="head-table">
@@ -296,7 +296,7 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
                                             <RiEdit2Fill />
                                         </Link>
                                         <DeleteConfirmationDialog
-                                            fild={`Usuario: ${user.name} ${user.last_name}`}
+                                            fild={`Confirma eliminación de: ${user.name} ${user.last_name}`}
                                             onConfirm={() =>
                                                 handleDelete(user.id)
                                             }

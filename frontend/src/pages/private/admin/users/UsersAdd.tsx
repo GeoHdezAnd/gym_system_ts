@@ -1,7 +1,13 @@
 import { useState } from "react";
 import clsx from "clsx";
 import { TbUsers, TbUserCog, TbUserBolt } from "react-icons/tb";
-import { FormMemberAdd } from "../../../../components/organisms";
+import {
+    FormMember,
+    type MemberAddSchema,
+} from "../../../../components/organisms";
+import { toast } from "sonner";
+import api from "../../../../lib/config/axios";
+import { handleApiError } from "../../../../lib/utils/handleAPIError";
 
 export default function UsersAdd() {
     const [credential, setCredential] = useState<string>("client");
@@ -12,8 +18,22 @@ export default function UsersAdd() {
         { value: "trainer", label: "Entrenador", icon: <TbUserBolt /> },
     ];
 
+    const onSubmit = (data: MemberAddSchema) => {
+        toast.promise(api.post("/member", data), {
+            loading: "Registrando usuario...",
+            success: (response) => {
+                const { member, message } = response.data;
+
+                return `${message}: ${member}`;
+            },
+            error: (error) => {
+                return handleApiError(error);
+            },
+        });
+    };
+
     return (
-        <div className="container mx-auto   text-white">
+        <div className="container  text-white">
             <h1 className="text-2xl font-semibold  mb-6">Agregar usuario</h1>
 
             <div className="flex flex-col md:flex-row gap-2 line">
@@ -46,7 +66,16 @@ export default function UsersAdd() {
                 {/* Contenido principal */}
                 <div className="w-full  px-2 py-2 shadow mx-0 lg:mx-12">
                     {/* Formulario según el tipo de credencial */}
-                    {credential === "client" && <FormMemberAdd />}
+                    {credential === "client" && (
+                        <FormMember
+                            mode="create"
+                            description="Ingresa la información del cliente, indique al cliente la
+                    matricula que te da como respuesta el envio del formulario"
+                            onSubmit={async (data) => {
+                                onSubmit(data);
+                            }}
+                        />
+                    )}
                 </div>
             </div>
         </div>

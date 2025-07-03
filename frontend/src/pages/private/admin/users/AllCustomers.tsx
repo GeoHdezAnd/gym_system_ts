@@ -17,7 +17,7 @@ export default function AllCustomers() {
 
     const { data, isLoading, isError, error } = useQuery({
         queryFn: () => getMembers({ page, limit, search }),
-        queryKey: ["members", page, limit, searchDebounce],
+        queryKey: ["members", page, limit, searchDebounce], // Estos campos están dentro ya que se vuelve a hacer la petición en cuanto hay cambio en esos valores
     });
 
     const {

@@ -5,7 +5,6 @@ import {
     InferCreationAttributes,
     Model,
     NonAttribute,
-    sql,
 } from "@sequelize/core";
 import {
     Table,
@@ -30,8 +29,8 @@ export class UserModel extends Model<
     InferAttributes<UserModel>,
     InferCreationAttributes<UserModel>
 > {
-    @Attribute(DataTypes.UUIDV4)
-    @Default(sql.uuidV4)
+    @Attribute(DataTypes.UUID)
+    @Default(DataTypes.UUIDV4)
     @PrimaryKey
     declare id: CreationOptional<string>;
 
