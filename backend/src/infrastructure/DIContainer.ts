@@ -143,10 +143,9 @@ export class DIContainer {
     // Casos de uso MEMBERS
     static getCreateMemberUseCase(): CreateMemberUseCase {
         return new CreateMemberUseCase(
+            this._userDomainService,
             this._userRepository,
             this._memberRepository,
-            this._roleRepository,
-            this._authService,
             this._emailService
         );
     }

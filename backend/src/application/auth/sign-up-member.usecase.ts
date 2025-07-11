@@ -9,18 +9,7 @@ import {
     SignUpDto,
 } from "./dtos/request/sign-up.dto";
 
-/**
- * Caso de uso para registrar un nuevo miembro.
- *
- * - Verifica que el usuario no exista previamente.
- * - Obtiene el rol de miembro.
- * - Crea el usuario y su perfil de miembro en una transacción.
- * - Envía un email de confirmación.
- *
- * @param input Datos del nuevo miembro.
- * @returns Datos básicos del miembro creado.
- * @throws Error si ocurre algún problema durante el registro.
- */
+
 export class SignUpMemberUseCase
     implements IUseCase<ISignUpMemberDto, ISignUpResultDto | undefined>
 {

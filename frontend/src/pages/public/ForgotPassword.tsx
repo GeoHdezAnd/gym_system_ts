@@ -1,5 +1,8 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { forgotPasswordSchema, type ForgotPasswordForm } from "../../lib/types";
+import {
+    forgotPasswordSchema,
+    type ForgotPasswordForm,
+} from "../../lib/types/schemas.zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomInput } from "../../components";
 import { toast } from "sonner";

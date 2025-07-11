@@ -8,7 +8,7 @@ type TUser = {
     name: string;
     last_name: string;
     email: string;
-    password: string;
+    password?: string;
     phone: string;
 };
 
@@ -16,7 +16,7 @@ export class UserDomainServiceImpl implements UserDomainService {
     constructor(
         private _userRepository: UserRepository,
         private readonly _roleRepository: RoleRepository,
-        private readonly _authService: IAuthService
+        public _authService: IAuthService
     ) {}
 
     async ensureUserDoesNotExist(email: string, phone: string) {
@@ -38,10 +38,10 @@ export class UserDomainServiceImpl implements UserDomainService {
     }
 
     async buildUser(input: TUser, role_id: number): Promise<User> {
-        const hashPassword = await this._authService.hashPassword(
-            input.password
-        );
         const token = createToken();
+        const hashPassword = await this._authService.hashPassword(
+            input.password || ""
+        );
 
         return new User({
             ...input,

@@ -25,14 +25,21 @@ export class PlanController {
 
     async create(req: Request, res: Response, next: NextFunction) {
         try {
-            const { name, description, benefits, price, duration_days } =
-                req.body;
+            const {
+                name,
+                description,
+                benefits,
+                price,
+                duration_days,
+                application_access,
+            } = req.body;
             const newPlan = await this.createPlanUseCase.execute({
                 name,
                 description,
                 benefits,
                 price,
                 duration_days,
+                application_access,
             });
             res.json({
                 success: true,

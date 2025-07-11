@@ -53,6 +53,10 @@ export class PlansModel extends Model<
     declare duration_days: number;
 
     @Attribute(DataTypes.BOOLEAN)
+    @Default(false)
+    declare application_access: CreationOptional<boolean>;
+
+    @Attribute(DataTypes.BOOLEAN)
     @Default(true)
     declare is_active: CreationOptional<boolean>;
 

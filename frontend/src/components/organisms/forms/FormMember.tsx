@@ -3,7 +3,7 @@ import { RiUser3Fill } from "react-icons/ri";
 import { MdEmail, MdPhoneInTalk, MdDateRange } from "react-icons/md";
 import { TbGenderAndrogyne } from "react-icons/tb";
 import { Button, CustomInput } from "../../attoms";
-import { memberSchema } from "../../../lib/types";
+import { memberSchema } from "../../../lib/types/schemas.zod";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -64,15 +64,13 @@ export function FormMember({
     };
 
     // Combina el estado de envío del formulario con nuestro estado personalizado
-    const isLoading = isSubmitting || isFormSubmitting || externalLoading;
+    const isLoading = isFormSubmitting || externalLoading || isSubmitting;
 
     return (
         <div className="mb-8">
             <div className="mb-4 space-y-2">
                 <h2 className="font-semibold text-lg ">Cliente</h2>
-                <p className="text-sm text-gray-500">
-                    {description}
-                </p>
+                <p className="text-sm text-gray-500">{description}</p>
             </div>
 
             <div className="space-y-6 bg-primary-200 rounded-md p-4 shadow-lg shadow-gray-950 border-1 border-gray-800">

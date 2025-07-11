@@ -3,7 +3,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import api from "../../lib/config/axios";
 import { CustomInput } from "../../components";
-import { memberSchema, type MemberFormData } from "../../lib/types";
+import { memberSchema, type MemberFormData } from "../../lib/types/schemas.zod";
 import { Link } from "react-router";
 import { handleApiError } from "../../lib/utils/handleAPIError";
 import { Button } from "../../components/attoms";

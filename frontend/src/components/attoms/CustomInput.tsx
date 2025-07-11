@@ -117,7 +117,7 @@ export const CustomInput = <T extends FieldValues>({
     return (
         <div className="form-group space-y-2 ">
             {icon ? (
-                <div className="  lg:flex  space-y-2 items-center justify-between gap-2 px-4 py-1">
+                <div className="lg:flex  space-y-2 items-center justify-between gap-2 px-2 py-1">
                     <div className="flex gap-2 items-center ">
                         {icon}
                         <label
@@ -163,11 +163,11 @@ export const CustomInput = <T extends FieldValues>({
                                 return (
                                     <textarea
                                         id={name}
-                                        className={`flex-1 border ${
+                                        className={`flex-1 border text-sm w-full ${
                                             error
                                                 ? "border-red-500"
                                                 : "border-gray-600"
-                                        } rounded p-1 transform duration-150 focus:outline-none focus:ring-1 focus:ring-blue-500`}
+                                        } rounded p-2 transform duration-150 focus:outline-none focus:ring-1 focus:ring-blue-500`}
                                         rows={rows}
                                         placeholder={placeholder}
                                         {...field}
@@ -197,6 +197,17 @@ export const CustomInput = <T extends FieldValues>({
                                                 : undefined
                                         }
                                         {...field}
+                                        onChange={(e) => {
+                                            if (type === "number") {
+                                                field.onChange(
+                                                    e.target.value === ""
+                                                        ? ""
+                                                        : Number(e.target.value)
+                                                );
+                                            } else {
+                                                field.onChange(e);
+                                            }
+                                        }}
                                     />
                                     {type === "password" && (
                                         <button
@@ -263,7 +274,7 @@ export const CustomInput = <T extends FieldValues>({
                                     return (
                                         <textarea
                                             id={name}
-                                            className={`w-full px-3 py-1 border ${
+                                            className={`w-full p-3  text-sm border ${
                                                 error
                                                     ? "border-red-500"
                                                     : "border-gray-500"

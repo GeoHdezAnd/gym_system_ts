@@ -4,6 +4,7 @@ export interface PlanProps {
     description: string;
     benefits: string[];
     price: number;
+    application_access?: boolean;
     duration_days: number;
     is_active?: boolean;
     deleted?: boolean;
@@ -33,6 +34,10 @@ export class Plan {
         return this.props.price;
     }
 
+    get application_access(): boolean | undefined {
+        return this.props.application_access;
+    }
+
     get duration_days(): number {
         return this.props.duration_days;
     }
@@ -57,12 +62,15 @@ export class Plan {
         benefits,
         price,
         duration_days,
+        application_access,
     }: Partial<PlanProps>): void {
         if (name) this.props.name = name;
         if (description) this.props.description = description;
         if (benefits) this.props.benefits = benefits;
         if (price) this.props.price = price;
         if (duration_days) this.props.duration_days = duration_days;
+        if (application_access)
+            this.props.application_access = application_access;
     }
 
     softDelete(): void {

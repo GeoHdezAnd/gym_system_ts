@@ -15,6 +15,7 @@ export class SequelizePlanRepository implements PlanRepository {
             benefits: plan.benefits,
             price: plan.price,
             duration_days: plan.duration_days,
+            application_access: plan.application_access,
         });
         return new Plan(planNew);
     }

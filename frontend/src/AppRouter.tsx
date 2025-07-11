@@ -11,6 +11,9 @@ import ConfirmAccount from "./pages/public/ConfirmAccount";
 import UsersAdd from "./pages/private/admin/users/UsersAdd";
 import AllCustomers from "./pages/private/admin/users/AllCustomers";
 import CustomerEdit from "./pages/private/admin/users/CustomerEdit";
+import AddMembership from "./pages/private/admin/memberships/AddMembership";
+import AllMemberships from "./pages/private/admin/memberships/AllMemberships";
+import { EditMembership } from "./pages/private/admin/memberships/EditMembership";
 
 export const AppRouter = () => {
     return (
@@ -35,14 +38,26 @@ export const AppRouter = () => {
                     </Route>
                     <Route path="/dashboard" element={<DashboardLayout />}>
                         <Route index element={<Dashboard />} />
-                        <Route path="users/add" element={<UsersAdd />} />
+                        <Route path="user/add" element={<UsersAdd />} />
                         <Route
-                            path="users/customer"
+                            path="user/customer/all"
                             element={<AllCustomers />}
                         />
                         <Route
-                            path="users/customer/:userId/edit"
+                            path="user/customer/:userId/edit"
                             element={<CustomerEdit />}
+                        />
+                        <Route
+                            path="membership/add"
+                            element={<AddMembership />}
+                        />
+                        <Route
+                            path="membership/all"
+                            element={<AllMemberships />}
+                        />
+                        <Route
+                            path="membership/:id/edit"
+                            element={<EditMembership />}
                         />
                     </Route>
                 </Routes>

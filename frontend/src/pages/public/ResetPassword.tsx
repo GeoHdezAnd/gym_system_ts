@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import { CustomInput } from "../../components";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { passwordSchema, type PasswordForm } from "../../lib/types";
+import { passwordSchema, type PasswordForm } from "../../lib/types/schemas.zod";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import api from "../../lib/config/axios";

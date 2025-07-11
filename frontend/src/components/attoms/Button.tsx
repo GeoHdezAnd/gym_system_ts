@@ -2,7 +2,7 @@ import { type ReactNode } from "react";
 import { clsx } from "clsx";
 
 type ButtonVariant = "primary" | "secondary" | "danger" | "ghost" | "outline";
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonSize = "xs" | "sm" | "md" | "lg";
 
 interface ButtonProps {
     children: ReactNode;
@@ -31,6 +31,7 @@ export const Button = ({
         "rounded-lg font-normal transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer";
 
     const sizeClasses = {
+        xs: "text-sm px-2 py-1",
         sm: "py-1.5 px-3 text-sm ",
         md: "py-2 px-4 text-base",
         lg: "py-3 px-6 text-lg",

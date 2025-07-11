@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { getMemberByID, updateMember } from "../../../../api/MemberApi";
 import { FaUserEdit } from "react-icons/fa";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import {
 } from "../../../../components/organisms";
 import { toast } from "sonner"; // o el paquete de toast que uses
 import { handleApiError } from "../../../../lib/utils/handleAPIError";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 export default function CustomerEdit() {
     const { userId } = useParams();
@@ -66,7 +67,14 @@ export default function CustomerEdit() {
 
     return (
         <div className="container text-white">
-            <h1 className="text-2xl font-semibold  mb-2">Editar cliente</h1>
+            <div className="flex gap-2 items-center mb-3">
+                <Link className="hover:text-pink-800" to={"/dashboard/users/customer"}>
+                    <IoIosArrowRoundBack className="text-3xl cursor-pointer" />
+                </Link>
+
+                <h1 className="text-2xl font-semibold">Editar cliente</h1>
+            </div>
+
             <div className="flex flex-col md:flex-row gap-2 line">
                 {/* Panel lateral izquierdo (Menú de navegación) */}
                 <div className="w-full  md:w-1/4  p-2 xs:border-b-1 md:border-r-1   border-gray-600 shadow">

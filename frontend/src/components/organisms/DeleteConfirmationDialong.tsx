@@ -58,7 +58,7 @@ export const DeleteConfirmationDialog = ({ fild, onConfirm }: Props) => {
                     >
                         <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-xl overflow-hidden w-64">
                             {/* Encabezado */}
-                            <div className="items-center p-3 border-b border-gray-700 bg-gray-900/50">
+                            <div className="items-center p-2 border-b border-gray-700 bg-gray-900/50">
                                 <h3 className="text-sm text-red-400 flex items-center gap-2">
                                     <PiEraserFill />
                                     Confirmar eliminación
@@ -67,7 +67,7 @@ export const DeleteConfirmationDialog = ({ fild, onConfirm }: Props) => {
                             </div>
 
                             {/* Cuerpo */}
-                            <div className="p-4 text-center">
+                            <div className="p-2 text-center">
                                
                                 <p className="text-pretty text-gray-400 py-2 text-sm leading-none">
                                     {fild}

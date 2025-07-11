@@ -22,9 +22,9 @@ export default function UsersAdd() {
         toast.promise(api.post("/member", data), {
             loading: "Registrando usuario...",
             success: (response) => {
-                const { member, message } = response.data;
+                const { matricula, message } = response.data;
 
-                return `${message}: ${member}`;
+                return `${message}: ${matricula}`;
             },
             error: (error) => {
                 return handleApiError(error);

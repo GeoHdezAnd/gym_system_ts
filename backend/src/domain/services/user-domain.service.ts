@@ -1,4 +1,5 @@
 import { Role, User } from "../entities";
+import { IAuthService } from "./auth.service";
 
 export type TUser = {
     name: string;
@@ -9,6 +10,7 @@ export type TUser = {
 };
 
 export interface UserDomainService {
+    _authService: IAuthService;
     ensureUserDoesNotExist(email: string, phone: string): Promise<void>;
     getRoleorFail(roleName: string): Promise<Role>;
     buildUser(input: TUser, role_id: number): Promise<User>;

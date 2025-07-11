@@ -1,7 +1,6 @@
 import { NavLink } from "react-router";
 import clsx from "clsx";
 import { type IconType } from "react-icons";
-import { useState } from "react";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 
 interface NavItemProps {
@@ -10,6 +9,8 @@ interface NavItemProps {
     label: string;
     end?: boolean;
     subItems?: Array<{ to: string; label: string; icon?: IconType }>;
+    isExpanded?: boolean;
+    onExpand?: () => void;
 }
 
 export function NavItem({
@@ -18,9 +19,9 @@ export function NavItem({
     label,
     end = false,
     subItems,
+    isExpanded = false,
+    onExpand,
 }: NavItemProps) {
-    const [isExpanded, setIsExpanded] = useState(false);
-
     return (
         <div className="flex flex-col cursor-pointer">
             <NavLink
@@ -39,7 +40,7 @@ export function NavItem({
                 onClick={(e) => {
                     if (subItems) {
                         e.preventDefault();
-                        setIsExpanded(!isExpanded);
+                        onExpand?.();
                     }
                 }}
             >

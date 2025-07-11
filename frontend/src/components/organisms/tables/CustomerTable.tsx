@@ -153,7 +153,7 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
                 <table className="w-full relative ">
                     <thead className="border-b-1 space-x-2 border-gray-800">
                         <tr>
-                            <th className="head-table">
+                            <th className="head-table px-4">
                                 <input
                                     type="checkbox"
                                     checked={
@@ -290,7 +290,7 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
                                 <td className="table-item-base">
                                     <div className="flex items-center gap-4 text-lg text-bold ">
                                         <Link
-                                            to={`/dashboard/users/customer/${user.id}/edit`}
+                                            to={`/dashboard/user/customer/${user.id}/edit`}
                                             className="p-1 cursor-pointer text-yellow-400 border border-yellow-400 rounded-md"
                                         >
                                             <RiEdit2Fill />

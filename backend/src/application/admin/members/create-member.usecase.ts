@@ -1,12 +1,6 @@
-import { Member, User } from "../../../domain/entities";
-import {
-    MemberRepository,
-    RoleRepository,
-    UserRepository,
-} from "../../../domain/interfaces";
-import { ConflictError, NotFoundError } from "../../../domain/errors";
-import { IAuthService, EmailService } from "../../../domain/services";
-import { createToken } from "../../../utils";
+import { Member } from "../../../domain/entities";
+import { MemberRepository, UserRepository } from "../../../domain/interfaces";
+import { EmailService, UserDomainService } from "../../../domain/services";
 
 export type TCreateUser = {
     name: string;
@@ -19,70 +13,66 @@ export type TCreateUser = {
 
 export class CreateMemberUseCase {
     constructor(
-        private userRepository: UserRepository,
-        private memberRepository: MemberRepository,
-        private roleRepository: RoleRepository,
-        private authService: IAuthService,
-        private emailService: EmailService
+        private _userDomainService: UserDomainService,
+        private _userRepository: UserRepository,
+        private _memberRepository: MemberRepository,
+        private _emailService: EmailService
     ) {}
 
     async execute(input: TCreateUser): Promise<string> {
-        // 1. Verfificamos si el usuario existe
-        const existingUser =
-            (await this.userRepository.findByEmail(input.email)) ||
-            (await this.userRepository.findByPhone(input.phone));
-        if (existingUser) {
-            throw new ConflictError("El usuario ya existe");
-        }
-        // 2. Obtener el rol del member
-        const memberRole = await this.roleRepository.findByName("member");
-        if (!memberRole) {
-            throw new NotFoundError("Rol de member no configurado");
-        }
-
-        // 3. Crear usuario
-        const hashPassword = await this.authService.hashPassword(
-            input.last_name
+        // 1. Verificar si el usuario existe
+        await this._userDomainService.ensureUserDoesNotExist(
+            input.email,
+            input.phone
         );
 
-        const token = createToken();
+        // 2. Obtener el rol de miembro
+        const memberRole = await this._userDomainService.getRoleorFail(
+            "member"
+        );
 
-        const user = new User({
-            name: input.name,
-            last_name: input.last_name,
-            email: input.email,
-            phone: input.phone,
-            password: hashPassword,
-            token,
-            role_id: memberRole.id,
-        });
+        // 3. Crear usuario SIN contraseña (la pondremos después)
+        const user = await this._userDomainService.buildUser(
+            {
+                name: input.name,
+                last_name: input.last_name,
+                email: input.email,
+                password: "", // Temporal, la cambiamos luego
+                phone: input.phone,
+            },
+            memberRole.id
+        );
 
-        const createdUser = await this.userRepository.create(user);
+        // 4. Generar matrícula
+        const matricula = user.createMatricula();
+
+        // 5. Hashear la matrícula y ponerla como contraseña
+        const hash = await this._userDomainService._authService.hashPassword(
+            matricula
+        );
+        user.changePassword(hash);
+
+        // 6. Guardar usuario
+        const createdUser = await this._userRepository.create(user);
         if (!createdUser) {
-            throw new Error();
+            throw new Error("No fue posible crear el usuario");
         }
 
-        // Crear perfil de member
+        // 7. Crear perfil de miembro
         const member = new Member({
             gender: input.gender,
             born_date: input.born_date,
-            matricula: createdUser.createMatricula(),
-            user_id: createdUser.id!, // Especificamos con "!" que la variable siempre existira
+            matricula,
+            user_id: createdUser.id!,
         });
+        await this._memberRepository.create(member);
 
-        // Cambiamos password a la matricula del usuario para que sea seguro su primer ingreso
-        const matricula = createdUser.createMatricula();
-        const hash = await this.authService.hashPassword(matricula);
-        createdUser.changePassword(hash);
-
-        await this.userRepository.save(createdUser);
-        await this.memberRepository.create(member);
-
-        // 5. Envio de email de confirmación
-        await this.emailService.sendCreatedUserGym({
+        // 8. Enviar email de bienvenida con matrícula
+        await this._emailService.sendCreatedUserGym({
             name: `${user.name} ${user.last_name}`,
             email: user.email,
             token: user.token!,
+            matricula,
         });
 
         return matricula;

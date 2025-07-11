@@ -4,25 +4,30 @@ import {
     RiSettingsFill,
     RiUserAddFill,
     RiShieldUserLine,
+    RiPantoneFill,
+    RiAddCircleLine,
+    RiAppsFill,
 } from "react-icons/ri";
 import { TbUsers } from "react-icons/tb";
 import { NavItem } from "../attoms/NavItem";
+import { useState } from "react";
 
 export function SideBar() {
+    const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
     const navItems = [
         { to: "", icon: RiCollageFill, label: "Dashboard", end: true },
         {
-            to: "users",
+            to: "user",
             icon: RiUserFill,
             label: "Usuarios",
             subItems: [
                 {
-                    to: "users/add",
+                    to: "user/add",
                     label: "Agregar usuario",
                     icon: RiUserAddFill,
                 },
                 {
-                    to: "users/customer",
+                    to: "user/customer/all",
                     label: "Clientes",
                     icon: TbUsers,
                 },
@@ -30,6 +35,23 @@ export function SideBar() {
                     to: "users/roles",
                     label: "Administrar roles",
                     icon: RiShieldUserLine,
+                },
+            ],
+        },
+        {
+            to: "membership",
+            icon: RiPantoneFill,
+            label: "Membresias",
+            subItems: [
+                {
+                    to: "membership/add",
+                    label: "Agregar",
+                    icon: RiAddCircleLine,
+                },
+                {
+                    to: "membership/all",
+                    label: "Ver todas",
+                    icon: RiAppsFill,
                 },
             ],
         },
@@ -44,14 +66,12 @@ export function SideBar() {
             </div>
 
             <nav className="flex-1 flex flex-col gap-1 mt-4 overflow-y-auto">
-                {navItems.map((item) => (
+                {navItems.map((item, idx) => (
                     <NavItem
                         key={item.to}
-                        to={item.to}
-                        icon={item.icon}
-                        label={item.label}
-                        end={item.end}
-                        subItems={item.subItems}
+                        {...item}
+                        isExpanded={expandedIndex === idx}
+                        onExpand={() => setExpandedIndex(expandedIndex === idx ? null : idx)}
                     />
                 ))}
             </nav>

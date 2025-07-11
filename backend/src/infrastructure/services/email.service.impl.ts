@@ -87,7 +87,8 @@ export class EmailServiceImpl implements EmailService {
             </div>
             
             <div style="padding: 20px;">
-                <h2 style="color:rgb(93, 26, 26);">Hola ${user.name},</h2>
+                <h2 style="color:rgb(93, 26, 26);">Hola ${user.name}, con matricula ${user.matricula}</h2>
+                
                 <p style="line-height: 1.6;">¡Gracias por registrarte en KingsLayer Gym! Tu cuenta fue creada desde el panel de administración del gimnasio.</p>
                 
                 <div style="background-color: #f7fafc; border-left: 4px solidrgb(93, 26, 35); padding: 12px; margin: 20px 0;">

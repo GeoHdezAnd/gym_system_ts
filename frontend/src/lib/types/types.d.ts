@@ -14,3 +14,15 @@ export type MemberProps = {
         matricula: string;
     };
 };
+
+type PlanProps = {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    duration_days: number;
+    application_access: boolean;
+    benefits: string[];
+    is_active: boolean;
+    deleted: boolean;
+};

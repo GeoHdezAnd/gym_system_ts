@@ -54,17 +54,17 @@ export class MemberController {
         try {
             const { name, last_name, email, phone, gender, born_date } =
                 req.body;
-            const member = await this._createMemberUseCase.execute({
+            const matricula = await this._createMemberUseCase.execute({
                 name,
                 last_name,
-                email,
+                email, 
                 phone,
                 gender,
                 born_date,
             });
             res.status(201).json({
                 message: "Miembro creado correctamente",
-                member,
+                matricula,
             });
         } catch (error) {
             next(error);
