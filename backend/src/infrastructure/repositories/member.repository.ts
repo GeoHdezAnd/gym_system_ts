@@ -6,7 +6,7 @@ import {
 } from "../../domain/interfaces";
 import { NotFoundError } from "../../domain/errors";
 import { MemberModel, UserModel } from "../models";
-import { MemberWithUserDto } from "../../application/auth/dtos/response";
+import { MemberWithUserDto } from "../../application/dtos/dashboard";
 import { Op } from "@sequelize/core";
 
 export class SequelizeMemberRepository implements MemberRepository {

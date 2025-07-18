@@ -70,7 +70,7 @@ export const MembershipsTable = ({
 
     const memberships = data || [];
     return (
-        <div className="bg-primary-200 rounded-md border-1 border-gray-800 shadow-lg shadow-gray-900 overflow-hidden ">
+        <div className="bg-primary-200 rounded-md border-1 border-gray-800 shadow-lg shadow-gray-900 overflow-hidden select-none">
             <div className="flex justify-between items-center py-4 px-6">
                 <div className="flex items-center gap-4">
                     <h2 className="text-md">Todos las membresias existentes</h2>
@@ -138,7 +138,7 @@ export const MembershipsTable = ({
                                 >
                                     <p className="text-base text-gray-500">
                                         {" "}
-                                        No existen miembros registrados
+                                        No existen membresias registradas
                                     </p>
                                 </td>
                             </tr>
@@ -151,8 +151,8 @@ export const MembershipsTable = ({
                                 <td className=" pl-4 flex-1 ">{index + 1}</td>
                                 <td className="table-item-base">{plan.name}</td>
                                 <td className="table-item-base">
-                                    {plan.benefits.map((benefit) => (
-                                        <p>{benefit}</p>
+                                    {plan.benefits.map((benefit, index) => (
+                                        <p key={index}>{benefit}</p>
                                     ))}
                                 </td>
                                 <td className="table-item-base">

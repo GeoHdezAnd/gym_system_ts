@@ -21,6 +21,7 @@ import planRouter from "./routes/plan.routes";
 import suscriptionRouter from "./routes/suscription.router";
 import attendecandeRouter from "./routes/attendance.router";
 import { runLoaders } from "../infrastructure/loaders";
+import trainerRouter from "./routes/trainer.router";
 /**
  * Clase principal para levantar y configurar el servidor de la API.
  *
@@ -53,8 +54,9 @@ export class ApiServer {
 
         app.use("/api/auth", authRouter);
         app.use("/api/member", memberRouter);
+        app.use("/api/trainer", trainerRouter);
         app.use("/api/plan", planRouter);
-        app.use("/api/suscription", suscriptionRouter);
+        app.use("/api/subscription", suscriptionRouter);
         app.use("/api/attendance", attendecandeRouter);
         app.use(errorHandler);
 
@@ -77,7 +79,7 @@ export class ApiServer {
         try {
             await db.authenticate();
             db.sync(); // Esto permite que si creamos modelos nuevos se creeen en la base de datos si los tenemos especificados en la configuración de la DB
-            await runLoaders()
+            await runLoaders();
             console.log(colors.blue.bold("Conexión exitosa a la BD"));
         } catch (error) {
             console.log(colors.red.bold("Falló la conexión a la BD"));

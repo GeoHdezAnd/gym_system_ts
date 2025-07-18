@@ -9,6 +9,7 @@ import {
     PlansModel,
     SubscriptionModel,
     AttendanceModel,
+    TrainerModel,
 } from "../models";
 dotenv.config();
 
@@ -24,12 +25,14 @@ export const db = new Sequelize({
     host: process.env.DATABASE_HOST,
     port: parseInt(process.env.DATABASE_PORT as string, 10),
     dialect: PostgresDialect,
+    timezone: "America/Mexico_City",
     logging: false,
     models: [
         UserModel,
         RoleModel,
         AdminModel,
         MemberModel,
+        TrainerModel,
         PlansModel,
         SubscriptionModel,
         AttendanceModel,

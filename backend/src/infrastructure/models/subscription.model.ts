@@ -45,8 +45,8 @@ export class SubscriptionModel extends Model<
     @NotNull
     declare plan_id: string;
 
-    @NotNull
     @Attribute(DataTypes.DATEONLY)
+    @Default(DataTypes.NOW)
     declare start_date: Date;
 
     @NotNull

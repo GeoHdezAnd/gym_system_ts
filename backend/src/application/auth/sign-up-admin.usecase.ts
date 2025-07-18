@@ -3,11 +3,12 @@ import { ConflictError } from "../../domain/errors";
 import { AdminRepository, UserRepository } from "../../domain/interfaces";
 import { EmailService, UserDomainService } from "../../domain/services";
 import { IUseCase } from "../../shared/IUseCase";
+import { createMatricula } from "../../utils/createMatricula";
 import {
     ISignUpDto,
     ISignUpResultDto,
     SignUpDto,
-} from "./dtos/request/sign-up.dto";
+} from "../dtos/request/sign-up.dto";
 
 /**
  * Caso de uso para registrar un nuevo administrador.
@@ -17,9 +18,6 @@ import {
  * - Crea el usuario y su perfil de administrador.
  * - Envía un email de confirmación.
  *
- * @param input Datos del nuevo administrador.
- * @returns Datos básicos del administrador creado.
- * @throws ConflictError si el usuario ya existe o no se puede crear.
  */
 export class SignUpAdminUseCase
     implements IUseCase<ISignUpDto, ISignUpResultDto>
@@ -61,10 +59,12 @@ export class SignUpAdminUseCase
         await this._adminRepository.create(admin);
 
         // 5. Enviar email de confirmación
-        await this._emailService.sendConfirmationEmail({
+        await this._emailService.sendCreatedUserGym({
             name: `${user.name} ${user.last_name}`,
             email: user.email,
             token: user.token!,
+            matricula: createMatricula(user.name, user.last_name, user.phone),
+            userType: "admin",
         });
 
         return new SignUpDto({

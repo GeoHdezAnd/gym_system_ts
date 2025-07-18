@@ -3,12 +3,12 @@ import { MemberRepository, UserRepository } from "../../domain/interfaces";
 import { EmailService, UserDomainService } from "../../domain/services";
 import { db } from "../../infrastructure/config/db";
 import { IUseCase } from "../../shared/IUseCase";
+import { createMatricula } from "../../utils/createMatricula";
 import {
     ISignUpMemberDto,
     ISignUpResultDto,
     SignUpDto,
-} from "./dtos/request/sign-up.dto";
-
+} from "../dtos/request/sign-up.dto";
 
 export class SignUpMemberUseCase
     implements IUseCase<ISignUpMemberDto, ISignUpResultDto | undefined>
@@ -57,7 +57,11 @@ export class SignUpMemberUseCase
                 const member = new Member({
                     gender: input.gender,
                     born_date: input.born_date,
-                    matricula: createdUser.createMatricula(),
+                    matricula: createMatricula(
+                        input.name,
+                        input.last_name,
+                        input.phone
+                    ),
                     user_id: createdUser.id!, // Especificamos con "!" que la variable siempre existira
                 });
                 if (!member) {

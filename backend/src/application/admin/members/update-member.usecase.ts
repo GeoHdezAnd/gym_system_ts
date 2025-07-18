@@ -1,9 +1,7 @@
-import {
-    MemberRepository,
-    UserRepository,
-} from "../../../domain/interfaces";
+import { MemberRepository, UserRepository } from "../../../domain/interfaces";
 import { NotFoundError } from "../../../domain/errors";
 import { TCreateUser } from "./create-member.usecase";
+import { createMatricula } from "../../../utils/createMatricula";
 
 export class UpdateMemberUseCase {
     constructor(
@@ -35,7 +33,11 @@ export class UpdateMemberUseCase {
             if (!memberProfile) {
                 throw new NotFoundError("Perfil no encontrado");
             }
-            const newMatricula = userComplete.createMatricula();
+            const newMatricula = createMatricula(
+                newData.name,
+                newData.last_name,
+                newData.phone
+            );
 
             memberProfile.updateProfile(
                 newData.gender,

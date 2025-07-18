@@ -3,6 +3,7 @@ import { Role, User } from "../../domain/entities";
 import { ConflictError, NotFoundError } from "../../domain/errors";
 import { RoleRepository, UserRepository } from "../../domain/interfaces";
 import { IAuthService, UserDomainService } from "../../domain/services";
+import { createMatricula } from "../../utils/createMatricula";
 
 type TUser = {
     name: string;
@@ -40,7 +41,8 @@ export class UserDomainServiceImpl implements UserDomainService {
     async buildUser(input: TUser, role_id: number): Promise<User> {
         const token = createToken();
         const hashPassword = await this._authService.hashPassword(
-            input.password || ""
+            input.password ||
+                createMatricula(input.name, input.last_name, input.phone)
         );
 
         return new User({

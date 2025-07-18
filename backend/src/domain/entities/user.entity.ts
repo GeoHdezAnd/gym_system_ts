@@ -62,14 +62,6 @@ export class User {
         this.props.token = token;
     }
 
-    createMatricula(): string {
-        const nameInitials = this.name.slice(0, 2).toUpperCase();
-        const lastNameInitials = this.last_name.slice(0, 2).toUpperCase();
-        const telInitials = this.phone.slice(-4);
-
-        return `${nameInitials}${lastNameInitials}-${telInitials}`;
-    }
-
     confirmAccount(): void {
         this.props.confirmed = true;
         this.props.token = null;

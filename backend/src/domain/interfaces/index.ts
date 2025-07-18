@@ -5,3 +5,4 @@ export * from "./member.repository";
 export * from "./plan.repository";
 export * from "./suscription.repository";
 export * from "./attendance.repository";
+export * from "./trainer.repository"

@@ -1,7 +1,13 @@
+import { SubscriptionDetailsResponseDto } from "../../application/auth/dtos/response";
 import { Subscription, SubscriptionProps } from "../entities";
 
 export interface SubscriptionRepository {
     create(subscription: Subscription): Promise<SubscriptionProps>;
-    findActiveSubscription(member_id: string, plan_id: string): Promise<boolean>;
-    findLastSubscription(memberId: string): Promise<Subscription | false>;
+    findAllSubscriptionUser(
+        member_id: string
+    ): Promise<SubscriptionDetailsResponseDto[] | []>;
+    findActiveSubscription(
+        member_id: string,
+    ): Promise<boolean>;
+    findLastSubscription(member_id: string): Promise<Subscription | false>;
 }

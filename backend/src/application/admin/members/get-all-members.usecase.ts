@@ -1,5 +1,5 @@
 import { MemberRepository } from "../../../domain/interfaces";
-import { IMemberWithUserDto } from "../../auth/dtos/response";
+import { IMemberWithUserDto } from "../../dtos/dashboard";
 
 export class GetAllMembersUseCase {
     constructor(private memberRepository: MemberRepository) {}

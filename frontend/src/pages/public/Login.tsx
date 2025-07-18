@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import api from "../../lib/config/axios";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../../lib/hooks/useAuth";
-import { loginSchema, type LoginFormData } from "../../lib/types/schemas.zod";
+import { loginSchema, type LoginFormData } from "../../lib/schemas/auth";
 import { Button } from "../../components/attoms";
 
 export default function Login() {

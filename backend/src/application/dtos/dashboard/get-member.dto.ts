@@ -1,4 +1,4 @@
-import { MemberProps } from "../../../../domain/entities";
+import { MemberProps } from "../../../domain/entities";
 
 export interface IMemberWithUserDto {
     id: string;

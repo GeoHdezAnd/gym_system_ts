@@ -35,8 +35,11 @@ export class CreateAttendanceUseCase {
     private async validateActiveSubscription(memberId: string) {
         const subscription =
             await this.subscriptionRepository.findLastSubscription(memberId);
+        
+    
 
         if (!subscription || subscription.status !== "active") {
+        
             throw new ForbiddenError(
                 "El miembro no tiene una suscripción activa para acceder al gimnasio"
             );

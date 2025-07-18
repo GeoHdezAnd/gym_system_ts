@@ -39,7 +39,7 @@ export const ToggleButton = ({
             onClick={handleToggle}
             className={`${
                 sizeClasses[size]
-            } relative rounded-full p-1 transition-colors duration-300 focus:outline-none ${
+            } relative rounded-full py-1 transition-colors duration-300 focus:outline-none ${
                 isOn ? "bg-green-500" : "bg-red-600"
             }`}
             aria-pressed={isOn}

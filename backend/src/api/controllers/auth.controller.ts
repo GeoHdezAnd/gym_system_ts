@@ -33,20 +33,18 @@ export class AuthController {
     /** Registro de administradores / solo es posible con un administrador autenticado */
     async signUpAdmin(req: Request, res: Response, next: NextFunction) {
         try {
-            const { name, last_name, email, password, phone, access_level } =
-                req.body;
+            const { name, last_name, email, phone, access_level } = req.body;
 
             const result = await this._signUpAdminUseCase.execute({
                 name,
                 last_name,
                 email,
                 phone,
-                password,
                 access_level: access_level || "limited",
             });
 
             res.status(201).json({
-                message: "Admin creado correctamente",
+                message: "Admin creado correctamente, pida que revise su email",
                 result,
             });
         } catch (error) {

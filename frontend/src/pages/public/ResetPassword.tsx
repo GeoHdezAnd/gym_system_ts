@@ -2,7 +2,11 @@ import { useNavigate, useParams } from "react-router";
 import { CustomInput } from "../../components";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { passwordSchema, type PasswordForm } from "../../lib/types/schemas.zod";
+import {
+    passwordSchemaLogin,
+    type PasswordFormLogin,
+} from "../../lib/schemas/auth";
+
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import api from "../../lib/config/axios";
@@ -19,8 +23,8 @@ export default function ResetPassword() {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<PasswordForm>({
-        resolver: zodResolver(passwordSchema),
+    } = useForm<PasswordFormLogin>({
+        resolver: zodResolver(passwordSchemaLogin),
         defaultValues: {
             password: "",
         },
@@ -40,8 +44,8 @@ export default function ResetPassword() {
         checkToken();
     }, [token]);
 
-    const onSubmit: SubmitHandler<PasswordForm> = async (
-        formData: PasswordForm
+    const onSubmit: SubmitHandler<PasswordFormLogin> = async (
+        formData: PasswordFormLogin
     ) => {
         toast.promise(api.post(`auth/reset-password/${token}`, formData), {
             success: (response) => {

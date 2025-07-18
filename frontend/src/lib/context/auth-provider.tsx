@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const signIn = async (token: string) => {
         localStorage.setItem("AUTH_TOKEN", token);
-        
+
         try {
             const { data } = await api.get<User>("/auth/user");
             setAuth(data);
@@ -47,16 +47,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     };
 
-    const cerrarSesion = () => {
+    const logOut = () => {
         localStorage.removeItem("AUTH_TOKEN");
-        setIsAuthenticated(false)
+        setIsAuthenticated(false);
         setAuth(undefined);
     };
 
     return (
-        <AuthContext.Provider
-            value={{ auth, isAuthenticated, signIn, cerrarSesion }}
-        >
+        <AuthContext.Provider value={{ auth, isAuthenticated, signIn, logOut }}>
             {children}
         </AuthContext.Provider>
     );

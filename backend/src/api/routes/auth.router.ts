@@ -6,6 +6,7 @@ import {
     authenticate,
     authorize,
     handleInputErrors,
+    validateUserDashInput,
     validateMemberAuthInput,
     validatePasswordReset,
     validateUpdatePassword,
@@ -33,7 +34,7 @@ authRouter.post(
     "/admin/sign-up",
     authenticate,
     authorize(["admin"]),
-    validateUserAuthInput,
+    validateUserDashInput,
     handleInputErrors,
     authController.signUpAdmin.bind(authController)
 );

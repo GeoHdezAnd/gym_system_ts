@@ -1,20 +1,19 @@
 import bcrypt from "bcrypt";
 import { RoleModel } from "../models";
 import { UserModel } from "../models/user.model";
-import { AdminModel } from "../models/admin.model"
+import { AdminModel } from "../models/admin.model";
 
 export async function runLoaders() {
     await loadDefaultRoles();
     await loadAdmin();
 }
 
-
 async function loadDefaultRoles() {
-    const roles = ["admin", "member"];
-    for(const role of roles){
-        const exists = await RoleModel.findOne({where: {name: role}})
-        if(!exists) {
-            await RoleModel.create({name: role})
+    const roles = ["admin", "member", "trainer"];
+    for (const role of roles) {
+        const exists = await RoleModel.findOne({ where: { name: role } });
+        if (!exists) {
+            await RoleModel.create({ name: role });
         }
     }
 }

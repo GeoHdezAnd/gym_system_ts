@@ -12,7 +12,7 @@ export interface AuthContextType {
     auth: User | undefined;
     isAuthenticated: boolean;
     signIn: (token: string) => Promise<boolean>;
-    cerrarSesion: () => void;
+    logOut: () => void;
 }
 
 // Creación del contexto con valor inicial tipado

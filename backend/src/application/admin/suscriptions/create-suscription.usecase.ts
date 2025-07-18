@@ -27,13 +27,12 @@ export class CreateSuscriptionUseCase {
 
         const suscripcionActive =
             await this.subscriptionRepository.findActiveSubscription(
-                (member_id = member.profile.id!),
-                plan_id
+                (member_id = member.profile.id!)
             );
 
         if (suscripcionActive) {
             throw new ConflictError(
-                "Ya tiene el usuario una suscripción con ese plan activa"
+                "Ya tiene el usuario una suscripción activa"
             );
         }
 

@@ -3,16 +3,18 @@ import {
     RiUserFill,
     RiSettingsFill,
     RiUserAddFill,
-    RiShieldUserLine,
     RiPantoneFill,
     RiAddCircleLine,
     RiAppsFill,
 } from "react-icons/ri";
 import { TbUsers } from "react-icons/tb";
 import { NavItem } from "../attoms/NavItem";
+import { ImExit } from "react-icons/im";
 import { useState } from "react";
+import useAuth from "../../lib/hooks/useAuth";
 
 export function SideBar() {
+    const { logOut } = useAuth();
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
     const navItems = [
         { to: "", icon: RiCollageFill, label: "Dashboard", end: true },
@@ -31,11 +33,7 @@ export function SideBar() {
                     label: "Clientes",
                     icon: TbUsers,
                 },
-                {
-                    to: "users/roles",
-                    label: "Administrar roles",
-                    icon: RiShieldUserLine,
-                },
+                
             ],
         },
         {
@@ -55,7 +53,6 @@ export function SideBar() {
                 },
             ],
         },
-        { to: "settings", icon: RiSettingsFill, label: "Configuración" },
     ];
 
     return (
@@ -65,15 +62,39 @@ export function SideBar() {
                 <p className="font-medium text-xl ">Kings Layer</p>
             </div>
 
-            <nav className="flex-1 flex flex-col gap-1 mt-4 overflow-y-auto">
-                {navItems.map((item, idx) => (
+            <nav className="h-full flex flex-col justify-between my-4">
+                <div className="flex flex-col gap-1 mt-4">
+                    {navItems.map((item, idx) => (
+                        <NavItem
+                            key={item.to}
+                            {...item}
+                            isExpanded={expandedIndex === idx}
+                            onExpand={() =>
+                                setExpandedIndex(
+                                    expandedIndex === idx ? null : idx
+                                )
+                            }
+                        />
+                    ))}
+                </div>
+                <div className="grid gap-2">
+                    <div className="w-auto h-[.5px] mx-4 bg-gray-700" />
+
                     <NavItem
-                        key={item.to}
-                        {...item}
-                        isExpanded={expandedIndex === idx}
-                        onExpand={() => setExpandedIndex(expandedIndex === idx ? null : idx)}
+                        to="settings"
+                        icon={RiSettingsFill}
+                        label="Configuración"
                     />
-                ))}
+
+                    <button
+                        type="button"
+                        className="cursor-pointer flex text-sm rounded-md items-center pl-8 py-2 mx-4 gap-6 transform duration-20 bg-red-800/20 hover:bg-red-800/30 text-red-600 border-red-700"
+                        onClick={logOut}
+                    >
+                        <ImExit />
+                        Cerrar sesión
+                    </button>
+                </div>
             </nav>
         </aside>
     );

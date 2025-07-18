@@ -1,6 +1,6 @@
 import { useFieldArray, useForm, type SubmitHandler } from "react-hook-form";
 import { Button, CustomInput } from "../../attoms";
-import { planSchema, type PlanFormData } from "../../../lib/types/schemas.zod";
+import { planSchema, type PlanFormData } from "../../../lib/schemas/plan";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RiNewspaperLine, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { MdDiscount } from "react-icons/md";
@@ -179,7 +179,7 @@ export const FormPlan = ({
                 <div className="lg:flex px-2 justify-between items-center">
                     <div className="flex gap-2 items-center">
                         <HiDevicePhoneMobile className="" />
-                        <p className="text-sm font-medium lg:pr-4">
+                        <p className="text-sm font-medium lg:pr-4 max-w-24">
                             Acceso a aplicación
                         </p>
                         <ToggleButton

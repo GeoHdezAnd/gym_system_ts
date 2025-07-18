@@ -1,23 +1,23 @@
-import { User } from "../../domain/entities";
+import { User, UserProps } from "../../domain/entities";
 import { UserRepository } from "../../domain/interfaces";
 import { NotFoundError } from "../../domain/errors";
 import { UserModel } from "../models";
 
 export class SequelizeUserRepository implements UserRepository {
-    async create(user: User): Promise<User> {
+    async create(user: UserProps): Promise<UserProps> {
         const userModel = await UserModel.create({
             name: user.name,
             last_name: user.last_name,
             email: user.email,
             phone: user.phone,
-            password: user.password,
+            password: user.password!,
             token: user.token,
             confirmed: user.confirmed,
             role_id: user.role_id,
         });
 
         const userData = userModel.get();
-        return new User({
+        return {
             id: userData.id,
             name: userData.name,
             last_name: userData.last_name,
@@ -28,7 +28,7 @@ export class SequelizeUserRepository implements UserRepository {
             token: userData.token,
             login_attempts: userData.login_attempts,
             role_id: userData.role_id,
-        });
+        };
     }
 
     async findByEmail(email: string): Promise<User | false> {

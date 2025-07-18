@@ -12,10 +12,11 @@ import {
 import { toast } from "sonner"; // o el paquete de toast que uses
 import { handleApiError } from "../../../../lib/utils/handleAPIError";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { SubscriptionManagement } from "../../../../components/organisms/subscriptions/SubscriptionManagement";
 
 export default function CustomerEdit() {
-    const { userId } = useParams();
-    const [menu, setMenu] = useState<string>("data");
+    const { userId, action } = useParams();
+    const [menu, setMenu] = useState<string>(action!);
     const { data, isLoading, error } = useQuery({
         queryFn: () => getMemberByID(userId!),
         queryKey: ["memberId"],
@@ -46,7 +47,8 @@ export default function CustomerEdit() {
         );
     }
 
-    if (error) return <p className="m-auto text-gray-300">Id invalido</p>;
+    if (error || !userId)
+        return <p className="m-auto text-gray-300">Id invalido</p>;
 
     const defaultValues = data
         ? {
@@ -60,27 +62,28 @@ export default function CustomerEdit() {
         : undefined;
 
     const options = [
-        { value: "data", label: "Datos personales", icon: <FaUserEdit /> },
-        { value: "membership", label: "Membresia", icon: <FaUserEdit /> },
+        { value: "edit", label: "Datos personales", icon: <FaUserEdit /> },
+        { value: "subscription", label: "Suscripción", icon: <FaUserEdit /> },
         { value: "record", label: "Historial", icon: <FaUserEdit /> },
     ];
 
     return (
         <div className="container text-white">
             <div className="flex gap-2 items-center mb-3">
-                <Link className="hover:text-pink-800" to={"/dashboard/users/customer"}>
+                <Link
+                    className="hover:text-pink-800"
+                    to={"/dashboard/user/customer/all"}
+                >
                     <IoIosArrowRoundBack className="text-3xl cursor-pointer" />
                 </Link>
 
-                <h1 className="text-2xl font-semibold">Editar cliente</h1>
+                <h1 className="text-2xl ">{`${data.user.name} ${data.user.last_name}`}</h1>
             </div>
 
             <div className="flex flex-col md:flex-row gap-2 line">
                 {/* Panel lateral izquierdo (Menú de navegación) */}
                 <div className="w-full  md:w-1/4  p-2 xs:border-b-1 md:border-r-1   border-gray-600 shadow">
-                    <h2 className=" text-lg mb-4 font-medium">
-                        Tipo de información
-                    </h2>
+                    <h2 className=" text-lg mb-4 ">Tipo de información</h2>
                     <ul className="space-y-2 flex overflow-x-auto pr-4  md:grid">
                         {options.map((option) => (
                             <li key={option.value}>
@@ -106,16 +109,19 @@ export default function CustomerEdit() {
 
                 {/* Contenido principal segun opción */}
                 <div className="w-full  px-2 py-2 shadow mx-0 lg:mx-12">
-                    {menu === "data" && (
+                    {menu === "edit" && (
                         <FormMember
                             mode="edit"
-                            description="Edita la información del usuario"
+                            description="Edita la información del usuario si lo deseas"
                             defaultValues={defaultValues}
                             isLoading={mutationUpdate.isPending}
                             onSubmit={async (data) => {
                                 mutationUpdate.mutate(data);
                             }}
                         />
+                    )}
+                    {menu === "subscription" && (
+                        <SubscriptionManagement userId={userId!} />
                     )}
                 </div>
             </div>

@@ -8,6 +8,8 @@ import {
 import { toast } from "sonner";
 import api from "../../../../lib/config/axios";
 import { handleApiError } from "../../../../lib/utils/handleAPIError";
+import { FormAdmin } from "../../../../components/organisms/forms/FormAdmin";
+import type { AdminFormData } from "../../../../lib/schemas/users";
 
 export default function UsersAdd() {
     const [credential, setCredential] = useState<string>("client");
@@ -18,13 +20,27 @@ export default function UsersAdd() {
         { value: "trainer", label: "Entrenador", icon: <TbUserBolt /> },
     ];
 
-    const onSubmit = (data: MemberAddSchema) => {
+    const onSubmitMember = (data: MemberAddSchema) => {
         toast.promise(api.post("/member", data), {
             loading: "Registrando usuario...",
             success: (response) => {
                 const { matricula, message } = response.data;
 
                 return `${message}: ${matricula}`;
+            },
+            error: (error) => {
+                return handleApiError(error);
+            },
+        });
+    };
+
+    const onSubmitAdmin = (data: AdminFormData) => {
+        toast.promise(api.post("/auth/admin/sign-up", data), {
+            loading: "Registrando usuario...",
+            success: (response) => {
+                const { message } = response.data;
+
+                return `${message}`;
             },
             error: (error) => {
                 return handleApiError(error);
@@ -39,7 +55,9 @@ export default function UsersAdd() {
             <div className="flex flex-col md:flex-row gap-2 line">
                 {/* Panel lateral izquierdo (Menú de navegación) */}
                 <div className="w-full  md:w-1/4  p-2 xs:border-b-1 md:border-r-1   border-gray-600 shadow">
-                    <h2 className=" text-lg mb-4 font-medium">Credenciales</h2>
+                    <h2 className=" text-lg mb-4 font-medium">
+                        Tipo de usuario
+                    </h2>
                     <ul className="space-y-2 flex overflow-x-auto pr-4  md:grid">
                         {credentialOptions.map((option) => (
                             <li key={option.value}>
@@ -72,7 +90,16 @@ export default function UsersAdd() {
                             description="Ingresa la información del cliente, indique al cliente la
                     matricula que te da como respuesta el envio del formulario"
                             onSubmit={async (data) => {
-                                onSubmit(data);
+                                onSubmitMember(data);
+                            }}
+                        />
+                    )}
+                    {credential === "admin" && (
+                        <FormAdmin
+                            mode="create"
+                            description="Ingresa la información del administrador y asigna niveles de acceso"
+                            onSubmit={async (data) => {
+                                onSubmitAdmin(data);
                             }}
                         />
                     )}

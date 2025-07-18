@@ -13,6 +13,30 @@ export const handleInputErrors = (
     }
     next();
 };
+// Validar admin creación desde dashboard
+export const validateUserDashInput = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    await body("name")
+        .notEmpty()
+        .withMessage("El nombre es obligatorio")
+        .run(req);
+    await body("last_name")
+        .notEmpty()
+        .withMessage("El apellido es obligatorio")
+        .run(req);
+    await body("email")
+        .isEmail()
+        .withMessage("El email no contiene formato correcto")
+        .run(req);
+    await body("phone")
+        .isMobilePhone("es-MX")
+        .withMessage("El telefono no es valido")
+        .run(req);
+    next();
+};
 
 // VALIDACIÓNES DE REGISTROS DE USUARIOS
 export const validateUserAuthInput = async (
@@ -48,12 +72,7 @@ export const validateUserAuthInput = async (
         .matches(/[\W_]/)
         .withMessage("Debe contener al menos un caratcer especial")
         .run(req);
-    await body("password_confirm")
-        .custom((value, { req }) => {
-            return value !== req.body.password;
-        })
-        .withMessage("Las contraseñas no coinciden")
-        .run(req);
+
     next();
 };
 
@@ -70,10 +89,7 @@ export const validateMemberAuthInput = async (
         .isIn(["F", "M"])
         .withMessage("El genero debe ser F o M")
         .run(req);
-    await body("born_date")
-        .isString()
-        .withMessage("Fecha no valida")
-        .run(req);
+    await body("born_date").isString().withMessage("Fecha no valida").run(req);
     next();
 };
 
@@ -125,5 +141,3 @@ export const validateUpdatePassword = async (
         .run(req);
     next();
 };
-
-

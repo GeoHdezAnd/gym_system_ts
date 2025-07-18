@@ -1,5 +1,5 @@
 import api from "../lib/config/axios";
-import type { PlanFormData } from "../lib/types/schemas.zod";
+import type { PlanFormData } from "../lib/schemas/plan";
 
 export async function getMemberships() {
     const { data } = await api.get("plan");

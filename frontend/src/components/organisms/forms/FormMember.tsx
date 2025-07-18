@@ -3,7 +3,7 @@ import { RiUser3Fill } from "react-icons/ri";
 import { MdEmail, MdPhoneInTalk, MdDateRange } from "react-icons/md";
 import { TbGenderAndrogyne } from "react-icons/tb";
 import { Button, CustomInput } from "../../attoms";
-import { memberSchema } from "../../../lib/types/schemas.zod";
+import { memberSchema } from "../../../lib/schemas/users";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -31,6 +31,7 @@ export function FormMember({
     const {
         control,
         handleSubmit,
+        
         formState: { errors, isSubmitting: isFormSubmitting },
         reset,
     } = useForm<MemberAddSchema>({
@@ -70,7 +71,7 @@ export function FormMember({
         <div className="mb-8">
             <div className="mb-4 space-y-2">
                 <h2 className="font-semibold text-lg ">Cliente</h2>
-                <p className="text-sm text-gray-500">{description}</p>
+                <p className="text-sm text-gray-400">{description}</p>
             </div>
 
             <div className="space-y-6 bg-primary-200 rounded-md p-4 shadow-lg shadow-gray-950 border-1 border-gray-800">

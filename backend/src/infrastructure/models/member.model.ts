@@ -5,7 +5,6 @@ import {
     InferCreationAttributes,
     Model,
     NonAttribute,
-    sql,
 } from "@sequelize/core";
 import {
     Attribute,
@@ -34,12 +33,6 @@ export class MemberModel extends Model<
     @PrimaryKey
     declare id: CreationOptional<string>;
 
-    // Foreign Key users_model
-    @BelongsTo(() => UserModel, {
-        foreignKey: "user_id",
-    })
-    declare user_account?: NonAttribute<UserModel>;
-
     @Attribute(DataTypes.UUID)
     @NotNull
     @Unique
@@ -59,6 +52,11 @@ export class MemberModel extends Model<
     declare matricula: string;
 
     // Relations
+    @BelongsTo(() => UserModel, {
+        foreignKey: "user_id",
+    })
+    declare user_account?: NonAttribute<UserModel>;
+
     @HasMany(() => SubscriptionModel, /* Foreign Key*/ "member_id")
     declare suscriptions?: NonAttribute<SubscriptionModel[]>;
 

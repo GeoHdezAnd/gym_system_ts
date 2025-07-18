@@ -5,6 +5,7 @@ import {
     PlanRepository,
     RoleRepository,
     SubscriptionRepository,
+    TrainerRepository,
     UserRepository,
 } from "../domain/interfaces";
 import {
@@ -28,7 +29,10 @@ import {
     DeletePlanUseCase,
     GetAllPlansUseCase,
 } from "../application/admin/plans";
-import { CreateSuscriptionUseCase } from "../application/admin/suscriptions";
+import {
+    CreateSuscriptionUseCase,
+    GetSuscriptionsUserUseCase,
+} from "../application/admin/suscriptions";
 import {
     SignInUseCase,
     SignUpMemberUseCase,
@@ -48,12 +52,15 @@ import {
     SequelizeMemberRepository,
     SequelizeSubscriptionRepository,
     SequelizeAttendanceRepository,
+    SequelizeTrainerRepository,
 } from "./repositories";
 import {
     AuthServiceImpl,
     EmailServiceImpl,
     UserDomainServiceImpl,
 } from "./services";
+import { CreateTrainerUseCase } from "../application/admin/trainer";
+import { GetAllTrainersUseCase } from "../application/admin/trainer/get-all-trainer.usecase";
 
 export class DIContainer {
     // Repositorios
@@ -71,6 +78,8 @@ export class DIContainer {
         new SequelizeSubscriptionRepository();
     private static _attendanceRepository: AttendanceRepository =
         new SequelizeAttendanceRepository();
+    private static _trainerRepository: TrainerRepository =
+        new SequelizeTrainerRepository();
 
     // Servicios
     private static _authService: IAuthService = new AuthServiceImpl();
@@ -191,6 +200,13 @@ export class DIContainer {
         );
     }
 
+    static getAllSuscriptionsUserUseCase(): GetSuscriptionsUserUseCase {
+        return new GetSuscriptionsUserUseCase(
+            this._memberRepository,
+            this._subscriptionRepository
+        );
+    }
+
     // Casos de uso de asistencias
     static getAllAttendances(): GetAllAttendancesWithMember {
         return new GetAllAttendancesWithMember(this._attendanceRepository);
@@ -201,6 +217,18 @@ export class DIContainer {
             this._attendanceRepository,
             this._memberRepository,
             this._subscriptionRepository
+        );
+    }
+
+    // Casos de uso de entrenadores
+    static getAllTrainersUseCase(): GetAllTrainersUseCase {
+        return new GetAllTrainersUseCase(this._trainerRepository);
+    }
+    static createTrainerUseCase(): CreateTrainerUseCase {
+        return new CreateTrainerUseCase(
+            this._userDomainService,
+            this._userRepository,
+            this._trainerRepository
         );
     }
 }

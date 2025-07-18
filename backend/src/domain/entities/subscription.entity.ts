@@ -2,7 +2,7 @@ export interface SubscriptionProps {
     id?: string;
     member_id: string;
     plan_id: string;
-    start_date: Date;
+    start_date?: Date;
     end_date: Date;
     status?: string;
 }
@@ -22,7 +22,7 @@ export class Subscription {
         return this.props.plan_id;
     }
 
-    get start_date(): Date {
+    get start_date(): Date | undefined {
         return this.props.start_date;
     }
 
@@ -34,33 +34,16 @@ export class Subscription {
         return this.props.status;
     }
 
-    checkStatus(): { status: string; daysRemaining?: number } {
+    public isActive(): boolean {
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Normalizamos la fecha para comparación
-
+        today.setHours(0, 0, 0, 0);
         const endDate = new Date(this.props.end_date);
-        endDate.setHours(0, 0, 0, 0);
+        return this.props.status === "active" && today <= endDate;
+    }
 
-        if (today > endDate && this.props.status !== "expired") {
+    public markAsExpired(): void {
+        if (this.props.status != "expired") {
             this.props.status = "expired";
-            return {
-                status: this.props.status,
-                daysRemaining: 0,
-            };
         }
-
-        if (this.props.status === "active") {
-            const timeDiff = endDate.getTime() - today.getTime();
-            const daysRemaining = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-            return {
-                status: this.props.status,
-                daysRemaining,
-            };
-        }
-
-        return {
-            status: this.props.status!,
-        };
     }
 }

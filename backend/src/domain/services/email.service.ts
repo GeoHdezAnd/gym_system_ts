@@ -3,6 +3,7 @@ export type TEmail = {
     email: string;
     token: string;
     matricula?: string;
+    userType?: string
 };
 export interface EmailService {
     sendConfirmationEmail(user: TEmail): Promise<void>;

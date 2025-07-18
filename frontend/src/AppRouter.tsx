@@ -14,6 +14,7 @@ import CustomerEdit from "./pages/private/admin/users/CustomerEdit";
 import AddMembership from "./pages/private/admin/memberships/AddMembership";
 import AllMemberships from "./pages/private/admin/memberships/AllMemberships";
 import { EditMembership } from "./pages/private/admin/memberships/EditMembership";
+import Settings from "./pages/private/admin/Settings";
 
 export const AppRouter = () => {
     return (
@@ -44,7 +45,7 @@ export const AppRouter = () => {
                             element={<AllCustomers />}
                         />
                         <Route
-                            path="user/customer/:userId/edit"
+                            path="user/customer/:userId/:action"
                             element={<CustomerEdit />}
                         />
                         <Route
@@ -59,6 +60,7 @@ export const AppRouter = () => {
                             path="membership/:id/edit"
                             element={<EditMembership />}
                         />
+                        <Route path="settings" element={<Settings />} />
                     </Route>
                 </Routes>
             </AuthProvider>
