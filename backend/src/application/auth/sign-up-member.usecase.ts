@@ -8,7 +8,7 @@ import {
     ISignUpMemberDto,
     ISignUpResultDto,
     SignUpDto,
-} from "../dtos/request/sign-up.dto";
+} from "../../domain/dtos/sign-up.dto";
 
 export class SignUpMemberUseCase
     implements IUseCase<ISignUpMemberDto, ISignUpResultDto | undefined>

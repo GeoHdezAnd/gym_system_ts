@@ -16,16 +16,7 @@ import {
     Unique,
 } from "@sequelize/core/decorators-legacy";
 import { UserModel } from "./user.model";
-type Availability = {
-    [day in
-        | "monday"
-        | "tuesday"
-        | "wednesday"
-        | "thursday"
-        | "friday"
-        | "saturday"
-        | "sunday"]?: string[] | null;
-};
+
 @Table({
     tableName: "trainers",
     timestamps: false,
@@ -46,16 +37,10 @@ export class TrainerModel extends Model<
     declare user_id: string;
 
     @Attribute(DataTypes.TEXT)
-    declare bio: string | null;
+    declare bio: string;
 
     @Attribute(DataTypes.ARRAY(DataTypes.STRING))
     declare skills: string[];
-
-    @Attribute(DataTypes.JSON)
-    declare availability: Availability | {}; // Horarios del entrenador en JSON
-
-    @Attribute(DataTypes.ARRAY(DataTypes.STRING))
-    declare networks: string[] | null;
 
     // Foreign Key users_model
     @BelongsTo(() => UserModel, {

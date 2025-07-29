@@ -1,4 +1,4 @@
-import type { MemberAddSchema } from "../components/organisms";
+import type { MemberAddSchema } from "../components/organisms/users";
 import api from "../lib/config/axios";
 
 type PropsGet = {
@@ -24,7 +24,7 @@ export async function getMemberByID(id: string) {
 }
 
 export async function updateMember(id: string, user: MemberAddSchema) {
-    const { data } = await api.put(`/member/${id}`, user );
+    const { data } = await api.put(`/member/${id}`, user);
     return data;
 }
 

@@ -3,12 +3,14 @@ import clsx from "clsx";
 import { TbUsers, TbUserCog, TbUserBolt } from "react-icons/tb";
 import {
     FormMember,
+    FormAdmin,
     type MemberAddSchema,
-} from "../../../../components/organisms";
+    FormTrainer,
+    type TrainerAddSchema,
+} from "../../../../components/organisms/users";
 import { toast } from "sonner";
 import api from "../../../../lib/config/axios";
 import { handleApiError } from "../../../../lib/utils/handleAPIError";
-import { FormAdmin } from "../../../../components/organisms/forms/FormAdmin";
 import type { AdminFormData } from "../../../../lib/schemas/users";
 
 export default function UsersAdd() {
@@ -41,6 +43,19 @@ export default function UsersAdd() {
                 const { message } = response.data;
 
                 return `${message}`;
+            },
+            error: (error) => {
+                return handleApiError(error);
+            },
+        });
+    };
+
+    const onSubmitTrainer = (data: TrainerAddSchema) => {
+        toast.promise(api.post("/trainer", data), {
+            loading: "Registrando miembro",
+            success: (response) => {
+                const { message } = response.data;
+                return message;
             },
             error: (error) => {
                 return handleApiError(error);
@@ -100,6 +115,15 @@ export default function UsersAdd() {
                             description="Ingresa la información del administrador y asigna niveles de acceso"
                             onSubmit={async (data) => {
                                 onSubmitAdmin(data);
+                            }}
+                        />
+                    )}
+                    {credential === "trainer" && (
+                        <FormTrainer
+                            mode="create"
+                            description="Ingresa la información del entrenador"
+                            onSubmit={async (data) => {
+                                onSubmitTrainer(data);
                             }}
                         />
                     )}

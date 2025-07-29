@@ -58,7 +58,7 @@ export class MemberModel extends Model<
     declare user_account?: NonAttribute<UserModel>;
 
     @HasMany(() => SubscriptionModel, /* Foreign Key*/ "member_id")
-    declare suscriptions?: NonAttribute<SubscriptionModel[]>;
+    declare subscriptions?: NonAttribute<SubscriptionModel[]>;
 
     @HasMany(() => AttendanceModel, "member_id")
     declare attendances?: NonAttribute<AttendanceModel[]>;

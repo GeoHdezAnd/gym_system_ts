@@ -1,13 +1,14 @@
-import { Trainer, TrainerProps, UserProps } from "../../../domain/entities";
-import { TrainerModel } from "../../../infrastructure/models";
+import { Trainer, TrainerProps, UserProps } from "../entities";
+import { TrainerModel } from "../../infrastructure/models";
 
 export type TrainerRequestDto = Pick<
     UserProps,
     "name" | "last_name" | "email" | "phone"
 > &
-    Pick<TrainerProps, "bio" | "skills" | "availability" | "networks">;
+    Pick<TrainerProps, "bio" | "skills">;
 
-export type TrainerProfileDto = {
+
+export type ITrainerProfileDto = {
     id: string;
     name: string;
     last_name: string;
@@ -16,9 +17,8 @@ export type TrainerProfileDto = {
     confirmed: boolean;
     profile: {
         id: string;
+        bio: string;
         skills: string[];
-        networks: string[];
-        availability: object;
     };
 };
 
@@ -29,8 +29,6 @@ export class TrainerDto {
             user_id: input.user_id,
             bio: input.bio,
             skills: input.skills,
-            availability: input.availability,
-            networks: input.networks,
         });
     }
 
@@ -40,15 +38,13 @@ export class TrainerDto {
             user_id: input.user_id,
             bio: input.bio || "",
             skills: input.skills || [],
-            availability: input.availability!,
-            networks: input.networks || [],
         };
     }
 
     static fromSequelizeModelsToProfile(
         userModel: UserProps,
         trainerModel: TrainerProps
-    ): TrainerProfileDto {
+    ): ITrainerProfileDto {
         return {
             id: userModel.id!,
             name: userModel.name,
@@ -58,9 +54,8 @@ export class TrainerDto {
             confirmed: userModel.confirmed!,
             profile: {
                 id: trainerModel.id!,
+                bio: trainerModel.bio!,
                 skills: trainerModel.skills,
-                networks: trainerModel.networks || [],
-                availability: trainerModel.availability || {},
             },
         };
     }

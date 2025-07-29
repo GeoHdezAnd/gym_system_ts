@@ -5,8 +5,7 @@ import {
 } from "../../../domain/interfaces";
 import {
     SubscriptionDetailsResponseDto,
-    SubscriptionDto,
-} from "../../dtos/dashboard";
+} from "../../../domain/dtos/suscriptions.dto";
 
 export class GetSuscriptionsUserUseCase {
     constructor(
@@ -28,6 +27,6 @@ export class GetSuscriptionsUserUseCase {
                 member.profile.id
             );
 
-        return suscriptions.map(SubscriptionDto.toShowInfo) || [];
+        return suscriptions || [];
     }
 }

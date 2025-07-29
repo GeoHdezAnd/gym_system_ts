@@ -8,8 +8,8 @@ import {
 import { LoadingSpinner } from "../../../../components/attoms/LoadingSpinner";
 import { toast } from "sonner";
 import { handleApiError } from "../../../../lib/utils/handleAPIError";
-import type { PlanFormData } from "../../../../lib/types/schemas.zod";
-import { FormPlan } from "../../../../components/organisms";
+import type { PlanFormData } from "../../../../lib/schemas/plan";
+import { FormPlan } from "../../../../components/organisms/users";
 
 export function EditMembership() {
     const { id } = useParams();

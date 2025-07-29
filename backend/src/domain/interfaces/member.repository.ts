@@ -1,4 +1,4 @@
-import { IMemberWithUserDto } from "../../application/dtos/dashboard";
+import { IMemberWithUserDto } from "../dtos/member.dto";
 import { Member } from "../entities";
 
 export interface PaginationOptions {

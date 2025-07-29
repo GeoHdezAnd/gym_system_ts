@@ -18,7 +18,7 @@ const memberController = new MemberController(
     DIContainer.getMembersUseCase(),
     DIContainer.getUpdateMemberUseCase(),
     DIContainer.getDeleteUserUseCase()
-);
+); 
 
 memberRouter.use(limiter, authenticate, authorize(["admin"]));
 memberRouter.param("memberId", validateMemberId);

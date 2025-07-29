@@ -53,8 +53,5 @@ export class SubscriptionModel extends Model<
     @Attribute(DataTypes.DATEONLY)
     declare end_date: Date;
 
-    @Attribute(DataTypes.ENUM("active", "expired", "renewed"))
-    @Default("active")
-    @NotNull
-    declare status: CreationOptional<string>;
+   
 }

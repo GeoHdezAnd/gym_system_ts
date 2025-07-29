@@ -29,9 +29,12 @@ export default function Login() {
     ) => {
         try {
             const { data } = await api.post(`/auth/sign-in`, formData);
-            const success = await signIn(data); // <-- Espera a que complete
+            const { token, role } = data;
+            const success = await signIn(token); // <-- Espera a que complete
             if (success) {
-                navigate("/dashboard"); // <-- Navega solo si fue exitoso
+                if (role === "admin")
+                    navigate("/dashboard"); // <-- Navega solo si fue exitoso
+                else if (role === "member") navigate("/user");
             }
         } catch (error) {
             if (isAxiosError(error) && error.response) {

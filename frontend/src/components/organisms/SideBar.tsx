@@ -7,6 +7,7 @@ import {
     RiAddCircleLine,
     RiAppsFill,
 } from "react-icons/ri";
+import { GiMuscleUp } from "react-icons/gi";
 import { TbUsers } from "react-icons/tb";
 import { NavItem } from "../attoms/NavItem";
 import { ImExit } from "react-icons/im";
@@ -33,7 +34,11 @@ export function SideBar() {
                     label: "Clientes",
                     icon: TbUsers,
                 },
-                
+                {
+                    to: "user/trainer/all",
+                    label: "Entrenadores",
+                    icon: GiMuscleUp,
+                },
             ],
         },
         {

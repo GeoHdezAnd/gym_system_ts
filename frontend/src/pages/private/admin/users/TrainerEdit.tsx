@@ -1,42 +1,46 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router";
-import { getMemberByID, updateMember } from "../../../../api/MemberApi";
-import { FaUserEdit } from "react-icons/fa";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import clsx from "clsx";
-import { LoadingSpinner } from "../../../../components/attoms/LoadingSpinner";
-import {
-    FormMember,
-    type MemberAddSchema,
-} from "../../../../components/organisms/users";
-import { toast } from "sonner"; // o el paquete de toast que uses
-import { handleApiError } from "../../../../lib/utils/handleAPIError";
+import { Link, useParams } from "react-router";
+import { getTrainerById, updateTrainer } from "../../../../api/TrainerApi";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { CgGym } from "react-icons/cg";
-import { SubscriptionManagement } from "../../../../components/organisms/subscriptions/SubscriptionManagement";
+import { LoadingSpinner } from "../../../../components/attoms/LoadingSpinner";
+import { FaUserEdit } from "react-icons/fa";
+import { MdGroups3 } from "react-icons/md";
+import clsx from "clsx";
+import {
+    FormTrainer,
+    type TrainerAddSchema,
+} from "../../../../components/organisms/users";
+import { toast } from "sonner";
+import { handleApiError } from "../../../../lib/utils/handleAPIError";
 
-export default function CustomerEdit() {
-    const { userId, action } = useParams();
+export default function TrainerEdit() {
+    const { trainerId, action } = useParams();
     const [menu, setMenu] = useState<string>(action!);
-    const { data, isLoading, error } = useQuery({
-        queryFn: () => getMemberByID(userId!),
-        queryKey: ["memberId"],
+    const { data, isLoading, isError } = useQuery({
+        queryFn: () => getTrainerById(trainerId!),
+        queryKey: ["trainerId", trainerId],
     });
 
-    // Actualizar miembro
-    const handleUpdateMember = async (data: MemberAddSchema) => {
-        await updateMember(userId!, data);
+    const queryClient = useQueryClient();
+
+    // Actualizar entrenador
+    const handleUpdateTrainer = async (data: TrainerAddSchema) => {
+        await updateTrainer(trainerId!, data);
     };
 
-    // Mutation para actualizar miembro
+    // Mutation para actualizar entrenador
     const mutationUpdate = useMutation({
-        mutationFn: handleUpdateMember,
+        mutationFn: handleUpdateTrainer,
         onSuccess: () => {
-            toast.success("Usuario actualizado correctamente");
+            toast.success("Entrenador actualizado correctamente");
+            queryClient.invalidateQueries({
+                queryKey: ["trainerId", trainerId],
+            });
         },
         onError: (error: Error) => {
             toast.error(handleApiError(error));
-            console.error(error);
+            console.log(error);
         },
     });
 
@@ -48,7 +52,7 @@ export default function CustomerEdit() {
         );
     }
 
-    if (error || !userId)
+    if (isError || !trainerId)
         return <p className="m-auto text-gray-300">Id invalido</p>;
 
     const defaultValues = data
@@ -57,15 +61,18 @@ export default function CustomerEdit() {
               last_name: data.last_name,
               email: data.email,
               phone: data.phone,
-              gender: data.profile.gender,
-              born_date: data.profile.born_date,
+              bio: data.profile.bio,
+              skills: data.profile.skills,
           }
         : undefined;
 
     const options = [
         { value: "edit", label: "Datos personales", icon: <FaUserEdit /> },
-        { value: "subscription", label: "Suscripción", icon: <CgGym /> },
-        { value: "record", label: "Historial", icon: <FaUserEdit /> },
+        {
+            value: "customers",
+            label: "Clientes asignados",
+            icon: <MdGroups3 />,
+        },
     ];
 
     return (
@@ -73,7 +80,7 @@ export default function CustomerEdit() {
             <div className="flex gap-2 items-center mb-3">
                 <Link
                     className="hover:text-pink-800"
-                    to={"/dashboard/user/customer/all"}
+                    to={"/dashboard/user/trainer/all"}
                 >
                     <IoIosArrowRoundBack className="text-3xl cursor-pointer" />
                 </Link>
@@ -111,18 +118,15 @@ export default function CustomerEdit() {
                 {/* Contenido principal segun opción */}
                 <div className="w-full  px-2 py-2 shadow mx-0 lg:mx-12">
                     {menu === "edit" && (
-                        <FormMember
+                        <FormTrainer
                             mode="edit"
-                            description="Edita la información del usuario si lo deseas"
+                            description="Edita la información del entrenador"
                             defaultValues={defaultValues}
                             isLoading={mutationUpdate.isPending}
                             onSubmit={async (data) => {
                                 mutationUpdate.mutate(data);
                             }}
                         />
-                    )}
-                    {menu === "subscription" && (
-                        <SubscriptionManagement userId={userId!} />
                     )}
                 </div>
             </div>

@@ -59,7 +59,10 @@ import {
     EmailServiceImpl,
     UserDomainServiceImpl,
 } from "./services";
-import { CreateTrainerUseCase } from "../application/admin/trainer";
+import {
+    CreateTrainerUseCase,
+    UpdateTrainerUseCase,
+} from "../application/admin/trainer";
 import { GetAllTrainersUseCase } from "../application/admin/trainer/get-all-trainer.usecase";
 
 export class DIContainer {
@@ -227,6 +230,13 @@ export class DIContainer {
     static createTrainerUseCase(): CreateTrainerUseCase {
         return new CreateTrainerUseCase(
             this._userDomainService,
+            this._userRepository,
+            this._trainerRepository
+        );
+    }
+
+    static getUpdateTrainerUseCase(): UpdateTrainerUseCase {
+        return new UpdateTrainerUseCase(
             this._userRepository,
             this._trainerRepository
         );

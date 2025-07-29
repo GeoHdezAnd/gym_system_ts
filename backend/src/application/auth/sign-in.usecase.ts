@@ -27,13 +27,16 @@ export class SignInUseCase {
     /**
      * Ejecuta el inicio de sesión.
      */
-    async execute(email: string, password: string): Promise<string> {
+    async execute(email: string, password: string): Promise<object> {
         const user = await this.grantedUserOrFail(email, password);
 
         user.resetLoginAttempts();
         await this._userRepository.save(user);
 
-        return this._authService.generateJWT(user.id!);
+        return {
+            token: this._authService.generateJWT(user.id!),
+            role: user.role,
+        };
     }
     /**
      * Verifica que el usuario pueda ingresar.
@@ -58,12 +61,11 @@ export class SignInUseCase {
 
         if (!isPasswordCorrect) {
             user.incrementLoginAttempts();
-            
+
             await this._userRepository.save(user);
 
             throw new UnauthorizedError("Credenciales invalidas");
         }
-
         return user;
     }
 }

@@ -73,11 +73,9 @@ export const adminSchema = baseUserSchema.extend({
 
 export type AdminFormData = z.infer<typeof adminSchema>;
 
-// Ejemplo de esquema para entrenador
 export const trainerSchema = baseUserSchema.extend({
     password: passwordSchema.optional(), // Opcional para actualizaciones
-    specialization: z.string().min(1, "Especialización requerida"),
-    certification: z.string().min(1, "Certificación requerida"),
+    bio: z.string(),
+    skills: z.array(z.string()).max(3, "Solo pueden ser 3 habilidades"),
 });
-
 export type TrainerFormData = z.infer<typeof trainerSchema>;

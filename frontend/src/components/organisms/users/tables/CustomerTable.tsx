@@ -1,19 +1,20 @@
-import { LoadingSpinner } from "../../attoms/LoadingSpinner";
-import { ErrorMessage } from "../../attoms/ErrorMessage";
+import { LoadingSpinner } from "../../../attoms/LoadingSpinner";
+import { ErrorMessage } from "../../../attoms/ErrorMessage";
 import { CiCalendarDate, CiPhone, CiUser } from "react-icons/ci";
 import { IoIdCardOutline } from "react-icons/io5";
 import { TiBusinessCard } from "react-icons/ti";
-import type { MemberProps } from "../../../lib/types/types";
-import { formatPhone, formatDate } from "../../../lib/utils/formatInfo";
+import type { MemberProps } from "../../../../lib/types/types";
+import { formatPhone, formatDate } from "../../../../lib/utils/formatInfo";
 import { RiEdit2Fill, RiUserSettingsLine } from "react-icons/ri";
-import { CardMemberMovil } from "../../molecules/member/CardMemberMovil";
-import { DeleteConfirmationDialog } from "../DeleteConfirmationDialong";
+import { CardMemberMovil } from "../../../molecules/member/CardMemberMovil";
+import { DeleteConfirmationDialog } from "../../DeleteConfirmationDialong";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteBatchMembers, deleteMember } from "../../../api/MemberApi";
+import { deleteBatchMembers, deleteMember } from "../../../../api/MemberApi";
 import { useState } from "react";
 import { PiEraserFill } from "react-icons/pi";
-import { Button } from "../../attoms";
+import { CgGym } from "react-icons/cg";
+import { Button } from "../../../attoms";
 import { Link } from "react-router";
 
 type Props = {
@@ -86,7 +87,7 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
 
     // Manejar selección y deselección de todos
     const handleSelectAll = (isChecked: boolean) => {
-        setSelectedMembers(isChecked ? members.map((m) => m.user.id) : []);
+        setSelectedMembers(isChecked ? members.map((m) => m.id) : []);
     };
 
     // Manejar la eliminación
@@ -150,7 +151,7 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
 
             {/* Tabla de usuarios */}
             <div className="hidden md:block  w-full ">
-                <table className="w-full relative ">
+                <table className="w-full relative mb-6 ">
                     <thead className="border-b-1 space-x-2 border-gray-800">
                         <tr>
                             <th className="head-table px-4">
@@ -197,6 +198,12 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
                                 </div>
                             </th>
                             <th className="head-table">
+                                <div className="flex gap-1 items-center">
+                                    <CgGym className="text-lg" />
+                                    <p>Suscripción</p>
+                                </div>
+                            </th>
+                            <th className="head-table">
                                 {" "}
                                 <div className="flex gap-1 items-center">
                                     <RiUserSettingsLine className="text-lg" />
@@ -220,7 +227,7 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
                                 </td>
                             </tr>
                         )}
-                        {members.map(({ user, profile }) => (
+                        {members.map((user) => (
                             <tr
                                 key={user.id}
                                 className="hover:bg-gray-800/50 items-center transition-colors "
@@ -245,7 +252,7 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
                                         <img
                                             className="rounded-full"
                                             src={`${
-                                                profile.gender === "M"
+                                                user.profile.gender === "M"
                                                     ? "/male-avatar.png"
                                                     : "/female-avatar.png"
                                             }`}
@@ -280,12 +287,24 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
                                     </span>
                                 </td>
                                 <td className="table-item-base">
-                                    {profile.matricula || "N/A"}
+                                    {user.profile.matricula || "N/A"}
                                 </td>
                                 <td className="table-item-base ">
-                                    {profile.born_date
-                                        ? formatDate(profile.born_date)
+                                    {user.profile.born_date
+                                        ? formatDate(user.profile.born_date)
                                         : "N/A"}
+                                </td>
+                                <td className="px-2">
+                                    <Link
+                                        to={`/dashboard/user/customer/${user.id}/subscription`}
+                                        className={`px-2 cursor-pointer inline-flex text-xs leading-2.5 font-semibold rounded-md border p-2 ${
+                                            user.profile.status === "active"
+                                                ? "bg-green-800/60 backdrop-blur-2xl text-green-400 border-green-700 after:content-[''] after:block after:w-1.5 after:h-1.5 after:bg-green-400 after:rounded-full after:ml-1.5 after:mt-0.5"
+                                                : "bg-red-800/20 backdrop-blur-2xl text-red-600 border-red-700 after:content-[''] after:block after:w-1.5 after:h-1.5 after:bg-red-600 after:rounded-full after:ml-1.5 after:mt-0.5"
+                                        }`}
+                                    >
+                                        {user.profile.status || "pending"}
+                                    </Link>
                                 </td>
                                 <td className="table-item-base">
                                     <div className="flex items-center gap-4 text-lg text-bold ">
@@ -313,10 +332,10 @@ export const CustomerTable = ({ data, isLoading, isError, error }: Props) => {
             <div className="md:hidden space-y-2 p-2">
                 {members.map((member, index) => (
                     <CardMemberMovil
-                        {...member}
+                        user={member}
                         key={index}
                         onDelete={handleDelete}
-                        isSelected={selectedMembers.includes(member.user.id)}
+                        isSelected={selectedMembers.includes(member.id)}
                         onSelect={handleSelectMember}
                     />
                 ))}

@@ -1,4 +1,4 @@
-import { Member } from "../../domain/entities";
+import { Member, Subscription } from "../../domain/entities";
 import {
     FilterOptions,
     MemberRepository,
@@ -6,7 +6,10 @@ import {
 } from "../../domain/interfaces";
 import { NotFoundError } from "../../domain/errors";
 import { MemberModel, UserModel } from "../models";
-import { MemberWithUserDto } from "../../application/dtos/dashboard";
+import {
+    IMemberWithUserDto,
+    MemberWithUserDto,
+} from "../../domain/dtos/member.dto";
 import { Op } from "@sequelize/core";
 
 export class SequelizeMemberRepository implements MemberRepository {
@@ -14,7 +17,7 @@ export class SequelizeMemberRepository implements MemberRepository {
         pagination?: PaginationOptions,
         filters?: FilterOptions
     ): Promise<{
-        members: MemberWithUserDto[];
+        members: IMemberWithUserDto[];
         total: number;
     }> {
         const { page = 1, limit = 10 } = pagination || {};
@@ -41,8 +44,7 @@ export class SequelizeMemberRepository implements MemberRepository {
                     include: [
                         {
                             association: "role",
-                            where: { name: "member" },
-                            attributes: [],
+                            attributes: ["name"],
                         },
                     ],
                     attributes: [
@@ -54,18 +56,46 @@ export class SequelizeMemberRepository implements MemberRepository {
                         "confirmed",
                     ],
                 },
+                {
+                    association: "subscriptions",
+                    attributes: ["id", "start_date", "end_date"],
+                    required: false,
+                    limit: 1,
+                    order: [["createdAt", "DESC"]],
+                },
             ],
             order: [
-                [{ model: UserModel, as: "user_account" }, "name", "ASC"],
-                [{ model: UserModel, as: "user_account" }, "last_name", "ASC"],
+                [
+                    { model: UserModel, as: "user_account" },
+                    "created_at",
+                    "DESC",
+                ],
             ],
             limit: limit,
             offset: (page - 1) * limit,
         });
+        const members = rows.map((member: MemberModel) => {
+            const lastSubscription = member.subscriptions?.[0];
+            let subscriptionStatus = "pending";
 
-        const members = rows.map((member: MemberModel) =>
-            MemberWithUserDto.fromSequelizeModels(member, member.user_account)
-        );
+            if (lastSubscription) {
+                const subscription = new Subscription({
+                    member_id: lastSubscription.member_id,
+                    plan_id: lastSubscription.plan_id,
+                    start_date: lastSubscription.start_date,
+                    end_date: lastSubscription.end_date,
+                });
+                subscriptionStatus = subscription.status;
+            }
+
+            const dto = MemberWithUserDto.fromSequelizeModels(
+                member,
+                member.user_account!,
+                subscriptionStatus
+            );
+
+            return dto;
+        });
 
         return { members, total: count };
     }
@@ -81,7 +111,7 @@ export class SequelizeMemberRepository implements MemberRepository {
         return new Member(memberModel);
     }
 
-    async findByUserId(user_id: string): Promise<MemberWithUserDto | false> {
+    async findByUserId(user_id: string): Promise<IMemberWithUserDto | false> {
         const memberModel = await MemberModel.findOne({
             where: { user_id },
             include: [
@@ -112,7 +142,7 @@ export class SequelizeMemberRepository implements MemberRepository {
         }
         return MemberWithUserDto.fromSequelizeModels(
             memberModel,
-            memberModel.user_account
+            memberModel.user_account!
         );
     }
 

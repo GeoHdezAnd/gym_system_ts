@@ -2,8 +2,8 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { RiUser3Fill } from "react-icons/ri";
 import { MdEmail, MdPhoneInTalk, MdDateRange } from "react-icons/md";
 import { TbGenderAndrogyne } from "react-icons/tb";
-import { Button, CustomInput } from "../../attoms";
-import { memberSchema } from "../../../lib/schemas/users";
+import { Button, CustomInput } from "../../../attoms";
+import { memberSchema } from "../../../../lib/schemas/users";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 

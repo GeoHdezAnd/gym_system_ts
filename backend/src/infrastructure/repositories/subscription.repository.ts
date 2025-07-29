@@ -5,8 +5,7 @@ import { Op } from "@sequelize/core";
 import {
     SubscriptionDetailsResponseDto,
     SubscriptionDto,
-} from "../../application/dtos/dashboard";
-import { checkAndUpdateSubscriptionStatus } from "../../utils/checkStatusMembership";
+} from "../../domain/dtos/suscriptions.dto";
 
 export class SequelizeSubscriptionRepository implements SubscriptionRepository {
     async create(subscription: Subscription): Promise<SubscriptionProps> {
@@ -43,40 +42,22 @@ export class SequelizeSubscriptionRepository implements SubscriptionRepository {
         // Si no hay suscripciones, retornamos []
         if (!subscriptions.length) return [];
 
-        // Revisión de estado de cada suscripción
-        for (const model of subscriptions) {
-            const subscription = new Subscription({
-                id: model.id,
-                member_id: model.member_id,
-                plan_id: model.plan_id,
-                start_date: model.start_date,
-                end_date: model.end_date,
-                status: model.status,
-            });
-
-            const updatedSubscription =
-                checkAndUpdateSubscriptionStatus(subscription);
-
-            if (updatedSubscription.status !== model.status) {
-                await SubscriptionModel.update(
-                    { status: updatedSubscription.status },
-                    { where: { id: updatedSubscription.id } }
-                );
-            }
-        }
-
         return subscriptions.map((model) => SubscriptionDto.toShowInfo(model));
     }
 
     async findActiveSubscription(member_id: string): Promise<boolean> {
-        const suscripcionActive = await SubscriptionModel.findOne({
-            where: {
-                member_id: { [Op.eq]: member_id },
-                status: { [Op.eq]: "active" },
-            },
+        const model = await SubscriptionModel.findOne({
+            where: { member_id },
+            order: [["createdAt", "DESC"]], // Ordenar por fecha de creación (último primero)
         });
 
-        return suscripcionActive !== null;
+        if (!model) return false;
+
+        const suscription = new Subscription(model);
+
+        const suscripcionActive = suscription.status;
+
+        return suscripcionActive === "active" ? true : false;
     }
 
     async findLastSubscription(
@@ -97,21 +78,9 @@ export class SequelizeSubscriptionRepository implements SubscriptionRepository {
             plan_id: model.plan_id,
             start_date: model.start_date,
             end_date: model.end_date,
-            status: model.status,
         });
 
-        // Verificar y actualizar estado si es necesario
-        const updatedSubscription =
-            checkAndUpdateSubscriptionStatus(subscription);
 
-        // Persistir cambios si hubo actualización
-        if (updatedSubscription.status !== model.status) {
-            await SubscriptionModel.update(
-                { status: updatedSubscription.status },
-                { where: { id: updatedSubscription.id } }
-            );
-        }
-
-        return updatedSubscription;
+        return subscription;
     }
 }

@@ -3,9 +3,9 @@ import { UserDomainService } from "../../../domain/services";
 import { db } from "../../../infrastructure/config/db";
 import {
     TrainerDto,
-    TrainerProfileDto,
+    ITrainerProfileDto,
     TrainerRequestDto,
-} from "../../dtos/dashboard/trainer.dto";
+} from "../../../domain/dtos/trainer.dto";
 
 export class CreateTrainerUseCase {
     constructor(
@@ -16,7 +16,7 @@ export class CreateTrainerUseCase {
 
     async execute(
         input: TrainerRequestDto
-    ): Promise<TrainerProfileDto | undefined> {
+    ): Promise<ITrainerProfileDto | undefined> {
         // 1. Verificamos que el usuario exista
         await this._userDomainService.ensureUserDoesNotExist(
             input.email,
@@ -29,7 +29,7 @@ export class CreateTrainerUseCase {
         // 3.Crear usuario
         const user = await this._userDomainService.buildUser(input, role.id);
 
-        let result: TrainerProfileDto | undefined;
+        let result: ITrainerProfileDto | undefined;
         // Utilizamos transacciones para mejorar el desempeño de la base de datos
         try {
             await db.transaction(async () => {
@@ -42,8 +42,6 @@ export class CreateTrainerUseCase {
                     user_id: createdUser.id!,
                     bio: input.bio,
                     skills: input.skills,
-                    availability: input.availability,
-                    networks: input.networks,
                 };
 
                 if (!trainer) {

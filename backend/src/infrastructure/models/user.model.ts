@@ -78,6 +78,9 @@ export class UserModel extends Model<
     @Attribute(DataTypes.INTEGER)
     declare role_id: number; // Foreign key column
 
+    @Attribute(DataTypes.DATE)
+    declare created_at: Date | undefined;
+
     // Relationships
     @BelongsTo(() => RoleModel, "role_id")
     declare role?: NonAttribute<RoleModel>;

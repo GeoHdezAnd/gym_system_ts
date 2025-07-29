@@ -15,6 +15,10 @@ import AddMembership from "./pages/private/admin/memberships/AddMembership";
 import AllMemberships from "./pages/private/admin/memberships/AllMemberships";
 import { EditMembership } from "./pages/private/admin/memberships/EditMembership";
 import Settings from "./pages/private/admin/Settings";
+import AllTrainers from "./pages/private/admin/users/AllTrainers";
+import TrainerEdit from "./pages/private/admin/users/TrainerEdit";
+import ClientLayout from "./components/templates/ClientLayout";
+import Main from "./pages/private/customer/Main";
 
 export const AppRouter = () => {
     return (
@@ -49,6 +53,14 @@ export const AppRouter = () => {
                             element={<CustomerEdit />}
                         />
                         <Route
+                            path="user/trainer/all"
+                            element={<AllTrainers />}
+                        />
+                        <Route
+                            path="user/trainer/:trainerId/:action"
+                            element={<TrainerEdit />}
+                        />
+                        <Route
                             path="membership/add"
                             element={<AddMembership />}
                         />
@@ -61,6 +73,10 @@ export const AppRouter = () => {
                             element={<EditMembership />}
                         />
                         <Route path="settings" element={<Settings />} />
+                    </Route>
+
+                    <Route path="/user" element={<ClientLayout />}>
+                        <Route index element={<Main />} />
                     </Route>
                 </Routes>
             </AuthProvider>

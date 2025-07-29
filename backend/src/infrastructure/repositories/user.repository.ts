@@ -34,9 +34,25 @@ export class SequelizeUserRepository implements UserRepository {
     async findByEmail(email: string): Promise<User | false> {
         const userModel = await UserModel.findOne({
             where: { email, deleted: false },
+            include: [
+                {
+                    association: "role",
+                    attributes: ["name"],
+                },
+            ],
         });
         if (!userModel) return false;
-        return new User(userModel.get());
+        return new User({
+            id: userModel.id,
+            name: userModel.name,
+            last_name: userModel.last_name,
+            email: userModel.email,
+            phone: userModel.phone,
+            role_id: userModel.role_id,
+            confirmed: userModel.confirmed,
+            password: userModel.password,
+            rol: userModel.role?.name,
+        });
     }
 
     async findByPhone(phone: string): Promise<User | false> {

@@ -1,17 +1,25 @@
-export type MemberProps = {
-    user: {
-        id: string;
-        name: string;
-        last_name: string;
-        email: string;
-        phone: string;
-        confirmed: boolean;
-    };
-
+export type BaseUserProps = {
+    id: string;
+    name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    confirmed: boolean;
+};
+export type MemberProps = BaseUserProps & {
     profile: {
+        id: string;
         gender: string;
         born_date: Date;
         matricula: string;
+        status?: string;
+    };
+};
+
+export type TrainerProps = BaseUserProps & {
+    profile: {
+        id: string;
+        skills: string[];
     };
 };
 
@@ -29,7 +37,7 @@ type PlanProps = {
 
 type Subscription = {
     id: string;
-    start_date:   Date;
+    start_date: Date;
     end_date: Date;
     status: string;
 };

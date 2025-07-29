@@ -1,6 +1,6 @@
 import { useFieldArray, useForm, type SubmitHandler } from "react-hook-form";
-import { Button, CustomInput } from "../../attoms";
-import { planSchema, type PlanFormData } from "../../../lib/schemas/plan";
+import { Button, CustomInput } from "../../../attoms";
+import { planSchema, type PlanFormData } from "../../../../lib/schemas/plan";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RiNewspaperLine, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { MdDiscount } from "react-icons/md";
@@ -8,7 +8,7 @@ import { GiDuration } from "react-icons/gi";
 import { IoFlash } from "react-icons/io5";
 import { HiDevicePhoneMobile } from "react-icons/hi2";
 import { useEffect, useState } from "react";
-import { ToggleButton } from "../../attoms/ToggleButton";
+import { ToggleButton } from "../../../attoms/ToggleButton";
 
 type PlanFormProps = {
     mode?: "create" | "edit";

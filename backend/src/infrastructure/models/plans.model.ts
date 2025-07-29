@@ -8,7 +8,6 @@ import {
 } from "@sequelize/core";
 import {
     Attribute,
-    ColumnName,
     Default,
     HasMany,
     NotNull,

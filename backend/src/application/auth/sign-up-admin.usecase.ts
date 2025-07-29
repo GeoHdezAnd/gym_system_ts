@@ -8,7 +8,7 @@ import {
     ISignUpDto,
     ISignUpResultDto,
     SignUpDto,
-} from "../dtos/request/sign-up.dto";
+} from "../../domain/dtos/sign-up.dto";
 
 /**
  * Caso de uso para registrar un nuevo administrador.

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { adminSchema, type AdminFormData } from "../../../lib/schemas/users";
+import { adminSchema, type AdminFormData } from "../../../../lib/schemas/users";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, CustomInput } from "../../attoms";
+import { Button, CustomInput } from "../../../attoms";
 import { MdEmail, MdPhoneInTalk } from "react-icons/md";
 import { RiUser3Fill } from "react-icons/ri";
 import { FaKey } from "react-icons/fa6";
-import { ToggleButton } from "../../attoms/ToggleButton";
+import { ToggleButton } from "../../../attoms/ToggleButton";
 
 type Props = {
     mode?: "create" | "edit";

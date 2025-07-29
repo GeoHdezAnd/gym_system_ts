@@ -24,7 +24,8 @@ interface Props<T extends FieldValues> {
         | "number"
         | "textarea"
         | "select"
-        | "date";
+        | "date"
+        | "time";
     error?: FieldError;
     placeholder?: string;
     maxLength?: number;
@@ -35,61 +36,6 @@ interface Props<T extends FieldValues> {
     patternMessage?: string; // Mensaje de error para el patrón
     icon?: React.ReactNode; // New prop for icon
 }
-/**
- * Componente de input personalizado para formularios controlados con react-hook-form.
- *
- * Permite renderizar diferentes tipos de campos (`text`, `password`, `email`, `tel`, `number`, `textarea`, `select`, `date`)
- * y soporta validación, íconos y mensajes de error.
- *
- * @template T - Tipos de valores del formulario (FieldValues).
- *
- * @param {Object} props - Props del componente.
- * @param {Path<T>} props.name - Nombre del campo (clave del formulario).
- * @param {Control<T>} props.control - Control de react-hook-form.
- * @param {string} props.label - Etiqueta a mostrar.
- * @param {'text'|'password'|'email'|'tel'|'number'|'textarea'|'select'|'date'} [props.type] - Tipo de input.
- * @param {FieldError} [props.error] - Objeto de error de react-hook-form.
- * @param {string} [props.placeholder] - Placeholder del input.
- * @param {number} [props.maxLength] - Longitud máxima permitida.
- * @param {number} [props.minLength] - Longitud mínima permitida.
- * @param {Option[]} [props.options] - Opciones para el select.
- * @param {number} [props.rows] - Número de filas para textarea.
- * @param {string} [props.pattern] - Patrón regex para validación.
- * @param {string} [props.patternMessage] - Mensaje de error para el patrón.
- * @param {React.ReactNode} [props.icon] - Ícono opcional a mostrar junto a la etiqueta.
- *
- * @example
- * <CustomInput
- *   name="email"
- *   control={control}
- *   label="Correo electrónico"
- *   type="email"
- *   placeholder="ejemplo@correo.com"
- *   error={errors.email}
- * />
- *
- * @example
- * <CustomInput
- *   name="password"
- *   control={control}
- *   label="Contraseña"
- *   type="password"
- *   error={errors.password}
- * />
- *
- * @example
- * <CustomInput
- *   name="rol"
- *   control={control}
- *   label="Rol"
- *   type="select"
- *   options={[
- *     { value: 'admin', label: 'Administrador' },
- *     { value: 'user', label: 'Usuario' }
- *   ]}
- *   error={errors.rol}
- * />
- */
 
 export const CustomInput = <T extends FieldValues>({
     name,
@@ -169,6 +115,7 @@ export const CustomInput = <T extends FieldValues>({
                                                 : "border-gray-600"
                                         } rounded p-2 transform duration-150 focus:outline-none focus:ring-1 focus:ring-blue-500`}
                                         rows={rows}
+                                        maxLength={maxLength}
                                         placeholder={placeholder}
                                         {...field}
                                     />

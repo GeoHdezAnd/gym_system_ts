@@ -1,10 +1,10 @@
 import { TrainerRepository } from "../../../domain/interfaces";
-import { TrainerProfileDto } from "../../dtos/dashboard/trainer.dto";
+import { ITrainerProfileDto } from "../../../domain/dtos/trainer.dto";
 
 export class GetAllTrainersUseCase {
     constructor(private readonly _trainerRepository: TrainerRepository) {}
 
-    async execute(): Promise<TrainerProfileDto[] | []> {
+    async execute(): Promise<ITrainerProfileDto[] | []> {
         const res = await this._trainerRepository.getAllWithProfile();
 
         return res || [];

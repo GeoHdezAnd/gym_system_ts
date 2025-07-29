@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
 import { SequelizeMemberRepository } from "../../infrastructure/repositories";
 import { NotFoundError } from "../../domain/errors";
-import { IMemberWithUserDto } from "../../application/dtos/dashboard";
+import { IMemberWithUserDto } from "../../domain/dtos/member.dto";
 
 declare global {
     namespace Express {

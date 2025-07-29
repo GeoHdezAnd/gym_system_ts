@@ -13,6 +13,7 @@ export interface UserProps {
     login_attempts?: number;
     deleted?: boolean;
     role_id: number;
+    rol?: string;
 }
 
 export class User {
@@ -52,13 +53,11 @@ export class User {
     get role_id(): number {
         return this.props.role_id;
     }
+    get role(): string {
+        return this.props.rol || "";
+    }
 
     updateToken(token: string): void {
-        // if (this.token !== null) {
-        //     throw new UnauthorizedError(
-        //         "
-        //     );
-        // }
         this.props.token = token;
     }
 
@@ -75,11 +74,6 @@ export class User {
         this.props.token = null;
     }
 
-    /**
-     * Funcion que incrementa y revisa la cantidad de login attempts cada que falla
-     * - Si falla se incrementa 1
-     * - Si tiene 5 se envia error y bloquea cuenta
-     */
     incrementLoginAttempts(): void {
         const maxAttempts = 5;
 
@@ -92,9 +86,6 @@ export class User {
         this.props.login_attempts = (this.props.login_attempts || 0) + 1;
     }
 
-    /**
-     * Reincia los logins attempts a 0
-     */
     resetLoginAttempts(): void {
         this.props.login_attempts = 0;
     }
@@ -112,5 +103,9 @@ export class User {
     }
     deleteAccount(): void {
         this.props.deleted = true;
+    }
+
+    restoreAccount(): void {
+        this.props.deleted;
     }
 }

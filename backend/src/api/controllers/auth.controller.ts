@@ -87,6 +87,8 @@ export class AuthController {
         try {
             const { email, password } = req.body;
             const response = await this._signInUseCase.execute(email, password);
+
+            
             res.json(response);
         } catch (error) {
             next(error);

@@ -7,21 +7,32 @@ import {
     authorize,
     handleInputErrors,
     validateUserDashInput,
+    validateTrainerId,
+    validateTrainerExists,
 } from "../middleware";
 
 const trainerRouter = Router();
 
 const trainerController = new TrainerController(
     DIContainer.createTrainerUseCase(),
-    DIContainer.getAllTrainersUseCase()
+    DIContainer.getAllTrainersUseCase(),
+    DIContainer.getDeleteUserUseCase(),
+    DIContainer.getUpdateTrainerUseCase()
 );
 
 trainerRouter.use(limiter, authenticate);
+trainerRouter.param("trainerID", validateTrainerId);
+trainerRouter.param("trainerID", validateTrainerExists);
 
 trainerRouter.get(
     "/",
     authorize(["admin"]),
     trainerController.getAll.bind(trainerController)
+);
+
+trainerRouter.get(
+    "/:trainerID",
+    trainerController.getById.bind(trainerController)
 );
 
 trainerRouter.post(
@@ -30,6 +41,19 @@ trainerRouter.post(
     validateUserDashInput,
     handleInputErrors,
     trainerController.create.bind(trainerController)
+);
+
+trainerRouter.put(
+    "/:trainerID",
+    validateUserDashInput,
+    handleInputErrors,
+    trainerController.update.bind(trainerController)
+);
+
+trainerRouter.delete(
+    "/:trainerID",
+    handleInputErrors,
+    trainerController.deleteTrainerById.bind(trainerController)
 );
 
 export default trainerRouter;
