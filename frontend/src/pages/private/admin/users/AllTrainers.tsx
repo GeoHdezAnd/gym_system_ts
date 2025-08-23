@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTrainers } from "../../../../api/TrainerApi";
-import { TrainerTable } from "../../../../components/organisms/users";
+import { TrainerTable } from "../../../../components/organisms/admin";
 
 export default function AllTrainers() {
     const { data, isLoading, isError, error } = useQuery({

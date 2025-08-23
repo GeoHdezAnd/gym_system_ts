@@ -35,20 +35,35 @@ export class CreateSuscriptionUseCase {
                 "Ya tiene el usuario una suscripción activa"
             );
         }
+        const today = new Date();
+        const startLocal = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+        );
 
         const suscription = new Subscription({
-            member_id: member.profile.id!, // en el perfil está el id de la tabla de su perfil miembro, es donde tendra todas sus suscripciones el usuario ya que solo los miembtos pueden tener suscripcion
+            member_id: member.profile.id!,
             plan_id,
-            start_date: new Date(),
-            end_date: this.calculateEndSuscription(plan.duration_days),
+            start_date: startLocal,
+            end_date: this.calculateEndSuscription(
+                plan.duration_days,
+                startLocal
+            ),
         });
 
         await this.subscriptionRepository.create(suscription);
     }
 
-    private calculateEndSuscription(days: number) {
-        const endDate = new Date();
-        endDate.setDate(endDate.getDate() + days);
+    private calculateEndSuscription(days: number, starLocal: Date) {
+        const today = new Date();
+        const endDate = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+        );
+
+        endDate.setDate(starLocal.getDate() + days);
         return endDate;
     }
 }

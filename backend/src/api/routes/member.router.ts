@@ -18,15 +18,16 @@ const memberController = new MemberController(
     DIContainer.getMembersUseCase(),
     DIContainer.getUpdateMemberUseCase(),
     DIContainer.getDeleteUserUseCase()
-); 
+);
 
-memberRouter.use(limiter, authenticate, authorize(["admin"]));
+memberRouter.use(limiter, authenticate);
 memberRouter.param("memberId", validateMemberId);
 memberRouter.param("memberId", validateMemberExists);
 
-/**  Rutas protegidas para operaciones del administrador */
+/**  Rutas protegidas para operaciones del administrador  */
 memberRouter.post(
     "/",
+    authorize(["admin"]),
     validateMemberInput,
     handleInputErrors,
     memberController.createMember.bind(memberController)
@@ -36,6 +37,7 @@ memberRouter.post(
 // Esta ruta contiene paginador por lo que recive parametros query
 memberRouter.get(
     "/",
+    authorize(["admin"]),
     [
         query("page").optional().isInt({ min: 1 }).toInt(),
         query("limit").optional().isInt({ min: 1, max: 100 }).toInt(),
@@ -47,9 +49,10 @@ memberRouter.get(
 // Ruta para obtener miembro por ID
 memberRouter.get("/:memberId", memberController.getById.bind(memberController));
 
-// Ruta para actualizar miembro desde panel admin por id
+// Ruta para actualizar miembro desde panel admin y cliente por id
 memberRouter.put(
     "/:memberId",
+    authorize(["admin", "member"]),
     validateMemberInput,
     handleInputErrors,
     memberController.updateMemberById.bind(memberController)
@@ -57,6 +60,7 @@ memberRouter.put(
 // Ruta para eliminar por lote
 memberRouter.delete(
     "/batch-delete/",
+    authorize(["admin"]),
     body("userIds").isArray({ min: 1 }),
     body("userIds.*").isString(),
     handleInputErrors,
@@ -65,6 +69,7 @@ memberRouter.delete(
 // Ruta para eliminar miembros
 memberRouter.delete(
     "/:memberId",
+    authorize(["admin"]),
     handleInputErrors,
     memberController.deleteMemberById.bind(memberController)
 );

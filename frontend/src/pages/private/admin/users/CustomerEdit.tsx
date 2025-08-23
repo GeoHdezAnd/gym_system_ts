@@ -8,7 +8,7 @@ import { LoadingSpinner } from "../../../../components/attoms/LoadingSpinner";
 import {
     FormMember,
     type MemberAddSchema,
-} from "../../../../components/organisms/users";
+} from "../../../../components/organisms/admin";
 import { toast } from "sonner"; // o el paquete de toast que uses
 import { handleApiError } from "../../../../lib/utils/handleAPIError";
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -78,7 +78,9 @@ export default function CustomerEdit() {
                     <IoIosArrowRoundBack className="text-3xl cursor-pointer" />
                 </Link>
 
-                <h1 className="text-2xl ">{`${data.name} ${data.last_name}`}</h1>
+                <h1 className="text-2xl ">{`${data!.name} ${
+                    data!.last_name
+                }`}</h1>
             </div>
 
             <div className="flex flex-col md:flex-row gap-2 line">

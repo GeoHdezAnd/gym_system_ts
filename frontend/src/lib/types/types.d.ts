@@ -9,8 +9,8 @@ export type BaseUserProps = {
 export type MemberProps = BaseUserProps & {
     profile: {
         id: string;
-        gender: string;
-        born_date: Date;
+        gender: "M" | "F" | "O";
+        born_date: string;
         matricula: string;
         status?: string;
     };
@@ -47,4 +47,50 @@ export type SubsciptionMemberInfo = Subscription & {
         PlanProps,
         "id" | "name" | "price" | "application_access" | "duration_days"
     >;
+};
+
+/// Type de Relación cliente entrenador
+export type TProgress = {
+    weight: number | undefined;
+};
+export type TRelationMemberTrainer = {
+    id?: string;
+    trainer_id: string;
+    goal: string;
+    notes: string;
+    progress: TProgress;
+    trainer_profile?: {
+        id: string;
+        name: string;
+        last_name: string;
+        phone: string;
+    };
+};
+
+export type TAdvisedResponse = {
+    member: {
+        id: string;
+        name: string;
+        last_name: string;
+        phone: string;
+        gender: string;
+    };
+    relation: {
+        id: string;
+        goal: string;
+    };
+};
+
+export type TExercises = {
+    name: string;
+    sets: number;
+    reps_goal: number;
+    notes: string;
+};
+
+export type TWorkOutResponse = {
+    id: string;
+    relation_id: string;
+    name: string;
+    exercises: TExercises[];
 };

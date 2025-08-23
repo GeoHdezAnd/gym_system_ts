@@ -159,7 +159,7 @@ export const FormTrainer = ({
                                 + Agregar
                             </Button>
                         </div>
-                        <div className="grid  gap-2 grid-cols-1 md:grid-cols-1 lg:grid-cols-3">
+                        <div className="grid  gap-2 grid-cols-1 md:grid-cols-1 max-[]:lg:grid-cols-3">
                             {fields.map((field, idx) => (
                                 <div
                                     key={field.id}

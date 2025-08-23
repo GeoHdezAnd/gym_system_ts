@@ -1,5 +1,6 @@
-import type { MemberAddSchema } from "../components/organisms/users";
+import type { MemberAddSchema } from "../components/organisms/admin";
 import api from "../lib/config/axios";
+import type { MemberProps } from "../lib/types/types";
 
 type PropsGet = {
     page?: number;
@@ -18,7 +19,7 @@ export async function getMembers(params: PropsGet) {
     return data || { members: [], total: 0, pages: 1, currentPage: 1 };
 }
 
-export async function getMemberByID(id: string) {
+export async function getMemberByID(id: string): Promise<MemberProps> {
     const { data } = await api.get(`/member/${id}`);
     return data;
 }

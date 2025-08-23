@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { CustomerTable } from "../../../../components/organisms/users";
+import { CustomerTable } from "../../../../components/organisms/admin";
 import { getMembers } from "../../../../api/MemberApi";
 import {
     RiArrowLeftLine,
@@ -49,7 +49,6 @@ export default function AllCustomers() {
         setSearch(e.target.value);
         setPage(1); // Resetear a primera pagina al buscar
     };
-
 
     return (
         <div className="container  text-white space-y-4 ">

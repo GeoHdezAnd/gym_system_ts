@@ -14,6 +14,7 @@ import { handleApiError } from "../../../lib/utils/handleAPIError";
 import type { SubsciptionMemberInfo } from "../../../lib/types/types";
 import { formatMoney } from "../../../lib/utils/formatMoney";
 import { formatDate } from "../../../lib/utils/formatInfo";
+import { GrStatusGoodSmall } from "react-icons/gr";
 import clsx from "clsx";
 
 export const SubscriptionManagement = ({ userId }: { userId: string }) => {
@@ -119,14 +120,16 @@ export const SubscriptionManagement = ({ userId }: { userId: string }) => {
                                     </h3>
                                     <span
                                         className={clsx(
-                                            "  text-xs font-bold px-2 py-1 rounded-full",
+                                            "  text-xs font-bold px-2 py-1 rounded-md",
                                             subscription.status === "active" &&
                                                 "bg-green-500/25 border-green-700 border shadow-sm shadow-green-700 text-green-400",
                                             subscription.status === "expired" &&
                                                 "bg-red-500/20 border-red-700 border shadow-sm shadow-red-700 text-red-600"
                                         )}
                                     >
-                                        {subscription.status.toUpperCase()}
+                                        {subscription.status === "active"
+                                            ? "Activa"
+                                            : "Expiro"}
                                     </span>
                                 </div>
                                 <div className="space-y-1">
@@ -158,6 +161,20 @@ export const SubscriptionManagement = ({ userId }: { userId: string }) => {
                                             {formatDate(
                                                 subscription.end_date
                                             ) ?? "—"}
+                                        </span>
+                                    </p>
+                                    <p className="text-gray-200 text-sm flex items-center">
+                                        Acceso a gestión de rutinas:
+                                        <span
+                                            className={clsx(
+                                                ` pl-4`,
+                                                subscription.plan
+                                                    .application_access
+                                                    ? "text-green-500 "
+                                                    : "text-red-600"
+                                            )}
+                                        >
+                                            <GrStatusGoodSmall className="text-lg " />
                                         </span>
                                     </p>
                                 </div>

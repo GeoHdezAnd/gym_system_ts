@@ -4,7 +4,7 @@ export interface SubscriptionProps {
     id?: string;
     member_id: string;
     plan_id: string;
-    start_date?: Date;
+    start_date: Date;
     end_date: Date;
 }
 
@@ -13,7 +13,7 @@ export class Subscription {
     private _end_date: Date;
 
     constructor(private readonly props: SubscriptionProps) {
-        this._start_date = props.start_date || new Date();
+        this._start_date = props.start_date ;
         this._end_date = new Date(props.end_date);
 
         // Validaciones básicas
@@ -41,6 +41,7 @@ export class Subscription {
     }
 
     get end_date(): Date {
+        
         return this._end_date;
     }
 

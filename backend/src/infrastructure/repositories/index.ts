@@ -6,3 +6,5 @@ export * from "./trainer.repository";
 export * from "./plan.repository";
 export * from "./subscription.repository";
 export * from "./attendance.repository";
+export * from "./member_trainer.repository"
+export * from "./workout.repository"

@@ -104,7 +104,8 @@ export class SequelizeTrainerRepository implements TrainerRepository {
         return TrainerDto.fromSequelizeModelsToProfile(
             trainerModel.user_account,
             {
-                user_id: trainerModel.id,
+                id: trainerModel.id,
+                user_id: trainerModel.user_id,
                 bio: trainerModel.bio,
                 skills: trainerModel.skills,
             }

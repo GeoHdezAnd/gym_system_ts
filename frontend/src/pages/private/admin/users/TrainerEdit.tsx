@@ -10,7 +10,7 @@ import clsx from "clsx";
 import {
     FormTrainer,
     type TrainerAddSchema,
-} from "../../../../components/organisms/users";
+} from "../../../../components/organisms/admin";
 import { toast } from "sonner";
 import { handleApiError } from "../../../../lib/utils/handleAPIError";
 

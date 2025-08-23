@@ -15,7 +15,7 @@ interface Option {
 interface Props<T extends FieldValues> {
     name: Path<T>;
     control: Control<T>;
-    label: string;
+    label?: string;
     type?:
         | "text"
         | "password"
@@ -35,6 +35,7 @@ interface Props<T extends FieldValues> {
     pattern?: string; // Para validación con regex
     patternMessage?: string; // Mensaje de error para el patrón
     icon?: React.ReactNode; // New prop for icon
+    min?: string;
 }
 
 export const CustomInput = <T extends FieldValues>({
@@ -49,6 +50,7 @@ export const CustomInput = <T extends FieldValues>({
     options,
     rows = 3,
     icon,
+    min,
 }: Props<T>) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -178,14 +180,7 @@ export const CustomInput = <T extends FieldValues>({
                 </div>
             ) : (
                 <>
-                    <label
-                        htmlFor={name}
-                        className="block text-sm text-gray-300 mb-2"
-                    >
-                        {label}
-                    </label>
-
-                    <div className="relative">
+                    <div className="relative ">
                         <Controller
                             name={name}
                             control={control}
@@ -221,7 +216,7 @@ export const CustomInput = <T extends FieldValues>({
                                     return (
                                         <textarea
                                             id={name}
-                                            className={`w-full p-3  text-sm border ${
+                                            className={`w-full p-3  text-md border ${
                                                 error
                                                     ? "border-red-500"
                                                     : "border-gray-500"
@@ -235,7 +230,7 @@ export const CustomInput = <T extends FieldValues>({
 
                                 return (
                                     <input
-                                        className={`w-full px-3 py-1 text-sm ${
+                                        className={`w-full px-3 py-1 text-md ${
                                             type === "password" ? "pr-10" : ""
                                         } border ${
                                             error
@@ -248,6 +243,7 @@ export const CustomInput = <T extends FieldValues>({
                                         autoComplete="off"
                                         maxLength={maxLength}
                                         minLength={minLength}
+                                        min={min}
                                         inputMode={
                                             type === "tel"
                                                 ? "tel"

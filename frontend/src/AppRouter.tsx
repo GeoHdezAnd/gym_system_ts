@@ -19,6 +19,17 @@ import AllTrainers from "./pages/private/admin/users/AllTrainers";
 import TrainerEdit from "./pages/private/admin/users/TrainerEdit";
 import ClientLayout from "./components/templates/ClientLayout";
 import Main from "./pages/private/customer/Main";
+import UserAccount from "./pages/private/customer/UserAccount";
+import SettingsClientProfile from "./pages/private/customer/SettingsClientProfile";
+import Training from "./pages/private/customer/workout/Training";
+import EditCoaching from "./pages/private/customer/workout/EditCoaching";
+import TrainerLayout from "./components/templates/TrainerLayout";
+import MainTrainer from "./pages/private/trainer/Main";
+import TrainerAccount from "./pages/private/trainer/TrainerAccount";
+import Coaching from "./pages/private/trainer/Coaching";
+import MemberCoaching from "./pages/private/trainer/MemberCoaching";
+import SettingProfile from "./pages/private/trainer/SettingProfile";
+import CreateWorkOut from "./pages/private/trainer/CreateWorkOut";
 
 export const AppRouter = () => {
     return (
@@ -77,6 +88,34 @@ export const AppRouter = () => {
 
                     <Route path="/user" element={<ClientLayout />}>
                         <Route index element={<Main />} />
+                        <Route path="training" element={<Training />} />
+                        <Route
+                            path="training/coaching"
+                            element={<EditCoaching />}
+                        />
+                        <Route path="profile" element={<UserAccount />} />
+                        <Route
+                            path="profile/setting"
+                            element={<SettingsClientProfile />}
+                        />
+                    </Route>
+
+                    <Route path="/trainer" element={<TrainerLayout />}>
+                        <Route index element={<MainTrainer />} />
+                        <Route path="profile" element={<TrainerAccount />} />
+                        <Route path="coaching" element={<Coaching />} />
+                        <Route
+                            path="coaching/:id"
+                            element={<MemberCoaching />}
+                        />
+                        <Route
+                            path="coaching/:id/create-workout"
+                            element={<CreateWorkOut />}
+                        />
+                        <Route
+                            path="profile/setting"
+                            element={<SettingProfile />}
+                        />
                     </Route>
                 </Routes>
             </AuthProvider>

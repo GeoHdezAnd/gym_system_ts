@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { FormPlan } from "../../../../components/organisms/users";
+import { FormPlan } from "../../../../components/organisms/admin";
 import type { PlanFormData } from "../../../../lib/schemas/plan";
 import api from "../../../../lib/config/axios";
 import { handleApiError } from "../../../../lib/utils/handleAPIError";

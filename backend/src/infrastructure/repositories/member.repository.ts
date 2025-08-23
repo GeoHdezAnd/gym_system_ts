@@ -125,6 +125,7 @@ export class SequelizeMemberRepository implements MemberRepository {
                             attributes: [],
                         },
                     ],
+
                     attributes: [
                         "id",
                         "name",
@@ -134,15 +135,36 @@ export class SequelizeMemberRepository implements MemberRepository {
                         "confirmed",
                     ],
                 },
+                {
+                    association: "subscriptions",
+                    attributes: ["id", "start_date", "end_date"],
+                    required: false,
+                    limit: 1,
+                    order: [["createdAt", "DESC"]],
+                },
             ],
         });
 
         if (!memberModel?.user_account) {
             return false;
         }
+
+        const subscriptionModel = memberModel.subscriptions?.[0];
+        let status = "pending";
+        if (subscriptionModel) {
+            const subscription = new Subscription({
+                member_id: subscriptionModel.member_id,
+                plan_id: subscriptionModel.plan_id,
+                start_date: subscriptionModel.start_date,
+                end_date: subscriptionModel.end_date,
+            });
+            status = subscription.status;
+        }
+
         return MemberWithUserDto.fromSequelizeModels(
             memberModel,
-            memberModel.user_account!
+            memberModel.user_account!,
+            status
         );
     }
 

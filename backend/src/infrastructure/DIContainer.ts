@@ -2,11 +2,13 @@ import {
     AdminRepository,
     AttendanceRepository,
     MemberRepository,
+    MemberTrainerRepository,
     PlanRepository,
     RoleRepository,
     SubscriptionRepository,
     TrainerRepository,
     UserRepository,
+    WorkoutRepository,
 } from "../domain/interfaces";
 import {
     IAuthService,
@@ -53,6 +55,7 @@ import {
     SequelizeSubscriptionRepository,
     SequelizeAttendanceRepository,
     SequelizeTrainerRepository,
+    SequelizeMemberTrainerRepository,
 } from "./repositories";
 import {
     AuthServiceImpl,
@@ -62,8 +65,18 @@ import {
 import {
     CreateTrainerUseCase,
     UpdateTrainerUseCase,
+    GetAllTrainersUseCase,
 } from "../application/admin/trainer";
-import { GetAllTrainersUseCase } from "../application/admin/trainer/get-all-trainer.usecase";
+import {
+    SelectTrainerUseCase,
+    UpdateRelationUseCase,
+} from "../application/memberApp";
+import { GetRelationMemberTrainerUseCase } from "../application/memberApp/get-relation-member-trainer.usecase";
+import {
+    GetAdvisedUseCase,
+    GetAllWorksoutUseCase,
+} from "../application/trainerApp";
+import { SequelizeWorkoutRepository } from "./repositories/workout.repository";
 
 export class DIContainer {
     // Repositorios
@@ -83,6 +96,11 @@ export class DIContainer {
         new SequelizeAttendanceRepository();
     private static _trainerRepository: TrainerRepository =
         new SequelizeTrainerRepository();
+    private static _memberTrainerRepository: MemberTrainerRepository =
+        new SequelizeMemberTrainerRepository();
+
+    private static _workoutRepository: WorkoutRepository =
+        new SequelizeWorkoutRepository();
 
     // Servicios
     private static _authService: IAuthService = new AuthServiceImpl();
@@ -240,5 +258,39 @@ export class DIContainer {
             this._userRepository,
             this._trainerRepository
         );
+    }
+
+    // Relacion cliente con entrenador
+    static getSelectTrainerUseCase(): SelectTrainerUseCase {
+        return new SelectTrainerUseCase(
+            this._memberRepository,
+            this._trainerRepository,
+            this._memberTrainerRepository
+        );
+    }
+
+    static getGetRelationMemberTrainerUseCase(): GetRelationMemberTrainerUseCase {
+        return new GetRelationMemberTrainerUseCase(
+            this._memberRepository,
+            this._memberTrainerRepository
+        );
+    }
+
+    static updateRelationUseCase(): UpdateRelationUseCase {
+        return new UpdateRelationUseCase(
+            this._memberTrainerRepository,
+            this._trainerRepository
+        );
+    }
+
+    static getAdvisedUseCase(): GetAdvisedUseCase {
+        return new GetAdvisedUseCase(
+            this._trainerRepository,
+            this._memberTrainerRepository
+        );
+    }
+
+    static getAllWorksOutUseCase(): GetAllWorksoutUseCase {
+        return new GetAllWorksoutUseCase(this._workoutRepository);
     }
 }

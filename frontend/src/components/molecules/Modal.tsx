@@ -39,16 +39,16 @@ export const Modal = ({
 
             {/* Contenedor del modal */}
             <div
-                className="m-10 relative z-10 bg-slate-800 px-4 py-2 rounded-xl shadow-xl w-full max-w-3xl"
+                className="m-10 relative z-10 bg-slate-800 px-4 py-2 rounded-xl shadow-xl w-auto "
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1  lg:gap-2">
                         <div className="p-1 border-1 border-gray-600 rounded-md">
                             {iconTitle}
                         </div>
                         <div>
-                            <h2 className="text-xl font-medium text-white">
+                            <h2 className="text-sm lg:text-xl font-medium text-white">
                                 {title}
                             </h2>
                             <p className="text-xs text-gray-400">

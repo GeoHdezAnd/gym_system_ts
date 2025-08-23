@@ -35,6 +35,7 @@ export default function Login() {
                 if (role === "admin")
                     navigate("/dashboard"); // <-- Navega solo si fue exitoso
                 else if (role === "member") navigate("/user");
+                else if (role === "trainer") navigate("/trainer");
             }
         } catch (error) {
             if (isAxiosError(error) && error.response) {
@@ -76,7 +77,7 @@ export default function Login() {
                 </Button>
             </form>
 
-            <div className="text-center text-sm text-gray-600 flex justify-between">
+            <div className="text-center text-xs text-gray-600 flex justify-between">
                 <div className="flex gap-2">
                     <p>¿No Tienes cuenta?</p>
                     <Link

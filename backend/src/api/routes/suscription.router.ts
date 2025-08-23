@@ -17,11 +17,12 @@ const suscriptionController = new SuscriptionController(
     DIContainer.getAllSuscriptionsUserUseCase()
 );
 
-suscriptionRouter.use(limiter, authenticate, authorize(["admin"]));
+suscriptionRouter.use(limiter, authenticate);
 suscriptionRouter.param("suscriptionId", validatePlanId);
 
 suscriptionRouter.post(
     "/",
+    authorize(["admin"]),
     validateSuscriptionData,
     handleInputErrors,
     suscriptionController.create.bind(suscriptionController)
@@ -29,6 +30,7 @@ suscriptionRouter.post(
 
 suscriptionRouter.get(
     "/:userId",
+    authorize(["admin", "member"]),
     validateUserId,
     handleInputErrors,
     suscriptionController.getAllByUserId.bind(suscriptionController)

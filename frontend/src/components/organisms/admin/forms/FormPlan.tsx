@@ -180,7 +180,7 @@ export const FormPlan = ({
                     <div className="flex gap-2 items-center">
                         <HiDevicePhoneMobile className="" />
                         <p className="text-sm font-medium lg:pr-4 max-w-24">
-                            Acceso a aplicación
+                            Gestión de rutinas
                         </p>
                         <ToggleButton
                             onToggle={handleToggle}
@@ -189,7 +189,7 @@ export const FormPlan = ({
                     </div>
                     <p className="text-xs text-gray-400 p-2">
                         ** Este campó es para seleccionar si la membresia otorga
-                        acceso a la aplicación de rutinas
+                        acceso a la gestión de rutinas
                     </p>
                 </div>
 

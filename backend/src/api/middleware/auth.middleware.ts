@@ -88,7 +88,7 @@ export const authenticate = async (
  * - Llama a next() si tiene permiso, lanza error si no.
  */
 // Autorización por roles
-type Role = "admin" | "member";
+type Role = "admin" | "member" | "trainer";
 
 export const authorize = (allowedRoles: Role[]) => {
     return async (req: Request, res: Response, next: NextFunction) => {

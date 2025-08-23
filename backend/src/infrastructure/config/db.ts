@@ -10,6 +10,8 @@ import {
     SubscriptionModel,
     AttendanceModel,
     TrainerModel,
+    MemberTrainerModel,
+    WorkoutModel,
 } from "../models";
 dotenv.config();
 
@@ -36,5 +38,7 @@ export const db = new Sequelize({
         PlansModel,
         SubscriptionModel,
         AttendanceModel,
+        MemberTrainerModel,
+        WorkoutModel,
     ],
 });

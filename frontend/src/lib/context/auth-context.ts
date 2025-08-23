@@ -2,6 +2,7 @@ import { createContext } from "react";
 
 // Tipos para el contexto
 export type User = {
+    id: string;
     name: string;
     lastName: string;
     email?: string;

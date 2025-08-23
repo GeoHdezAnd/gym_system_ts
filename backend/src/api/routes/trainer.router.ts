@@ -26,7 +26,7 @@ trainerRouter.param("trainerID", validateTrainerExists);
 
 trainerRouter.get(
     "/",
-    authorize(["admin"]),
+    authorize(["admin", "member"]),
     trainerController.getAll.bind(trainerController)
 );
 

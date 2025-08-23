@@ -14,6 +14,7 @@ export type MemberAddSchema = z.infer<typeof memberAddSchema>;
 
 type FormMemberProps = {
     mode?: "create" | "edit";
+    title?: string;
     description: string;
     defaultValues?: Partial<MemberAddSchema>; // Partial crea un type del objeto que recibe
     onSubmit?: (data: MemberAddSchema) => Promise<void> | void;
@@ -22,6 +23,7 @@ type FormMemberProps = {
 
 export function FormMember({
     mode = "create",
+    title = "Cliente",
     description,
     defaultValues,
     onSubmit,
@@ -31,7 +33,7 @@ export function FormMember({
     const {
         control,
         handleSubmit,
-        
+
         formState: { errors, isSubmitting: isFormSubmitting },
         reset,
     } = useForm<MemberAddSchema>({
@@ -70,7 +72,7 @@ export function FormMember({
     return (
         <div className="mb-8">
             <div className="mb-4 space-y-2">
-                <h2 className="font-semibold text-lg ">Cliente</h2>
+                <h2 className="font-semibold text-lg ">{title}</h2>
                 <p className="text-sm text-gray-400">{description}</p>
             </div>
 
