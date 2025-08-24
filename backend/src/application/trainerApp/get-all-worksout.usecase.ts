@@ -7,7 +7,6 @@ export class GetAllWorksoutUseCase {
         const worksout = await this._workoutRepository.getAllByRelationId(
             relationId
         );
-        console.log("Hola");
         return worksout;
     }
 }

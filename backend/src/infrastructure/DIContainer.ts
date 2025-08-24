@@ -56,6 +56,7 @@ import {
     SequelizeAttendanceRepository,
     SequelizeTrainerRepository,
     SequelizeMemberTrainerRepository,
+    SequelizeWorkoutRepository,
 } from "./repositories";
 import {
     AuthServiceImpl,
@@ -70,13 +71,15 @@ import {
 import {
     SelectTrainerUseCase,
     UpdateRelationUseCase,
+    GetRelationMemberTrainerUseCase,
 } from "../application/memberApp";
-import { GetRelationMemberTrainerUseCase } from "../application/memberApp/get-relation-member-trainer.usecase";
 import {
     GetAdvisedUseCase,
     GetAllWorksoutUseCase,
+    CreateWorkoutUseCase,
+    GetWorkOutUseCase,
+    UpdateWorkOutUseCase,
 } from "../application/trainerApp";
-import { SequelizeWorkoutRepository } from "./repositories/workout.repository";
 
 export class DIContainer {
     // Repositorios
@@ -290,7 +293,23 @@ export class DIContainer {
         );
     }
 
+    // Entrenamientos WORKOUTS
+
     static getAllWorksOutUseCase(): GetAllWorksoutUseCase {
         return new GetAllWorksoutUseCase(this._workoutRepository);
+    }
+
+    static getWorkOutUseCase(): GetWorkOutUseCase {
+        return new GetWorkOutUseCase(this._workoutRepository);
+    }
+
+    static createWorkOutUseCase(): CreateWorkoutUseCase {
+        return new CreateWorkoutUseCase(this._workoutRepository);
+    }
+
+    static updateWorkOutUseCase(): UpdateWorkOutUseCase {
+        return new UpdateWorkOutUseCase(
+            this._workoutRepository
+        );
     }
 }

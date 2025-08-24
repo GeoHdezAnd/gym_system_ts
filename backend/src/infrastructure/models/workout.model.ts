@@ -38,13 +38,13 @@ export class WorkoutModel extends Model<
     @NotNull
     declare name: string;
 
-     @Attribute(DataTypes.DATEONLY)
+    @Attribute(DataTypes.DATEONLY)
     @Default(DataTypes.NOW)
-    declare start_date: Date;
+    declare start_date: string;
 
     @NotNull
     @Attribute(DataTypes.DATEONLY)
-    declare end_date: Date;
+    declare end_date: string;
 
     @Attribute(DataTypes.ARRAY(DataTypes.JSON))
     declare exercises: TExercises[];

@@ -5,23 +5,40 @@ import type { WorkOutData } from "../../../lib/schemas/training";
 import { toast } from "sonner";
 import api from "../../../lib/config/axios";
 import { handleApiError } from "../../../lib/utils/handleAPIError";
+import { useQuery } from "@tanstack/react-query";
+import { getRelationMemberTrainer } from "../../../api/RelationMemberTrainerAPI";
 
 export default function CreateWorkOut() {
     const { id } = useParams();
+    
+    const {
+        data: relationData,
+        
+    } = useQuery({
+        queryFn: () => getRelationMemberTrainer(id!),
+        queryKey: ["relationMember", id],
+        enabled: !!id,
+    });
 
     const onSubmit = (data: WorkOutData) => {
-        console.log(data)
-        toast.promise(api.post("/member-trainer/workout", data), {
-            loading: "Guardando rutina...",
-            success: (response) => {
-                const { message } = response.data;
-                return message;
-            },
-            error: (error) => {
-                console.log(error)
-                return handleApiError(error);
-            },
-        });
+        console.log(data);
+        toast.promise(
+            api.post("/member-trainer/work-out", {
+                ...data,
+                relation_id: relationData.id,
+            }),
+            {
+                loading: "Guardando rutina...",
+                success: (response) => {
+                    const { message } = response.data;
+                    return message;
+                },
+                error: (error) => {
+                    console.error(error);
+                    return handleApiError(error);
+                },
+            }
+        );
     };
 
     return (

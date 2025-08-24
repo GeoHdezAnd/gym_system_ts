@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { GrNext } from "react-icons/gr";
 import { Link, useParams } from "react-router";
 import {
     getAllWorksoutByRelationId,
@@ -10,6 +11,8 @@ import { ErrorMessage } from "../../../components/attoms/ErrorMessage";
 import { GiStairsGoal } from "react-icons/gi";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 import { Button } from "../../../components/attoms";
+import type { TWorkOutResponse } from "../../../lib/types/types";
+import { formatDate } from "../../../lib/utils/formatInfo";
 
 export default function MemberCoaching() {
     const { id } = useParams();
@@ -54,7 +57,7 @@ export default function MemberCoaching() {
     }
 
     return (
-        <main className="text-white max-w-md   grid text-center p-3 lg:p-1 space-y-3 overflow-auto">
+        <main className="text-white max-w-md  m-auto grid text-center p-3 lg:p-1 space-y-3 overflow-auto">
             <Link className="hover:text-pink-800" to={"/trainer/coaching"}>
                 <IoIosArrowRoundBack className="text-3xl cursor-pointer" />
             </Link>
@@ -111,7 +114,19 @@ export default function MemberCoaching() {
             </div>
 
             <div className="py-2">
-                <h3 className="font-semibold text-lg">Entrenamientos</h3>
+                <div className="flex gap-2 justify-between">
+                    <h3 className="font-semibold text-lg">Entrenamientos</h3>
+                    <Button className=" mb-3">
+                        <Link
+                            to={"create-workout"}
+                            className="flex items-center gap-5"
+                        >
+                            Agregar rutina{" "}
+                            <MdOutlineAddCircleOutline className="text-xl" />{" "}
+                        </Link>
+                    </Button>
+                </div>
+
                 {workoutsIsLoading && (
                     <div className="flex justify-center items-center h-64">
                         <LoadingSpinner size="lg" />
@@ -125,22 +140,44 @@ export default function MemberCoaching() {
                     />
                 )}
                 <div className="py-2 ">
-                    <Button className="m-auto mb-3">
-                        <Link
-                            to={"create-workout"}
-                            className="flex items-center gap-5"
-                        >
-                            Agregar rutina{" "}
-                            <MdOutlineAddCircleOutline className="text-xl" />{" "}
-                        </Link>
-                    </Button>
                     {workoutsData?.length === 0 ? (
                         <p>Sin rutinas registradas aún</p>
                     ) : (
-                        <p>Si hay rutinas</p>
+                        workoutsData?.map((workOut: TWorkOutResponse) => (
+                            <WorkOut key={workOut.id} workOut={workOut} />
+                        ))
                     )}
                 </div>
             </div>
         </main>
     );
 }
+
+const WorkOut = ({ workOut }: { workOut: TWorkOutResponse }) => {
+    return (
+        <div className="p-4 my-2 items-center flex justify-between bg-primary-300 hover:bg-primary-200 rounded-lg border border-gray-600">
+            <div className="text-left space-y-1">
+                <h3 className="font-medium text-xl">{workOut.name}</h3>
+                <p className="text-sm">
+                    <span className="text-gray-200 text-md">
+                        Fecha inicio:{" "}
+                    </span>
+                    {formatDate(workOut.start_date)}
+                </p>
+                <p className="text-sm">
+                    <span className="text-gray-200 text-md">Fecha fin: </span>
+                    {formatDate(workOut.end_date)}
+                </p>
+                <p className="text-sm">
+                    <span className="text-gray-200 text-md">
+                        Número de ejercicios:{" "}
+                    </span>
+                    {workOut.exercises.length}
+                </p>
+            </div>
+            <Link to={`workout/${workOut.id}`}>
+                <GrNext className="text-gray-200 text-4xl hover:text-secondary-200 cursor-pointer" />
+            </Link>
+        </div>
+    );
+};

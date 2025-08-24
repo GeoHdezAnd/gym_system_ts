@@ -36,6 +36,7 @@ interface Props<T extends FieldValues> {
     patternMessage?: string; // Mensaje de error para el patrón
     icon?: React.ReactNode; // New prop for icon
     min?: string;
+    disabled?: boolean,
 }
 
 export const CustomInput = <T extends FieldValues>({
@@ -51,6 +52,7 @@ export const CustomInput = <T extends FieldValues>({
     rows = 3,
     icon,
     min,
+    disabled
 }: Props<T>) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -244,6 +246,7 @@ export const CustomInput = <T extends FieldValues>({
                                         maxLength={maxLength}
                                         minLength={minLength}
                                         min={min}
+                                        disabled={disabled}
                                         inputMode={
                                             type === "tel"
                                                 ? "tel"

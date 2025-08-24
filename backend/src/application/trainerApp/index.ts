@@ -1,2 +1,5 @@
 export * from "./get-advised.usecase"
 export * from "./get-all-worksout.usecase"
+export * from "./create-workout.usecase"
+export * from "./get-workout.usecase"
+export * from "./update-workout.usecase"

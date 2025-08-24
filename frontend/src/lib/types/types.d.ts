@@ -90,7 +90,9 @@ export type TExercises = {
 
 export type TWorkOutResponse = {
     id: string;
-    relation_id: string;
+    relation_id?: string;
     name: string;
+    start_date: string,
+    end_date: string,
     exercises: TExercises[];
 };

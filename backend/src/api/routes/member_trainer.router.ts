@@ -18,7 +18,10 @@ const memberTrainerController = new MemberTrainerController(
     DIContainer.getGetRelationMemberTrainerUseCase(),
     DIContainer.updateRelationUseCase(),
     DIContainer.getAdvisedUseCase(),
-    DIContainer.getAllWorksOutUseCase()
+    DIContainer.getAllWorksOutUseCase(),
+    DIContainer.getWorkOutUseCase(),
+    DIContainer.createWorkOutUseCase(),
+    DIContainer.updateWorkOutUseCase()
 );
 
 memberTrainerRouter.use(limiter, authenticate);
@@ -58,11 +61,25 @@ memberTrainerRouter.get(
     memberTrainerController.getAllWorksout.bind(memberTrainerController)
 );
 
+memberTrainerRouter.get(
+    "/work-out/:idWorkout",
+    authorize(["trainer", "trainer"]),
+    memberTrainerController.getWorkOutById.bind(memberTrainerController)
+);
+
 memberTrainerRouter.post(
-    "/workout",
+    "/work-out",
     authorize(["trainer"]),
     validateWorkoutCreate,
-    handleInputErrors
+    handleInputErrors,
+    memberTrainerController.createWorkOut.bind(memberTrainerController)
+);
+
+memberTrainerRouter.put(
+    "/work-out/:id",
+    authorize(["trainer"]),
+    handleInputErrors,
+    memberTrainerController.updateWorkOut.bind(memberTrainerController)
 );
 
 export default memberTrainerRouter;

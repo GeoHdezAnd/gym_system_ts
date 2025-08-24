@@ -7,27 +7,27 @@ export type TExercises = {
 
 export interface WorkoutProps {
     id?: string;
-    relation_id: string;
+    relation_id?: string;
     name: string;
-    start_date: Date;
-    end_date: Date;
+    start_date: string;
+    end_date: string;
     exercises: TExercises[];
 }
 
 export class Workout {
     private _id?: string;
-    private _relation_id: string;
+    private _relation_id?: string;
     private _name: string;
-    private _start_date: Date;
-    private _end_date: Date;
+    private _start_date: string;
+    private _end_date: string;
     private _exercises: TExercises[];
 
     constructor(private readonly props: WorkoutProps) {
         this._id = props.id;
         this._relation_id = props.relation_id;
         this._name = props.name;
-        this._start_date = props.start_date;
-        this._end_date = new Date(props.end_date);
+        this._start_date = props.end_date;
+        this._end_date = props.end_date;
         this._exercises = props.exercises || [
             {
                 name: "",
@@ -42,7 +42,7 @@ export class Workout {
         return this._id;
     }
 
-    get relation_id(): string {
+    get relation_id(): string | undefined {
         return this._relation_id;
     }
 
@@ -50,11 +50,11 @@ export class Workout {
         return this._name;
     }
 
-    get start_date(): Date {
+    get start_date(): string {
         return this._start_date;
     }
 
-    get end_date(): Date {
+    get end_date(): string {
         return this._end_date;
     }
 

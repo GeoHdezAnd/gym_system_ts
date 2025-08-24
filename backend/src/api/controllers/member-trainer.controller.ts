@@ -7,6 +7,9 @@ import {
 import {
     GetAdvisedUseCase,
     GetAllWorksoutUseCase,
+    CreateWorkoutUseCase,
+    GetWorkOutUseCase,
+    UpdateWorkOutUseCase,
 } from "../../application/trainerApp";
 
 export class MemberTrainerController {
@@ -15,7 +18,10 @@ export class MemberTrainerController {
         private readonly _getRelaionMemberTrainerUseCase: GetRelationMemberTrainerUseCase,
         private readonly _updateRelationUseCase: UpdateRelationUseCase,
         private readonly _getAdvisedUseCase: GetAdvisedUseCase,
-        private readonly _getAllWorksoutUseCase: GetAllWorksoutUseCase
+        private readonly _getAllWorksoutUseCase: GetAllWorksoutUseCase,
+        private readonly _getWorkOutUseCase: GetWorkOutUseCase,
+        private readonly _createWorkoutUseCase: CreateWorkoutUseCase,
+        private readonly _updateWorkoutUseCase: UpdateWorkOutUseCase
     ) {}
 
     // Ruta para obtener la relación segun el user id, lo buscara en la tabla de miembros
@@ -85,11 +91,43 @@ export class MemberTrainerController {
         }
     }
 
+    async getWorkOutById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { idWorkout } = req.params;
+            const workout = await this._getWorkOutUseCase.execute(idWorkout);
+            res.json(workout);
+        } catch (error) {
+            next(error);
+        }
+    }
+
     async createWorkOut(req: Request, res: Response, next: NextFunction) {
         try {
+            const { name, relation_id, start_date, end_date, exercises } =
+                req.body;
+            const workout = await this._createWorkoutUseCase.execute({
+                name,
+                relation_id,
+                start_date,
+                end_date,
+                exercises,
+            });
+            res.json({ message: "Rutina creada correctamente", workout });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async updateWorkOut(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
             const { name, start_date, end_date, exercises } = req.body;
-            console.log(name, start_date, end_date, exercises);
-            res.json({ message: "Rutina creada correctamente" });
+
+            const workout = await this._updateWorkoutUseCase.execute({
+                id,
+                input: { name, start_date, end_date, exercises },
+            });
+            res.json({ message: "Rutina actualizada", workout });
         } catch (error) {
             next(error);
         }

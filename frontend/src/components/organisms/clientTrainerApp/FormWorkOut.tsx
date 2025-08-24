@@ -9,12 +9,14 @@ import { FaDumbbell } from "react-icons/fa6";
 type WorkOutFormProps = {
     mode?: "create" | "edit";
     defaultValues?: Partial<WorkOutData>;
+    disabled?: boolean;
     onSubmit?: (data: WorkOutData) => Promise<void> | void;
     isLoading?: boolean;
 };
 
 export const FormWorkOut = ({
     mode = "create",
+    disabled,
     defaultValues,
     onSubmit,
     isLoading: externalLoading,
@@ -126,6 +128,7 @@ export const FormWorkOut = ({
                         placeholder="Nombre de la rutina"
                         error={errors.name}
                         control={control}
+                        disabled={disabled}
                     />
 
                     <div className="flex justify-between">
@@ -137,6 +140,7 @@ export const FormWorkOut = ({
                                 min={getDate()}
                                 error={errors.start_date}
                                 control={control}
+                                disabled={disabled}
                             />
                         </div>
                         <div>
@@ -147,16 +151,19 @@ export const FormWorkOut = ({
                                 min={getDate(1)} // SI agregas 1 deja seleccionar un mes despues la fecha de end
                                 error={errors.end_date}
                                 control={control}
+                                disabled={disabled}
                             />
                         </div>
                     </div>
 
                     <div className="flex items-center justify-between">
                         <h2 className="font-semibold text-lg">Ejercicios</h2>
-                        <Button type="button" onClick={addExercise}>
-                            <MdAdd className="text-xl" />
-                            <p>Agregar ejercicio</p>
-                        </Button>
+                        {!disabled && (
+                            <Button type="button" onClick={addExercise}>
+                                <MdAdd className="text-xl" />
+                                <p>Agregar ejercicio</p>
+                            </Button>
+                        )}
                     </div>
 
                     {fields.map((field, index) => {
@@ -178,6 +185,7 @@ export const FormWorkOut = ({
                                     <div className="flex items-center gap-2">
                                         <button
                                             type="button"
+                                            disabled={disabled}
                                             onClick={() =>
                                                 toggleExercise(index)
                                             }
@@ -208,7 +216,7 @@ export const FormWorkOut = ({
                                 </div>
 
                                 {/* Vista contraída - solo muestra la información */}
-                                {!isExpanded && exerciseData && (
+                                {(!isExpanded || disabled) && exerciseData && (
                                     <div className="bg-gray-800/60 p-3 rounded-md mb-3">
                                         <p className="font-medium truncate">
                                             {exerciseData.name || "Sin nombre"}
@@ -231,7 +239,7 @@ export const FormWorkOut = ({
                                 )}
 
                                 {/* Vista expandida - muestra todos los inputs */}
-                                {isExpanded && (
+                                {isExpanded && !disabled && (
                                     <>
                                         <div className="flex gap-2 items-center w-auto mb-3">
                                             <div className="flex-1">
@@ -290,7 +298,7 @@ export const FormWorkOut = ({
                     <div className="mt-6">
                         <Button
                             loading={isLoading}
-                            disabled={isLoading}
+                            disabled={isLoading || disabled}
                             type="submit"
                             className="w-full bg-blue-600 hover:bg-blue-700"
                         >

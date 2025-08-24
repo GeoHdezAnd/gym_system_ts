@@ -1,4 +1,5 @@
 import api from "../lib/config/axios";
+import type { WorkOutData } from "../lib/schemas/training";
 import type {
     TRelationMemberTrainer,
     TWorkOutResponse,
@@ -28,9 +29,20 @@ export async function getAdvisedByTrainerId(trainerId: string) {
     return data;
 }
 
+// Entrenamientos
 export async function getAllWorksoutByRelationId(
     relationId: string
 ): Promise<TWorkOutResponse[] | []> {
     const { data } = await api.get(`/member-trainer/workout-all/${relationId}`);
+    return data;
+}
+
+export async function getWorkOutById(id: string): Promise<TWorkOutResponse> {
+    const { data } = await api.get(`/member-trainer/work-out/${id}`);
+    return data;
+}
+
+export async function updateWorkOut(id: string, workout: WorkOutData) {
+    const { data } = await api.put(`/member-trainer/work-out/${id}`, workout);
     return data;
 }
