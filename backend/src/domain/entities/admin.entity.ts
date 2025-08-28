@@ -1,6 +1,6 @@
 export interface AdminProps {
     id?: string;
-    user_id: string;
+    user_id?: string;
     access_level: string;
 }
 
@@ -10,7 +10,7 @@ export class Admin {
     get id(): string | undefined {
         return this.props.id;
     }
-    get user_id(): string {
+    get user_id(): string | undefined {
         return this.props.user_id;
     }
     get access_level(): string {

@@ -21,7 +21,7 @@ export const CardMemberMovil = ({
     onSelect,
 }: CardMemberMovilProps) => {
     return (
-        <div key={user.id} className="bg-gray-800/50 p-4 rounded-lg">
+        <div key={user.id} className="bg-gray-800/50 border-1 border-gray-600 p-4 rounded-lg">
             <div className="flex justify-between items-start">
                 <div className="flex gap-3 items-center">
                     <img
@@ -98,9 +98,12 @@ export const CardMemberMovil = ({
             </div>
 
             <div className="mt-3 flex justify-end gap-2">
-                <button className="p-1 text-yellow-400 hover:bg-amber-400/70 border border-yellow-400 rounded-md">
-                    <RiEdit2Fill />
-                </button>
+                <Link
+                    to={`/dashboard/user/customer/${user.id}/subscription`}
+                    className="px-2 text-yellow-400 flex hover:bg-amber-400/70 border border-yellow-400 rounded-md"
+                >
+                    <RiEdit2Fill className="m-auto" />
+                </Link>
                 <DeleteConfirmationDialog
                     fild={`Usuario: ${user.name} ${user.last_name}`}
                     onConfirm={() => onDelete(user.id)}

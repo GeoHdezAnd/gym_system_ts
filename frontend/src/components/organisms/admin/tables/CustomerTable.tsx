@@ -6,7 +6,7 @@ import { TiBusinessCard } from "react-icons/ti";
 import type { MemberProps } from "../../../../lib/types/types";
 import { formatPhone, formatDate } from "../../../../lib/utils/formatInfo";
 import { RiEdit2Fill, RiUserSettingsLine } from "react-icons/ri";
-import { CardMemberMovil } from "../../../molecules/member/CardMemberMovil";
+import { CardMemberMovil } from "../../../molecules/users/CardMemberMovil";
 import { DeleteConfirmationDialog } from "../../DeleteConfirmationDialong";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

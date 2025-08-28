@@ -6,3 +6,4 @@ export * from "./validation-trainer.middlware";
 export * from "./validation-plan.middleware";
 export * from "./validate-suscription.middleware";
 export * from "./validate-member-trainer.middleware"
+export * from "./validate-admin.middleware"

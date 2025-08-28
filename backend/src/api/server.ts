@@ -23,6 +23,7 @@ import attendecandeRouter from "./routes/attendance.router";
 import { runLoaders } from "../infrastructure/loaders";
 import trainerRouter from "./routes/trainer.router";
 import memberTrainerRouter from "./routes/member_trainer.router";
+import adminRouter from "./routes/admin.router";
 /**
  * Clase principal para levantar y configurar el servidor de la API.
  *
@@ -56,6 +57,7 @@ export class ApiServer {
         app.use("/api/auth", authRouter);
         app.use("/api/member", memberRouter);
         app.use("/api/trainer", trainerRouter);
+        app.use("/api/admin", adminRouter);
         app.use("/api/plan", planRouter);
         app.use("/api/subscription", suscriptionRouter);
         app.use("/api/attendance", attendecandeRouter);

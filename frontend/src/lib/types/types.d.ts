@@ -19,7 +19,15 @@ export type MemberProps = BaseUserProps & {
 export type TrainerProps = BaseUserProps & {
     profile: {
         id: string;
+        bio: string;
         skills: string[];
+    };
+};
+
+export type AdminProps = BaseUserProps & {
+    profile: {
+        id: string;
+        access_level: "full" | "limited";
     };
 };
 
@@ -92,7 +100,7 @@ export type TWorkOutResponse = {
     id: string;
     relation_id?: string;
     name: string;
-    start_date: string,
-    end_date: string,
+    start_date: string;
+    end_date: string;
     exercises: TExercises[];
 };

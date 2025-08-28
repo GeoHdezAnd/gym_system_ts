@@ -4,15 +4,18 @@ import {
     InferAttributes,
     InferCreationAttributes,
     Model,
+    NonAttribute,
 } from "@sequelize/core";
 import {
     Attribute,
+    BelongsTo,
     Default,
     NotNull,
     PrimaryKey,
     Table,
     Unique,
 } from "@sequelize/core/decorators-legacy";
+import { UserModel } from "./user.model";
 
 @Table({
     tableName: "admins",
@@ -34,4 +37,10 @@ export class AdminModel extends Model<
     @NotNull
     @Unique
     declare user_id: string;
+
+    // Relations
+    @BelongsTo(() => UserModel, {
+        foreignKey: "user_id",
+    })
+    declare user_account?: NonAttribute<UserModel>;
 }

@@ -80,6 +80,10 @@ import {
     GetWorkOutUseCase,
     UpdateWorkOutUseCase,
 } from "../application/trainerApp";
+import {
+    GetAllAdminsUseCase,
+    UpdateAdminUseCase,
+} from "../application/admin/admins";
 
 export class DIContainer {
     // Repositorios
@@ -308,8 +312,18 @@ export class DIContainer {
     }
 
     static updateWorkOutUseCase(): UpdateWorkOutUseCase {
-        return new UpdateWorkOutUseCase(
-            this._workoutRepository
+        return new UpdateWorkOutUseCase(this._workoutRepository);
+    }
+
+    // Administradores
+    static getAllAdminsUseCase(): GetAllAdminsUseCase {
+        return new GetAllAdminsUseCase(this._adminRepository);
+    }
+
+    static updateAdminUseCase(): UpdateAdminUseCase {
+        return new UpdateAdminUseCase(
+            this._userRepository,
+            this._adminRepository
         );
     }
 }

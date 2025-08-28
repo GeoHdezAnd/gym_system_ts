@@ -1,7 +1,5 @@
 import {
-    RiCollageFill,
     RiUserFill,
-    RiSettingsFill,
     RiUserAddFill,
     RiPantoneFill,
     RiAddCircleLine,
@@ -9,6 +7,7 @@ import {
 } from "react-icons/ri";
 import { GiMuscleUp } from "react-icons/gi";
 import { TbUsers } from "react-icons/tb";
+import { LiaUsersCogSolid } from "react-icons/lia";
 import { NavItem } from "../attoms/NavItem";
 import { ImExit } from "react-icons/im";
 import { useState } from "react";
@@ -18,7 +17,6 @@ export function SideBar() {
     const { logOut } = useAuth();
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
     const navItems = [
-        { to: "", icon: RiCollageFill, label: "Dashboard", end: true },
         {
             to: "user",
             icon: RiUserFill,
@@ -38,6 +36,11 @@ export function SideBar() {
                     to: "user/trainer/all",
                     label: "Entrenadores",
                     icon: GiMuscleUp,
+                },
+                {
+                    to: "user/admin/all",
+                    label: "Administradores",
+                    icon: LiaUsersCogSolid,
                 },
             ],
         },
@@ -84,12 +87,6 @@ export function SideBar() {
                 </div>
                 <div className="grid gap-2">
                     <div className="w-auto h-[.5px] mx-4 bg-gray-700" />
-
-                    <NavItem
-                        to="settings"
-                        icon={RiSettingsFill}
-                        label="Configuración"
-                    />
 
                     <button
                         type="button"

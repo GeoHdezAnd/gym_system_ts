@@ -1,23 +1,23 @@
 import type { Request, Response, NextFunction } from "express";
-import { ITrainerProfileDto } from "../../domain/dtos/trainer.dto";
-import { param, validationResult } from "express-validator";
-import { SequelizeTrainerRepository } from "../../infrastructure/repositories";
+import { body, param, validationResult } from "express-validator";
+import { SequelizeAdminRepository } from "../../infrastructure/repositories";
 import { NotFoundError } from "../../domain/errors";
+import { IAdminWithUserDto } from "../../domain/dtos/admin.dto";
 
 declare global {
     namespace Express {
         interface Request {
-            trainer?: ITrainerProfileDto;
+            admin?: IAdminWithUserDto;
         }
     }
 }
 
-export const validateTrainerId = async (
+export const validateAdminId = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    await param("trainerID")
+    await param("adminId")
         .isString()
         .withMessage("El ID debe ser una cadena de texto")
         .bail()
@@ -33,19 +33,19 @@ export const validateTrainerId = async (
     next();
 };
 
-export const validateTrainerExists = async (
+export const validateAdminExists = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    const trainerRepository = new SequelizeTrainerRepository();
+    const adminRepository = new SequelizeAdminRepository();
     try {
-        const { trainerID } = req.params;
-        const trainer = await trainerRepository.findByUserId(trainerID);
-        if (!trainer) {
-            throw new NotFoundError("Entrenador no encontrado");
+        const { adminId } = req.params;
+        const admin = await adminRepository.findByUserId(adminId);
+        if (!admin) {
+            throw new NotFoundError("Admin no encontrado");
         }
-        req.trainer = trainer;
+        req.admin = admin!;
         next();
     } catch (error) {
         next(error);

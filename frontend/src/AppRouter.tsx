@@ -31,6 +31,8 @@ import MemberCoaching from "./pages/private/trainer/MemberCoaching";
 import SettingProfile from "./pages/private/trainer/SettingProfile";
 import CreateWorkOut from "./pages/private/trainer/CreateWorkOut";
 import EditWorkOut from "./pages/private/trainer/EditWorkOut";
+import AllAdmins from "./pages/private/admin/users/AllAdmins";
+import AdminEdit from "./pages/private/admin/users/AdminEdit";
 
 export const AppRouter = () => {
     return (
@@ -71,6 +73,11 @@ export const AppRouter = () => {
                         <Route
                             path="user/trainer/:trainerId/:action"
                             element={<TrainerEdit />}
+                        />
+                        <Route path="user/admin/all" element={<AllAdmins />} />
+                        <Route
+                            path="user/admin/:adminId/edit"
+                            element={<AdminEdit />}
                         />
                         <Route
                             path="membership/add"

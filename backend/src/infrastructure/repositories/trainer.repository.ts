@@ -1,7 +1,6 @@
 import {
     TrainerDto,
     ITrainerProfileDto,
-    TrainerRequestDto,
 } from "../../domain/dtos/trainer.dto";
 import { Trainer, TrainerProps } from "../../domain/entities";
 import { NotFoundError } from "../../domain/errors";

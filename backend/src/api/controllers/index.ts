@@ -5,3 +5,4 @@ export * from "./suscription.controller";
 export * from "./attendance.controller";
 export * from "./trainer.controller";
 export * from "./member-trainer.controller";
+export * from "./admin.controller";
