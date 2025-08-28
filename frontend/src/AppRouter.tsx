@@ -33,6 +33,7 @@ import CreateWorkOut from "./pages/private/trainer/CreateWorkOut";
 import EditWorkOut from "./pages/private/trainer/EditWorkOut";
 import AllAdmins from "./pages/private/admin/users/AllAdmins";
 import AdminEdit from "./pages/private/admin/users/AdminEdit";
+import Workout from "./pages/private/customer/workout/Workout";
 
 export const AppRouter = () => {
     return (
@@ -100,6 +101,10 @@ export const AppRouter = () => {
                         <Route
                             path="training/coaching"
                             element={<EditCoaching />}
+                        />
+                        <Route
+                            path="training/workout/:idWorkout"
+                            element={<Workout />}
                         />
                         <Route path="profile" element={<UserAccount />} />
                         <Route

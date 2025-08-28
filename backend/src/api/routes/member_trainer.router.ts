@@ -63,7 +63,7 @@ memberTrainerRouter.get(
 
 memberTrainerRouter.get(
     "/work-out/:idWorkout",
-    authorize(["trainer", "trainer"]),
+    authorize(["trainer", "member"]),
     memberTrainerController.getWorkOutById.bind(memberTrainerController)
 );
 

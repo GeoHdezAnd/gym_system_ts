@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../lib/hooks/useAuth";
 import { Navigate, NavLink, Outlet } from "react-router";
-import { IoHomeSharp } from "react-icons/io5";
 import { FaDumbbell, FaSearchengin } from "react-icons/fa6";
 import { RiAccountCircle2Fill } from "react-icons/ri";
 import clsx from "clsx";
@@ -48,8 +47,8 @@ export default function ClientLayout() {
 
 const SideBar = () => {
     return (
-        <div className=" flex px-2 lg:p-0 justify-center  bg-primary-300 w-screen min-md:w-xl min-md:rounded-b-lg">
-            <NavLink
+        <div className=" flex px-2 lg:p-0 justify-evenly  bg-primary-300 w-screen min-md:w-xl min-md:rounded-b-lg">
+            {/* <NavLink
                 to={"/user"}
                 end
                 className={({ isActive }) =>
@@ -61,7 +60,7 @@ const SideBar = () => {
             >
                 <IoHomeSharp className="text-2xl md:text-xl m-auto" />
                 <p>Inicio</p>
-            </NavLink>
+            </NavLink> */}
             <NavLink
                 to={"training"}
                 className={({ isActive }) =>

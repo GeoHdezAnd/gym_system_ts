@@ -3,7 +3,6 @@ import useAuth from "../../lib/hooks/useAuth";
 import { Navigate, NavLink, Outlet } from "react-router";
 import { Toaster } from "sonner";
 import clsx from "clsx";
-import { IoHomeSharp } from "react-icons/io5";
 import { RiAccountCircle2Fill } from "react-icons/ri";
 import { FaDumbbell } from "react-icons/fa6";
 
@@ -48,7 +47,7 @@ export default function TrainerLayout() {
 const SideBar = () => {
     return (
         <div className=" flex px-2 lg:p-0 justify-center  bg-primary-300 w-screen min-md:w-xl min-md:rounded-b-lg">
-            <NavLink
+            {/* <NavLink
                 to={"/trainer"}
                 end
                 className={({ isActive }) =>
@@ -60,7 +59,7 @@ const SideBar = () => {
             >
                 <IoHomeSharp className="text-2xl md:text-xl m-auto" />
                 <p>Inicio</p>
-            </NavLink>
+            </NavLink> */}
             <NavLink
                 to={"coaching"}
                 className={({ isActive }) =>

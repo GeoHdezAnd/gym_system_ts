@@ -6,11 +6,13 @@ import { ErrorMessage } from "../../../../components/attoms/ErrorMessage";
 import type {
     SubsciptionMemberInfo,
     TRelationMemberTrainer,
+    TWorkOutResponse,
 } from "../../../../lib/types/types";
 import { FaHeartBroken } from "react-icons/fa";
 import { GiMuscleUp, GiStairsGoal } from "react-icons/gi";
 import {
     createRelationMemberTrainer,
+    getAllWorksoutByRelationId,
     getRelationMemberTrainer,
 } from "../../../../api/RelationMemberTrainerAPI";
 import { Modal } from "../../../../components/molecules/Modal";
@@ -22,9 +24,11 @@ import { handleApiError } from "../../../../lib/utils/handleAPIError";
 import { formatPhone } from "../../../../lib/utils/formatInfo";
 import { Link } from "react-router";
 import { FiEdit2 } from "react-icons/fi";
+import { WorkOut } from "../../../../components/molecules/WorkOutCard";
 
 export default function Training() {
     const { auth } = useAuth();
+    console.log(auth);
     const id = auth?.id;
     const [activeModal, setActiveModal] = useState<boolean>(false);
     const [selectedTrainer, setSelectedTrainer] = useState<{
@@ -55,6 +59,18 @@ export default function Training() {
         queryFn: () => getRelationMemberTrainer(id!),
         queryKey: ["relationMemberTrainer", id],
         enabled: !!id,
+    });
+
+    // Consulta para los workouts, dependiente de relationData
+    const {
+        data: workoutsData,
+        isLoading: workoutsIsLoading,
+        isError: workoutsIsError,
+        error: workoutsError,
+    } = useQuery({
+        queryFn: () => getAllWorksoutByRelationId(dataRelation!.id!),
+        queryKey: ["workouts", dataRelation?.id],
+        enabled: !!dataRelation?.id, // Solo se habilita si tenemos relationData.id
     });
 
     const queryClient = useQueryClient();
@@ -126,12 +142,23 @@ export default function Training() {
     const lastSubscription: SubsciptionMemberInfo =
         subscriptionsData[0] || null;
 
-    if (!lastSubscription) {
+    if (!lastSubscription || !lastSubscription.plan.application_access) {
         return (
             <div className="text-white h-full flex flex-col text-center p-4 lg:p-1 space-y-3 overflow-auto">
-                <h1 className="m-auto">
+                <h1 className="m-auto max-w-96">
                     No tienes acceso a esta parte de la aplicación hasta que
                     adquieras una suscripción valida
+                </h1>
+            </div>
+        );
+    }
+
+    if (lastSubscription.status === "expired") {
+        return (
+            <div className="text-white  h-full flex flex-col text-center p-4 lg:p-1 space-y-3 overflow-auto">
+                <h1 className="m-auto max-w-96">
+                    Renueva tu suscripción actual para disfrutar de este
+                    beneficio
                 </h1>
             </div>
         );
@@ -238,6 +265,30 @@ export default function Training() {
                     </div>
                 </div>
             )}
+
+            <div className="py-2">
+                {workoutsIsLoading && (
+                    <div className="flex justify-center items-center h-64">
+                        <LoadingSpinner size="lg" />
+                    </div>
+                )}
+                {workoutsIsError && (
+                    <ErrorMessage
+                        message="Error al cargar los datos"
+                        error={workoutsError!}
+                        className="my-4"
+                    />
+                )}
+                <div className="py-2 ">
+                    {workoutsData?.length === 0 ? (
+                        <p>Sin rutinas registradas aún</p>
+                    ) : (
+                        workoutsData?.map((workOut: TWorkOutResponse) => (
+                            <WorkOut key={workOut.id} workOut={workOut} />
+                        ))
+                    )}
+                </div>
+            </div>
         </main>
     );
 }

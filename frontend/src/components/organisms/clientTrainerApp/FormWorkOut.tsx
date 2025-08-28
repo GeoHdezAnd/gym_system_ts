@@ -183,25 +183,28 @@ export const FormWorkOut = ({
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <button
-                                            type="button"
-                                            disabled={disabled}
-                                            onClick={() =>
-                                                toggleExercise(index)
-                                            }
-                                            className="text-gray-400 hover:text-white p-1"
-                                            title={
-                                                isExpanded
-                                                    ? "Contraer"
-                                                    : "Expandir"
-                                            }
-                                        >
-                                            {isExpanded ? (
-                                                <MdExpandLess className="text-xl" />
-                                            ) : (
-                                                <MdExpandMore className="text-xl" />
-                                            )}
-                                        </button>
+                                        {!disabled && (
+                                            <button
+                                                type="button"
+                                                disabled={disabled}
+                                                onClick={() =>
+                                                    toggleExercise(index)
+                                                }
+                                                className="text-gray-400 hover:text-white p-1"
+                                                title={
+                                                    isExpanded
+                                                        ? "Contraer"
+                                                        : "Expandir"
+                                                }
+                                            >
+                                                {isExpanded ? (
+                                                    <MdExpandLess className="text-xl" />
+                                                ) : (
+                                                    <MdExpandMore className="text-xl" />
+                                                )}
+                                            </button>
+                                        )}
+
                                         {fields.length > 1 && (
                                             <button
                                                 type="button"
@@ -263,7 +266,7 @@ export const FormWorkOut = ({
                                                     errors.exercises?.[index]
                                                         ?.sets
                                                 }
-                                                maxLength={2}
+                                                maxLength={1}
                                                 placeholder="Sets (3-4)"
                                                 control={control}
                                             />
@@ -296,14 +299,16 @@ export const FormWorkOut = ({
                     })}
 
                     <div className="mt-6">
-                        <Button
-                            loading={isLoading}
-                            disabled={isLoading || disabled}
-                            type="submit"
-                            className="w-full bg-blue-600 hover:bg-blue-700"
-                        >
-                            Guardar Rutina
-                        </Button>
+                        {!disabled && (
+                            <Button
+                                loading={isLoading}
+                                disabled={isLoading || disabled}
+                                type="submit"
+                                className="w-full bg-blue-600 hover:bg-blue-700"
+                            >
+                                Guardar Rutina
+                            </Button>
+                        )}
                     </div>
                 </form>
             </div>
