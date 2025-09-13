@@ -15,7 +15,7 @@ export function EditMembership() {
     const { id } = useParams();
     const { data, isLoading, error } = useQuery({
         queryFn: () => getMembershipId(id!),
-        queryKey: ["memberId"],
+        queryKey: ["membershipId", id],
     });
 
     const mutationUpdate = useMutation({

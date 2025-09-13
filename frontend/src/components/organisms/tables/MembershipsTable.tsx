@@ -73,7 +73,7 @@ export const MembershipsTable = ({
         <div className="bg-primary-200 rounded-md border-1 border-gray-800 shadow-lg shadow-gray-900 overflow-hidden select-none">
             <div className="flex justify-between items-center py-4 px-6">
                 <div className="flex items-center gap-4">
-                    <h2 className="text-md">Todos las membresias existentes</h2>
+                    <h2 className="text-md">Todos los planes existentes</h2>
                 </div>
             </div>
 
@@ -138,7 +138,7 @@ export const MembershipsTable = ({
                                 >
                                     <p className="text-base text-gray-500">
                                         {" "}
-                                        No existen membresias registradas
+                                        No existen planes registrados
                                     </p>
                                 </td>
                             </tr>

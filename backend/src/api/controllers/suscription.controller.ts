@@ -3,11 +3,13 @@ import {
     CreateSuscriptionUseCase,
     GetSuscriptionsUserUseCase,
 } from "../../application/admin/suscriptions";
+import { DeleteSubsciptionUseCase } from "../../application/admin/suscriptions/delete-suscription.usecase";
 
 export class SuscriptionController {
     constructor(
         private _createSuscriptionUseCase: CreateSuscriptionUseCase,
-        private _getAllSuscriptionsUserUseCase: GetSuscriptionsUserUseCase
+        private _getAllSuscriptionsUserUseCase: GetSuscriptionsUserUseCase,
+        private _deleteSuscriptionUseCase: DeleteSubsciptionUseCase
     ) {}
 
     async create(req: Request, res: Response, next: NextFunction) {
@@ -26,7 +28,16 @@ export class SuscriptionController {
             const data = await this._getAllSuscriptionsUserUseCase.execute(
                 userId
             );
-            res.json( data );
+            res.json(data);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async deleteById(req: Request, res: Response, next: NextFunction) {
+        try {
+            await this._deleteSuscriptionUseCase.execute(req.subscription!);
+            res.json({ message: "Suscripción eliminada" });
         } catch (error) {
             next(error);
         }

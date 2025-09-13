@@ -183,6 +183,7 @@ export const CustomInput = <T extends FieldValues>({
             ) : (
                 <>
                     <div className="relative ">
+                        {label}
                         <Controller
                             name={name}
                             control={control}
@@ -263,7 +264,7 @@ export const CustomInput = <T extends FieldValues>({
                         {type === "password" && (
                             <button
                                 type="button"
-                                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-300"
+                                className="absolute top-5 inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-300"
                                 onClick={() => setShowPassword(!showPassword)}
                             >
                                 {showPassword ? (

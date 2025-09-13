@@ -63,7 +63,7 @@ export default function EditWorkOut() {
             />
         );
     }
-
+    console.log(data)
     return (
         <main className="text-white max-w-md mx-auto grid p-4 lg:p-1 overflow-auto">
             <div className="flex items-center justify-between mb-4">

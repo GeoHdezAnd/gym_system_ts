@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+    deleteById,
     getSubscriptionsByUserId,
     makeSubscriptionMember,
 } from "../../../api/SubscriptionApi";
@@ -16,6 +17,7 @@ import { formatMoney } from "../../../lib/utils/formatMoney";
 import { formatDate } from "../../../lib/utils/formatInfo";
 import { GrStatusGoodSmall } from "react-icons/gr";
 import clsx from "clsx";
+import { DeleteConfirmationDialog } from "../DeleteConfirmationDialong";
 
 export const SubscriptionManagement = ({ userId }: { userId: string }) => {
     const { data, isLoading, error, refetch } = useQuery({
@@ -46,6 +48,23 @@ export const SubscriptionManagement = ({ userId }: { userId: string }) => {
         },
     });
 
+    const deleteSubscriptionMutation = useMutation({
+        mutationFn: deleteById,
+        onSuccess: (data) => {
+            toast.success(data.message);
+            queryClient.invalidateQueries({
+                queryKey: ["subscriptionsMemberId"],
+            });
+        },
+        onError: (error) => {
+            toast.error(handleApiError(error));
+        },
+    });
+
+    const handleDeleteSubscription = (id: string) => {
+        deleteSubscriptionMutation.mutate(id);
+    };
+
     const handleMembershipSelect = (membershipId: string) => {
         if (membershipId && userId) {
             makeSubscriptionMutation.mutate({
@@ -73,6 +92,11 @@ export const SubscriptionManagement = ({ userId }: { userId: string }) => {
     if (error || !userId) {
         return <p className="m-auto text-gray-300">Id invalido</p>;
     }
+    const suscriptionActive = !!data.find(
+        (x: SubsciptionMemberInfo) => x.status === "active"
+    );
+
+    const today = new Date().toISOString().split("T")[0];
 
     return (
         <div className="mb-8">
@@ -100,13 +124,15 @@ export const SubscriptionManagement = ({ userId }: { userId: string }) => {
             ) : (
                 <div className="h-92">
                     {/* Aquí puedes mostrar la lista de suscripciones existentes si es necesario */}
-                    <Button
-                        className="mt-4"
-                        onClick={() => setIsModalOpen(true)}
-                    >
-                        <CiShop className="text-lg" />
-                        Agregar nueva suscripción
-                    </Button>
+                    {!suscriptionActive && (
+                        <Button
+                            className="mt-4"
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            <CiShop className="text-lg" />
+                            Agregar nueva suscripción
+                        </Button>
+                    )}
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
                         {data.map((subscription: SubsciptionMemberInfo) => (
@@ -131,6 +157,17 @@ export const SubscriptionManagement = ({ userId }: { userId: string }) => {
                                             ? "Activa"
                                             : "Expiro"}
                                     </span>
+                                    {today ===
+                                        subscription.start_date.toString() && (
+                                        <DeleteConfirmationDialog
+                                            fild="Confirmar la eliminación"
+                                            onConfirm={() =>
+                                                handleDeleteSubscription(
+                                                    subscription.id
+                                                )
+                                            }
+                                        />
+                                    )}
                                 </div>
                                 <div className="space-y-1">
                                     <p className="text-gray-100 text-sm ">

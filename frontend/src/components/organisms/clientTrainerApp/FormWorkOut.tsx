@@ -137,7 +137,11 @@ export const FormWorkOut = ({
                             <CustomInput
                                 name="start_date"
                                 type="date"
-                                min={getDate()}
+                                min={
+                                    mode !== "edit"
+                                        ? getDate()
+                                        : defaultValues?.start_date
+                                }
                                 error={errors.start_date}
                                 control={control}
                                 disabled={disabled}
@@ -148,7 +152,11 @@ export const FormWorkOut = ({
                             <CustomInput
                                 name="end_date"
                                 type="date"
-                                min={getDate(1)} // SI agregas 1 deja seleccionar un mes despues la fecha de end
+                                min={
+                                    mode !== "edit"
+                                        ? getDate(1)
+                                        : defaultValues?.end_date
+                                } // SI agregas 1 deja seleccionar un mes despues la fecha de end
                                 error={errors.end_date}
                                 control={control}
                                 disabled={disabled}
@@ -205,7 +213,7 @@ export const FormWorkOut = ({
                                             </button>
                                         )}
 
-                                        {fields.length > 1 && (
+                                        {(fields.length > 1 && !disabled )&& (
                                             <button
                                                 type="button"
                                                 onClick={() => remove(index)}

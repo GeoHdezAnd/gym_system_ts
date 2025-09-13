@@ -9,3 +9,8 @@ export async function getSubscriptionsByUserId(userId: string) {
     const { data } = await api.get(`subscription/${userId}`);
     return data || [];
 }
+
+export async function deleteById(id: string) {
+    const { data } = await api.delete(`subscription/${id}`)
+    return data;
+}

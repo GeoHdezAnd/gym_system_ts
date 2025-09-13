@@ -20,7 +20,7 @@ export default function CustomerEdit() {
     const [menu, setMenu] = useState<string>(action!);
     const { data, isLoading, error } = useQuery({
         queryFn: () => getMemberByID(userId!),
-        queryKey: ["memberId"],
+        queryKey: ["memberId", userId],
     });
 
     // Actualizar miembro
@@ -65,7 +65,6 @@ export default function CustomerEdit() {
     const options = [
         { value: "edit", label: "Datos personales", icon: <FaUserEdit /> },
         { value: "subscription", label: "Suscripción", icon: <CgGym /> },
-        { value: "record", label: "Historial", icon: <FaUserEdit /> },
     ];
 
     return (
@@ -111,7 +110,7 @@ export default function CustomerEdit() {
                 </div>
 
                 {/* Contenido principal segun opción */}
-                <div className="w-full  px-2 py-2 shadow mx-0 lg:mx-12">
+                <div className="w-full  py-2 shadow mx-0 lg:mx-12">
                     {menu === "edit" && (
                         <FormMember
                             mode="edit"

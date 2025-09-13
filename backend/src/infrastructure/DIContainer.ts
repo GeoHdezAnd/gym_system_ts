@@ -84,6 +84,7 @@ import {
     GetAllAdminsUseCase,
     UpdateAdminUseCase,
 } from "../application/admin/admins";
+import { DeleteSubsciptionUseCase } from "../application/admin/suscriptions/delete-suscription.usecase";
 
 export class DIContainer {
     // Repositorios
@@ -235,6 +236,11 @@ export class DIContainer {
         );
     }
 
+    static deleteSuscriptionUseCase(): DeleteSubsciptionUseCase {
+        return new DeleteSubsciptionUseCase(
+            this._subscriptionRepository
+        )
+    }
     // Casos de uso de asistencias
     static getAllAttendances(): GetAllAttendancesWithMember {
         return new GetAllAttendancesWithMember(this._attendanceRepository);

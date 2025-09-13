@@ -26,7 +26,7 @@ export class Workout {
         this._id = props.id;
         this._relation_id = props.relation_id;
         this._name = props.name;
-        this._start_date = props.end_date;
+        this._start_date = props.start_date;
         this._end_date = props.end_date;
         this._exercises = props.exercises || [
             {

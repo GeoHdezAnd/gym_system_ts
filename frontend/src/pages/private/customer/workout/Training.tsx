@@ -220,7 +220,7 @@ export default function Training() {
                     </Link>
 
                     <h2 className="text-center font-semibold p-1 mb-1">
-                        Información general
+                        Perfil de entrenamiento
                     </h2>
 
                     <div className="flex items-center gap-3">

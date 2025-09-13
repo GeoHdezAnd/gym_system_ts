@@ -11,9 +11,9 @@ export default function AllMemberships() {
     return (
         <div className="container text-white space-y-4">
             <>
-                <h1 className="text-2xl font-semibold  mb-2">Membresias</h1>
+                <h1 className="text-2xl font-semibold  mb-2">Planes</h1>
                 <p className="text-sm text-gray-300">
-                    Centro de control de membresias
+                    Centro de control de planes
                 </p>
             </>
             <MembershipsTable

@@ -20,9 +20,9 @@ export default function AddMembership() {
     return (
         <div className="container text-white">
             <div className="mb-4">
-                <h1 className="text-2xl font-semibold  ">Agregar membresia</h1>
+                <h1 className="text-2xl font-semibold  ">Agregar un plan</h1>
                 <p className="text-gray-500">
-                    LLena el formulario y envialo para crear membresia
+                    LLena el formulario y envialo para crear el plan
                 </p>
             </div>
 

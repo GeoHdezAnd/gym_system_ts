@@ -188,7 +188,7 @@ export const FormPlan = ({
                         />
                     </div>
                     <p className="text-xs text-gray-400 p-2">
-                        ** Este campó es para seleccionar si la membresia otorga
+                        ** Este campó es para seleccionar si el plan otorga
                         acceso a la gestión de rutinas
                     </p>
                 </div>

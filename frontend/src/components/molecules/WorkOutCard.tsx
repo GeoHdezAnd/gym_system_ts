@@ -4,6 +4,7 @@ import { formatDate } from "../../lib/utils/formatInfo";
 import { Link } from "react-router";
 
 export const WorkOut = ({ workOut }: { workOut: TWorkOutResponse }) => {
+    console.log(workOut)
     return (
         <div className="p-4 my-2 items-center flex justify-between bg-primary-300 hover:bg-primary-200 rounded-lg border border-gray-600">
             <div className="text-left space-y-1">

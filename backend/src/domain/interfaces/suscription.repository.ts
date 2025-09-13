@@ -8,4 +8,6 @@ export interface SubscriptionRepository {
     ): Promise<SubscriptionDetailsResponseDto[] | []>;
     findActiveSubscription(member_id: string): Promise<boolean>;
     findLastSubscription(member_id: string): Promise<Subscription | false>;
+    findById(id: string): Promise<Subscription | false>;
+    deleteById(id: string):Promise<void>
 }

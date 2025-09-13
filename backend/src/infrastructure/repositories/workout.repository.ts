@@ -17,6 +17,7 @@ export class SequelizeWorkoutRepository implements WorkoutRepository {
                 "name",
                 "exercises",
             ],
+            order: [["updatedAt", "DESC"]],
         });
 
         if (!workouts.length) return [];

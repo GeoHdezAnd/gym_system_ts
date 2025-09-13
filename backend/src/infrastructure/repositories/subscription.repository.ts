@@ -1,7 +1,6 @@
 import { Subscription, SubscriptionProps } from "../../domain/entities";
 import { SubscriptionRepository } from "../../domain/interfaces";
 import { PlansModel, SubscriptionModel } from "../models";
-import { Op } from "@sequelize/core";
 import {
     SubscriptionDetailsResponseDto,
     SubscriptionDto,
@@ -80,7 +79,26 @@ export class SequelizeSubscriptionRepository implements SubscriptionRepository {
             end_date: model.end_date,
         });
 
-
         return subscription;
+    }
+
+    async findById(id: string): Promise<Subscription | false> {
+        const model = await SubscriptionModel.findByPk(id);
+        if (!model) return false;
+        return new Subscription({
+            id: model.id,
+            member_id: model.member_id,
+            plan_id: model.plan_id,
+            start_date: model.start_date,
+            end_date: model.end_date,
+        });
+    }
+
+    async deleteById(id: string): Promise<void> {
+        await SubscriptionModel.destroy({
+            where: {
+                id: id,
+            },
+        });
     }
 }

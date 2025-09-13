@@ -47,7 +47,7 @@ export function SideBar() {
         {
             to: "membership",
             icon: RiPantoneFill,
-            label: "Membresias",
+            label: "Planes",
             subItems: [
                 {
                     to: "membership/add",
