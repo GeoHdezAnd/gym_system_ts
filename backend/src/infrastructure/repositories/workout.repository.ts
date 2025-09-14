@@ -63,4 +63,11 @@ export class SequelizeWorkoutRepository implements WorkoutRepository {
 
         return new Workout(workoutUpdated).toPersistance();
     }
+    async deleteWorkOutById(id: string): Promise<void> {
+        await WorkoutModel.destroy({
+            where: {
+                id,
+            },
+        });
+    }
 }

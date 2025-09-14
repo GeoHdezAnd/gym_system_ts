@@ -5,7 +5,11 @@ import {
     handleInputErrors,
     validateMemberId,
     validateMemberTrainerRelationCreate,
+    validateRelationExistsById,
+    validateRelationId,
+    validateWorkExists,
     validateWorkoutCreate,
+    validateWorkOutID,
 } from "../middleware";
 import { limiter } from "../../infrastructure/config/limiter";
 import { MemberTrainerController } from "../controllers";
@@ -21,11 +25,14 @@ const memberTrainerController = new MemberTrainerController(
     DIContainer.getAllWorksOutUseCase(),
     DIContainer.getWorkOutUseCase(),
     DIContainer.createWorkOutUseCase(),
-    DIContainer.updateWorkOutUseCase()
+    DIContainer.updateWorkOutUseCase(),
+    DIContainer.deleteWorkOutUseCase()
 );
 
 memberTrainerRouter.use(limiter, authenticate);
 memberTrainerRouter.param("memberId", validateMemberId);
+memberTrainerRouter.param("workOutId", validateWorkOutID);
+memberTrainerRouter.param("workOutId", validateWorkExists);
 
 memberTrainerRouter.get(
     "/:memberId",
@@ -54,6 +61,13 @@ memberTrainerRouter.put(
     memberTrainerController.updateRelation.bind(memberTrainerController)
 );
 
+memberTrainerRouter.delete(
+    "/:relationId",
+    authorize(["trainer", "member"]),
+    handleInputErrors,
+    
+)
+
 // WORKOUTS
 memberTrainerRouter.get(
     "/workout-all/:relationId",
@@ -62,7 +76,7 @@ memberTrainerRouter.get(
 );
 
 memberTrainerRouter.get(
-    "/work-out/:idWorkout",
+    "/work-out/:workOutId",
     authorize(["trainer", "member"]),
     memberTrainerController.getWorkOutById.bind(memberTrainerController)
 );
@@ -76,10 +90,17 @@ memberTrainerRouter.post(
 );
 
 memberTrainerRouter.put(
-    "/work-out/:id",
+    "/work-out/:workOutId",
     authorize(["trainer"]),
     handleInputErrors,
     memberTrainerController.updateWorkOut.bind(memberTrainerController)
 );
+
+memberTrainerRouter.delete(
+    "/work-out/:workOutId",
+    authorize(["trainer", "member"]),
+    handleInputErrors,
+    memberTrainerController.deleteWorkOutById.bind(memberTrainerController)
+)
 
 export default memberTrainerRouter;

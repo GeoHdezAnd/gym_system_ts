@@ -1,12 +1,18 @@
 import { RequestPropsRelation } from "../../application/memberApp";
 import { AdvisedDto, ResponseAdvisedDto } from "../../domain/dtos/advised.dto";
 import { MemberTrainer } from "../../domain/entities";
+import { NotFoundError } from "../../domain/errors";
 import { MemberTrainerRepository } from "../../domain/interfaces";
 import { MemberModel, MemberTrainerModel, UserModel } from "../models";
 
 export class SequelizeMemberTrainerRepository
     implements MemberTrainerRepository
 {
+    async getById(id: string): Promise<MemberTrainer> {
+        const model = await MemberTrainerModel.findByPk(id);
+        if(!model) throw new NotFoundError("No existe la relación");
+        return new MemberTrainer(model);
+    }
     async getByMemberId(member_id: string): Promise<MemberTrainer | null> {
         const model = await MemberTrainerModel.findOne({
             where: { member_id },

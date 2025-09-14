@@ -85,6 +85,7 @@ import {
     UpdateAdminUseCase,
 } from "../application/admin/admins";
 import { DeleteSubsciptionUseCase } from "../application/admin/suscriptions/delete-suscription.usecase";
+import { DeleteWorkOutUseCase } from "../application/trainerApp/delete-workout.usecase";
 
 export class DIContainer {
     // Repositorios
@@ -237,9 +238,7 @@ export class DIContainer {
     }
 
     static deleteSuscriptionUseCase(): DeleteSubsciptionUseCase {
-        return new DeleteSubsciptionUseCase(
-            this._subscriptionRepository
-        )
+        return new DeleteSubsciptionUseCase(this._subscriptionRepository);
     }
     // Casos de uso de asistencias
     static getAllAttendances(): GetAllAttendancesWithMember {
@@ -319,6 +318,10 @@ export class DIContainer {
 
     static updateWorkOutUseCase(): UpdateWorkOutUseCase {
         return new UpdateWorkOutUseCase(this._workoutRepository);
+    }
+
+    static deleteWorkOutUseCase(): DeleteWorkOutUseCase {
+        return new DeleteWorkOutUseCase(this._workoutRepository);
     }
 
     // Administradores

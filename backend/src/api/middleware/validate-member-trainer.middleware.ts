@@ -1,5 +1,16 @@
 import type { Request, Response, NextFunction } from "express";
-import { body } from "express-validator";
+import { body, param } from "express-validator";
+import { SequelizeMemberTrainerRepository, SequelizeWorkoutRepository } from "../../infrastructure/repositories";
+import { MemberTrainerProps, WorkoutProps } from "../../domain/entities";
+
+declare global {
+    namespace Express {
+        interface Request {
+            relation?: MemberTrainerProps;
+            workOut?: WorkoutProps
+        }
+    }
+}
 
 export const validateMemberTrainerRelationCreate = async (
     req: Request,
@@ -27,7 +38,73 @@ export const validateMemberTrainerRelationCreate = async (
     next();
 };
 
+export const validateRelationId = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    await param("relationId")
+        .isString()
+        .withMessage("El ID debe ser una cadena de texto")
+        .bail()
+        .matches(
+            /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
+        )
+        .withMessage("ID no válido, debe ser un UUID válido")
+        .run(req);
+    next();
+};
 
+export const validateRelationExistsById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const relationRepository = new SequelizeMemberTrainerRepository();
+    try {
+        const { relationId } = req.params;
+        const relation = await relationRepository.getById(relationId);
+        req.relation = relation;
+        next();
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+export const validateWorkOutID = async (
+req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    await param("workOutId")
+        .isString()
+        .withMessage("El ID debe ser una cadena de texto")
+        .bail()
+        .matches(
+            /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
+        )
+        .withMessage("ID no válido, debe ser un UUID válido")
+        .run(req);
+    next(); 
+}
+
+export const validateWorkExists = async (
+req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const workoutRepository = new SequelizeWorkoutRepository();
+    try {
+        const { workOutId } = req.params;
+        const workOut = await workoutRepository.getById(workOutId);
+        req.workOut = workOut;
+        next();
+    }
+    catch (error) {
+        next(error)
+    }
+}
 
 export const validateWorkoutCreate = async (
     req: Request,
@@ -91,8 +168,11 @@ export const validateWorkoutCreate = async (
     await body("exercises.*.sets")
         .custom((value) => {
             // Convertir a número si es string
-            const numValue = typeof value === 'string' ? parseInt(value) : value;
-            return Number.isInteger(numValue) && numValue >= 1 && numValue <= 20;
+            const numValue =
+                typeof value === "string" ? parseInt(value) : value;
+            return (
+                Number.isInteger(numValue) && numValue >= 1 && numValue <= 20
+            );
         })
         .withMessage("Debe haber entre 1 y 20 sets")
         .run(req);
@@ -100,8 +180,11 @@ export const validateWorkoutCreate = async (
     await body("exercises.*.reps_goal")
         .custom((value) => {
             // Convertir a número si es string
-            const numValue = typeof value === 'string' ? parseInt(value) : value;
-            return Number.isInteger(numValue) && numValue >= 1 && numValue <= 15;
+            const numValue =
+                typeof value === "string" ? parseInt(value) : value;
+            return (
+                Number.isInteger(numValue) && numValue >= 1 && numValue <= 15
+            );
         })
         .withMessage("Debe haber entre 1 y 15 repeticiones")
         .run(req);

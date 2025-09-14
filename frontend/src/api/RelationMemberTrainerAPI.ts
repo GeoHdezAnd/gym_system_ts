@@ -46,3 +46,8 @@ export async function updateWorkOut(id: string, workout: WorkOutData) {
     const { data } = await api.put(`/member-trainer/work-out/${id}`, workout);
     return data;
 }
+
+export async function deleteWorkOut(id: string){
+    const { data } = await api.delete(`/member-trainer/work-out/${id}`)
+    return data;
+}

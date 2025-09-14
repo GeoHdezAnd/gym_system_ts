@@ -11,6 +11,7 @@ import {
     GetWorkOutUseCase,
     UpdateWorkOutUseCase,
 } from "../../application/trainerApp";
+import { DeleteWorkOutUseCase } from "../../application/trainerApp/delete-workout.usecase";
 
 export class MemberTrainerController {
     constructor(
@@ -21,7 +22,8 @@ export class MemberTrainerController {
         private readonly _getAllWorksoutUseCase: GetAllWorksoutUseCase,
         private readonly _getWorkOutUseCase: GetWorkOutUseCase,
         private readonly _createWorkoutUseCase: CreateWorkoutUseCase,
-        private readonly _updateWorkoutUseCase: UpdateWorkOutUseCase
+        private readonly _updateWorkoutUseCase: UpdateWorkOutUseCase,
+        private readonly _deleteWorkOutUseCase: DeleteWorkOutUseCase
     ) {}
 
     // Ruta para obtener la relación segun el user id, lo buscara en la tabla de miembros
@@ -80,6 +82,15 @@ export class MemberTrainerController {
         }
     }
 
+    async deleteRelationById(req: Request, res: Response, next: NextFunction) {
+        try {
+            console.log(req.relation);
+            res.json("Recibiendo....");
+        } catch (error) {
+            next(error);
+        }
+    }
+
     // Entrenamientos
     async getAllWorksout(req: Request, res: Response, next: NextFunction) {
         try {
@@ -93,8 +104,8 @@ export class MemberTrainerController {
 
     async getWorkOutById(req: Request, res: Response, next: NextFunction) {
         try {
-            const { idWorkout } = req.params;
-            const workout = await this._getWorkOutUseCase.execute(idWorkout);
+            const { workOutId } = req.params;
+            const workout = await this._getWorkOutUseCase.execute(workOutId);
             res.json(workout);
         } catch (error) {
             next(error);
@@ -120,14 +131,24 @@ export class MemberTrainerController {
 
     async updateWorkOut(req: Request, res: Response, next: NextFunction) {
         try {
-            const { id } = req.params;
+            const { workOutId } = req.params;
             const { name, start_date, end_date, exercises } = req.body;
 
             const workout = await this._updateWorkoutUseCase.execute({
-                id,
+                id: workOutId,
                 input: { name, start_date, end_date, exercises },
             });
             res.json({ message: "Rutina actualizada", workout });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async deleteWorkOutById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.workOut?.id!;
+            await this._deleteWorkOutUseCase.execute(id);
+            res.json({ message: "Entrenamiento eliminado" });
         } catch (error) {
             next(error);
         }
