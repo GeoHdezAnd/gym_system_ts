@@ -16,7 +16,7 @@ export class EmailServiceImpl implements EmailService {
                 
              
                 
-                <p style="line-height: 1.6; ">O haz clic en el botón:</p>
+                <p style="line-height: 1.6; ">Haz clic en el botón:</p>
                 <a href="${process.env.FRONTEND_URL}confirm-account/${user.token}" 
                    style="display: inline-block; background-color:rgb(93, 26, 26); color: white; padding: 12px 24px; 
                           text-decoration: none; border-radius: 4px; font-weight: bold; margin: 10px 0;">

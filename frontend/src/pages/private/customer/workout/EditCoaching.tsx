@@ -149,7 +149,7 @@ export default function EditCoaching() {
                 <span>Volver</span>
             </Link>
 
-            <h2 className="text-lg font-bold text-center">Editar Coaching</h2>
+            <h2 className="text-lg font-bold text-center">Editar perfil de entrenamiento</h2>
 
             <form
                 className="space-y-3"

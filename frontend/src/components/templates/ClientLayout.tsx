@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../lib/hooks/useAuth";
 import { Navigate, NavLink, Outlet } from "react-router";
-import { FaDumbbell, FaSearchengin } from "react-icons/fa6";
+import { FaDumbbell } from "react-icons/fa6";
 import { RiAccountCircle2Fill } from "react-icons/ri";
 import clsx from "clsx";
 import { Toaster } from "sonner";
@@ -73,18 +73,7 @@ const SideBar = () => {
                 <FaDumbbell className="text-2xl md:text-xl m-auto" />
                 <p>Entrenamientos</p>
             </NavLink>
-            <NavLink
-                to={"/"}
-                className={({ isActive }) =>
-                    clsx(
-                        "grid gap-1 p-4 text-gray-400 hover:text-gray-200 text-sm",
-                        isActive && "text-white"
-                    )
-                }
-            >
-                <FaSearchengin className="text-2xl md:text-xl m-auto" />
-                <p>Ejercicios</p>
-            </NavLink>
+          
             <NavLink
                 to={"profile"}
                 className={({ isActive }) =>
